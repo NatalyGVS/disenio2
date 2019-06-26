@@ -3,7 +3,7 @@
 	$username = $_SESSION['username'];
 	$email = $_SESSION['email'];
 	if(!strcmp($email, "")){
-		echo "<script>location.href='http://localhost/stock-v2/application/views/cliente/';</script>";
+		echo "<script>location.href='http://localhost/disenio2/application/views/cliente/';</script>";
 	}
 	 
 ?>

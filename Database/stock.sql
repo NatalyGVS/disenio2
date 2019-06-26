@@ -1,9 +1,152 @@
+-------------LO AGREGADO PARA DISEÑO-------------
+CREATE TABLE `proveedor`(
+  `id_proveedor` varchar(255) NOT NULL,
+  `razon_social` varchar(255),
+  `ruc` varchar(255) NOT NULL,
+  `direccion` varchar(255),
+  `tipo_proveedor` varchar(255) NOT NULL
+)
+
+CREATE TABLE `categoria`(
+  `id_categoria` varchar(255) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+)
+
+CREATE TABLE `producto`(
+  `id_producto` varchar(255) NOT NULL,
+  `id_proveedor` varchar(255),
+  `material` varchar(255),
+  `unidad_medida` varchar NOT NULL,
+  `descripcion` varchar(255)
+)
+
+CREATE TABLE `kardex`(
+  `id_kardex` varchar(255) NOT NULL,
+  `codigo_kardex` varchar(255) NOT NULL,
+  `id_producto` varchar(255) NOT NULL,
+  `fecha` varchar(255) NOT NULL,
+  `detalle` varchar(255),
+  `precio_unitario` int(11) NOT NULL,
+  `entrada_cantidad` int(11),
+  `entrada_precio_total` int (11),
+  `salida_cantidad` int(11),
+  `salida_precio_total` int (11),
+  `saldo_cantidad` int(11) NOT NULL,
+  `saldo_precio_total` int (11) NOT NUlL
+)
+
+CREATE TABLE `inventario`(
+  `id_producto` varchar(255) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `unidad_medida` varchar(255) NOT NULL
+)
+
+CREATE TABLE `pedido`(
+  `id_pedido` varchar(255) NOT NULL,
+  `codigo_pedido` varchar(255) NOT NULL,
+  `fecha_emision` varchar(255) NOT NULL,
+  `id_trabajador` varchar(255) NOT NULL,
+  `id_order_item` varchar(255) NOT NULL,
+  `estado` varchar(255) NOT NULL--falta poner para que sea en espera por defecto
+)
+
+CREATE TABLE `order_item`(
+  `id_order_item` varchar(255) NOT NULL,
+  `id_pedido` varchar(255) NOT NULL,
+  `id_producto` varchar(255) NOT NULL,
+  `cantidad` int(11) NOT NULL
+)
+
+CREATE TABLE `rol`(
+  `id_rol` varchar(255) NOT NULL,
+  `grupo` varchar(255) NOT NULL,
+  `id_usuario` varchar(255) NOT NULL
+)
+
+CREATE TABLE `usuario`(
+  `id_usuario` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `nombres` varchar(255) NOT NULL,
+  `apellidos` varchar(255) NOT NULL,
+  `celular` varchar(255),
+  `dni` varchar(255) NOT NULL
+)
+
+CREATE TABLE `cotizacion`(
+  `id_cotizacion` varchar(255) NOT NULL,
+  `id_proveedor` varchar(255) NOT NULL,
+  `fecha_entrega` varchar(255) NOT NULL
+  --FALTA LO DE LA LISTA DE PRODUCTOS
+)
+
+CREATE TABLE `documento_de_evaluacion_de_cotizacion`(
+  `id_documento` varchar(255) NOT NULL,
+  `fecha_evaluacion` varchar(255) NOT NULL,
+  --aquí en vez de id_trabajador pongo id_pedido
+  `id_pedido` varchar(255) NOT NULL
+  --FALTA PONER PARA LAS COTIZACIONES QUE VAN EN EL DOCUMENTO
+)
+
+CREATE TABLE `orden_compra`(
+  `id_orden` varchar(255) NOT NULL,
+  `codigo_orden` varchar(255) NOT NULL,
+  `id_usuario_emisor` varchar(255) NOT NULL,
+  `id_usuario_receptor` varchar(255) NOT NULL,
+  `id_cotizacion` varchar(255) NOT NULL
+)
+
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id_proveedor`);
+
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id_categoria`);
+
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id_producto`);
+
+ALTER TABLE `kardex`
+  ADD PRIMARY KEY (`id_kardex`);
+
+ALTER TABLE `inventario`
+  ADD PRIMARY KEY (`id_producto`);
+
+ALTER TABLE `pedido`
+  ADD PRIMARY KEY (`id_pedido`);
+
+ALTER TABLE `order_item`
+  ADD PRIMARY KEY (`id_order_item`);
+
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id_rol`);
+
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`);
+
+ALTER TABLE `cotizacion`
+  ADD PRIMARY KEY (`id_cotizacion`);
+
+ALTER TABLE `documento_de_evaluacion_de_cotizacion`
+  ADD PRIMARY KEY (`id_documento`);
+
+ALTER TABLE `orden_compra`
+  ADD PRIMARY KEY (`id_orden`);
+
+
+
+
+-- **************************************************************************
+-- **************************************************************************
+-- **************************************************************************
+
+
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `stock`
+-- Database: `disenio2`
 --
 
 --
@@ -106,7 +249,7 @@ CREATE TABLE `orders_item` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `sku  ` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
   `price` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL,
   `image` text NOT NULL,
@@ -114,7 +257,6 @@ CREATE TABLE `products` (
   `category_id` text NOT NULL,
   `availability` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 -- --------------------------------------------------------
@@ -360,3 +502,5 @@ CREATE TABLE `order_itemsb` (
  KEY `order_id` (`order_id`),
  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+

@@ -64,7 +64,7 @@ class Products extends Admin_Controller
             if($value['qty'] <= 10) {
                 $qty_status = '<span class="label label-warning">Low !</span>';
             } else if($value['qty'] <= 0) {
-                $qty_status = '<span class="label label-danger">Out of stock !</span>';
+                $qty_status = '<span class="label label-danger">Out of disenio2 !</span>';
             }
 
 

@@ -43,9 +43,9 @@
       $mail->Body .=" <p style='font-weight: bold; font-size: 80%;'>Unidad de Inform&aacute;tica<br>Restaurante La Reserva<br>FISI - UNMSM</p>";
 */
       //if($mail->send()){
-      //  echo "<script>location.href = 'http://localhost/stock-v2/application/views/cliente/';</script>";
+      //  echo "<script>location.href = 'http://localhost/disenio2/application/views/cliente/';</script>";
       //}else{
-        echo "<script>location.href = 'http://localhost/stock-v2/application/views/cliente/';</script>";
+        echo "<script>location.href = 'http://localhost/disenio2/application/views/cliente/';</script>";
       //}
       
   ?>

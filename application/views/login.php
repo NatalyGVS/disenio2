@@ -23,7 +23,7 @@
 
 </head>
 <body style=
-	   "background:url('/stock-v2/assets/images/background_image/background.jpg'); 
+	   "background:url('/disenio2/assets/images/background_image/background.jpg'); 
 		background-position: center;
   		background-repeat: no-repeat;
   		background-size: cover;">

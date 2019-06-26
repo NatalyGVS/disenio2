@@ -7,7 +7,7 @@
         
             <li id="cajasNav" >
                 <a href="<?php echo base_url('cajas/')?>">
-                    <img class="fa" src="/stock-v2/assets/images/icons/atm.png"> 
+                    <img class="fa" src="/disenio2/assets/images/icons/atm.png"> 
                     <span style="margin-left: 15px;">Control de Cajas</span>
                 </a>
             </li>
@@ -16,7 +16,7 @@
             <li id="dashboardMainMenu" >
 
                 <a href="<?php echo base_url('dashboard')?>">
-                    <img class="fa" src="/stock-v2/assets/images/icons/dashboard.png"> 
+                    <img class="fa" src="/disenio2/assets/images/icons/dashboard.png"> 
                     <span style="margin-left: 15px;">Panel de Control</span>
                 </a>
             </li>
@@ -24,7 +24,7 @@
             <?php if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
                 <li id="mesasNav" >
                     <a href="<?php echo base_url('mesas/') ?>">
-                      <img class="fa" src="/stock-v2/assets/images/icons/table.png">
+                      <img class="fa" src="/disenio2/assets/images/icons/table.png">
                       <span style="margin-left: 15px;">
                         Mesas del Restaurante
                       </span>
@@ -35,7 +35,7 @@
             <!-- <?php //if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
                 <li id="ordenesNav" class="activar">
                     <a href="<?php echo base_url('ordenes/') ?>">
-                      <img class="fa" src="/stock-v2/assets/images/icons/table.png">
+                      <img class="fa" src="/disenio2/assets/images/icons/table.png">
                       <span style="margin-left: 15px;">
                         Ordenes Mesa
                       </span>
@@ -49,7 +49,7 @@
                 <?php if(in_array('createUser', $user_permission) || in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
                     <li class="treeview" id="mainUserNav">
                         <a href="#">
-                            <img class="fa" src="/stock-v2/assets/images/icons/users.png">
+                            <img class="fa" src="/disenio2/assets/images/icons/users.png">
                             <span style="margin-left: 15px;">
                                 Usuarios del Sistema
                             </span>
@@ -82,7 +82,7 @@
           <?php if(in_array('createGroup', $user_permission) || in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
             <li class="treeview" id="mainGroupNav">
               <a href="#">
-               <img  class="fa" src="/stock-v2/assets/images/icons/groups.png">
+               <img  class="fa" src="/disenio2/assets/images/icons/groups.png">
                 <span style="margin-left: 15px;">Grupos de Usuarios</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -105,7 +105,7 @@
           <?php if(in_array('createCategory', $user_permission) || in_array('updateCategory', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteCategory', $user_permission)): ?>
             <li id="categoryNav">
               <a href="<?php echo base_url('category/') ?>">
-                <img  class="fa" src="/stock-v2/assets/images/icons/categories.png">
+                <img  class="fa" src="/disenio2/assets/images/icons/categories.png">
                 <span style="margin-left: 15px;">
                   Categorías de Productos
                 </span>
@@ -118,7 +118,7 @@
           <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
             <li id="mainProductNav">
               <a href="<?php echo base_url('products') ?>">
-                <img class="fa" src="/stock-v2/assets/images/icons/products.png">
+                <img class="fa" src="/disenio2/assets/images/icons/products.png">
                 <span style="margin-left: 15px;">Productos Totales</span>
               </a>
             </li>
@@ -130,7 +130,7 @@
           <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
             <li class="manageOrdersNav" id="mainOrdersNav">
               <a href="<?php echo base_url('orders') ?>">
-                <img  class="fa" src="/stock-v2/assets/images/icons/orders.png">
+                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
                 <span style="margin-left: 15px;">
                   Registro de Ordenes
                 </span>
@@ -144,7 +144,7 @@
        <!-- <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?> -->
             <li class="mainEstadoNav" id="mainEstadoNav">
               <a href="<?php echo base_url('estado') ?>">
-                <img  class="fa" src="/stock-v2/assets/images/icons/orders.png">
+                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
                 <span style="margin-left: 15px;">
                   Estados Ordenes
                 </span>
@@ -156,7 +156,7 @@
        <!-- <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?> -->
        <li class="mainEstadoNav" id="mainCancelarNav">
               <a href="<?php echo base_url('cancelar') ?>">
-                <img  class="fa" src="/stock-v2/assets/images/icons/orders.png">
+                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
                 <span style="margin-left: 15px;">
                   Cancelar pedido
                 </span>
@@ -168,7 +168,7 @@
           <?php if(in_array('viewReports', $user_permission)): ?>
               <li id="reportNav">
                   <a href="<?php echo base_url('orders/') ?>">
-                      <img  class="fa" src="/stock-v2/assets/images/icons/reports.png">
+                      <img  class="fa" src="/disenio2/assets/images/icons/reports.png">
                       <span style="margin-left: 15px;">
                           Informes/Reportes
                       </span>
@@ -181,7 +181,7 @@
           <?php if(in_array('updateCompany', $user_permission)): ?>
               <li id="companyNav">
                   <a href="<?php echo base_url('company/') ?>">
-                      <img  class="fa" src="/stock-v2/assets/images/icons/restaurant.png">
+                      <img  class="fa" src="/disenio2/assets/images/icons/restaurant.png">
                       <span style="margin-left: 15px;">
                           Restaurante
                       </span>

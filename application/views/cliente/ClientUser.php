@@ -45,14 +45,14 @@ class ClientUser{
 					if($this->verifyUserEmail($connection)!=false){
 						$this->insertDbUser($connection, $this->firstname, $this->lastname, $this->email, $this->password, $this->gender, $this->phone, $this->username);
 					}else{
-						echo "<script>location.href='http://localhost/stock-v2/application/views/cliente/registrar.php';</script>";
+						echo "<script>location.href='http://localhost/disenio2/application/views/cliente/registrar.php';</script>";
 					}
 				}else{
 					echo "Error en la base de datos";
 				}
 
 			}else{
-				echo "<script>location.href='http://localhost/stock-v2/application/views/cliente/registrar.php';</script>";
+				echo "<script>location.href='http://localhost/disenio2/application/views/cliente/registrar.php';</script>";
 			}
 		}
 
@@ -69,7 +69,7 @@ class ClientUser{
 		}
 
 		public function getDb($connection){
-			$base_datos = "stock";
+			$base_datos = "disenio2";
 			$db = mysqli_select_db ($connection, $base_datos) or die ( "No se pudo conectar a la BD" );
 			return $db;
 		}
@@ -117,7 +117,7 @@ class ClientUser{
 
 			mysqli_query ($connection,$_GRABAR_SQL);
 			header ("Cache-Control: no-cache, must-revalidate");
-			$ref = 'http://localhost/stock-v2/application/views/cliente/email/envioemail.php?&firstname='.$this->firstname.'&lastname='.$this->lastname.'&email='.$this->email.'&gender='.$this->gender.'&password='.$this->password;
+			$ref = 'http://localhost/disenio2/application/views/cliente/email/envioemail.php?&firstname='.$this->firstname.'&lastname='.$this->lastname.'&email='.$this->email.'&gender='.$this->gender.'&password='.$this->password;
 		  	echo "<script>location.href='$ref';</script>";
 		}
 	}
