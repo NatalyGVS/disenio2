@@ -149,7 +149,7 @@
           </div>
 
           <div class="form-group">
-            <label for="edit_brand_name">RUCa</label>
+            <label for="edit_brand_name">RUC</label>
             <input type="text" class="form-control" id="edit_proveedores_RUC" name="edit_proveedores_RUC" placeholder="Ingresa RUC" autocomplete="off">
           </div>
 
@@ -289,10 +289,11 @@ function editFunc(id)
     dataType: 'json',
     success:function(response) {
 
-      // $("#edit_mesas_name").val(response.name);
+       $("#edit_proveedores_razon_social").val(response.razon_social);
+       $("#edit_proveedores_RUC").val(response.ruc);
+       $("#edit_proveedores_direccion").val(response.direccion);
+       $("#edit_tipo_proveedor").val(response.tipo_proveedor);
       
-      
-
       // submit the edit from 
       $("#updateForm").unbind('submit').bind('submit', function() {
         var form = $(this);
@@ -356,20 +357,21 @@ function editFunc(id)
 function removeFunc(id)
 {
   if(id) {
-    $("#removeForm").on('submit', function() {
 
+    $("#removeForm").on('submit', function() {
+    
       var form = $(this);
 
       // remove the text-danger
       $(".text-danger").remove();
-
+    
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
         data: { proveedores_id:id }, 
         dataType: 'json',
         success:function(response) {
-
+        
           manageTable.ajax.reload(null, false); 
 
           if(response.success === true) {
@@ -382,7 +384,7 @@ function removeFunc(id)
             $("#removeModal").modal('hide');
 
           } else {
-
+           
             $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
               '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
               '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+

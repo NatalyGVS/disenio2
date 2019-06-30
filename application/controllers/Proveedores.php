@@ -60,7 +60,7 @@ modelo de mesas y devuelve los datos en formato json.
 			$buttons = '';
 
 			//if(in_array('updateMesas', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
+			   $buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
 			//}
 
 			//if(in_array('deleteMesas', $this->permission)) {
@@ -86,9 +86,9 @@ correctamente, inserta los datos en la base de datos y devuelve los mensajes de
 	*/
 	public function create()
 	{
-		/*if(!in_array('createMesas', $this->permission)) {
-			redirect('dashboard', 'refresh');
-		}*/
+		// if(!in_array('createMesas', $this->permission)) {
+		// 	redirect('dashboard', 'refresh');
+		// }
 
 		$response = array();
      /////////////////////////////////////////////////////////////////////////////////////////
@@ -145,8 +145,10 @@ Comprueba la validación del formulario de mesas y si la validación se realiza
 		$response = array();
 
 		if($id) {
-			// $this->form_validation->set_rules('edit_mesas_name', 'Mesas name', 'trim|required');
-			// $this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
+			 $this->form_validation->set_rules('edit_proveedores_razon_social', 'Razon Social', 'trim|required');
+			 $this->form_validation->set_rules('edit_proveedores_RUC', 'RUC', 'trim|required');
+			 $this->form_validation->set_rules('edit_proveedores_direccion', 'Direccion', 'trim|required');
+			 $this->form_validation->set_rules('edit_tipo_proveedor', 'Tipo Proveedor', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
@@ -198,7 +200,7 @@ los mensajes de operación de formato json
 
 		$response = array();
 		if($proveedores_id) {
-			$delete = $this->model_mesas->remove($proveedores_id);
+			$delete = $this->model_proveedores->remove($proveedores_id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	

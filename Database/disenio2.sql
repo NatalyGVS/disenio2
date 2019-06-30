@@ -1,6 +1,6 @@
 -------------LO AGREGADO PARA DISEÑO-------------
 CREATE TABLE `proveedores`(
-  `id_proveedor` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `razon_social` varchar(255),
   `ruc` varchar(255) NOT NULL,
   `direccion` varchar(255),
@@ -100,7 +100,7 @@ CREATE TABLE `orden_compra`(
 )
 
 ALTER TABLE `proveedores`
-  ADD PRIMARY KEY (`id_proveedor`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id_categoria`);
@@ -142,7 +142,7 @@ ALTER TABLE `orden_compra`
 --
 
 ALTER TABLE `proveedores`
-  MODIFY `id_proveedor`int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id`int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 
 
