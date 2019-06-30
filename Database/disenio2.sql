@@ -7,10 +7,13 @@ CREATE TABLE `proveedores`(
   `tipo_proveedor` varchar(255) NOT NULL
 )
 
-CREATE TABLE `categoria`(
-  `id_categoria` varchar(255) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-)
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 CREATE TABLE `producto`(
   `id_producto` varchar(255) NOT NULL,
@@ -102,8 +105,9 @@ CREATE TABLE `orden_compra`(
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id_categoria`);
+
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`);
@@ -143,8 +147,11 @@ ALTER TABLE `orden_compra`
 
 ALTER TABLE `proveedores`
   MODIFY `id`int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+);
 
-
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  
 
 
 -- **************************************************************************
