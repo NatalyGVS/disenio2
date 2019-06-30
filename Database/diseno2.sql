@@ -15,10 +15,18 @@ CREATE TABLE `categoria`(
 CREATE TABLE `producto`(
   `id_producto` varchar(255) NOT NULL,
   `id_proveedor` varchar(255),
+  `id_categoria` varchar(255) NOT NULL,
   `material` varchar(255),
   `unidad_medida` varchar NOT NULL,
-  `descripcion` varchar(255)
-)
+  `descripcion` varchar(255),
+   `image` text NOT NULL,
+
+)s
+
+
+
+
+
 
 CREATE TABLE `kardex`(
   `id_kardex` varchar(255) NOT NULL,
