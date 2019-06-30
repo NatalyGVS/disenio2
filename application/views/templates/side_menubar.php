@@ -24,40 +24,17 @@
                 </li>
             <?php endif;?>
 
-            <?php if(in_array('createUser', $user_permission) || in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
-                    <li class="treeview" id="mainUserNav">
-                        <a href="#">
-                            <img class="fa" src="/disenio2/assets/images/icons/users.png">
-                            <span style="margin-left: 15px;">
-                               Proveedores
-                            </span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                          <?php if(in_array('createUser', $user_permission)): ?>
-                              <li id="createProveedorNav">
-                                  <a href="<?php echo base_url('proveedores/create') ?>">
-                                      <i class="fa fa-circle-o"></i>
-                                      Agregar Proveedor
-                                  </a>
-                              </li>
-                          <?php endif; ?>
-
-                          <?php if(in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
-                              <li id="manageProveedorNav">
-                                  <a href="<?php echo base_url('proveedores') ?>">
-                                      <i class="fa fa-circle-o"></i>
-                                      Administrar Proveedores
-                                  </a>
-                              </li>
-                          <?php endif; ?>
-                        </ul>
-                    </li>
-            <?php endif; ?>
-
-
+            <?php if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
+                <li id="proveedoresNav" >
+                    <a href="<?php echo base_url('proveedores/') ?>">
+                      <img class="fa" src="/disenio2/assets/images/icons/table.png">
+                      <span style="margin-left: 15px;">
+                        Proveedores
+                      </span>
+                    </a>
+                </li>
+            <?php endif;?>
+           
 
             <?php if($user_permission): ?>
                 <?php if(in_array('createUser', $user_permission) || in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>

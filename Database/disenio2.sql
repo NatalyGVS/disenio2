@@ -1,5 +1,5 @@
 -------------LO AGREGADO PARA DISEÑO-------------
-CREATE TABLE `proveedor`(
+CREATE TABLE `proveedores`(
   `id_proveedor` varchar(255) NOT NULL,
   `razon_social` varchar(255),
   `ruc` varchar(255) NOT NULL,
@@ -19,14 +19,9 @@ CREATE TABLE `producto`(
   `material` varchar(255),
   `unidad_medida` varchar NOT NULL,
   `descripcion` varchar(255),
-   `image` text NOT NULL,
+   `image` text NOT NULL
 
-)s
-
-
-
-
-
+)
 
 CREATE TABLE `kardex`(
   `id_kardex` varchar(255) NOT NULL,
@@ -104,7 +99,7 @@ CREATE TABLE `orden_compra`(
   `id_cotizacion` varchar(255) NOT NULL
 )
 
-ALTER TABLE `proveedor`
+ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`id_proveedor`);
 
 ALTER TABLE `categoria`
@@ -139,6 +134,15 @@ ALTER TABLE `documento_de_evaluacion_de_cotizacion`
 
 ALTER TABLE `orden_compra`
   ADD PRIMARY KEY (`id_orden`);
+
+
+ 
+--
+-- AUTO_INCREMENT for table `proveedor`
+--
+
+ALTER TABLE `proveedores`
+  MODIFY `id_proveedor`int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 
 
