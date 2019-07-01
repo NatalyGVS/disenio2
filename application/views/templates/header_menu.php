@@ -1,21 +1,20 @@
-<header class="main-header">
+<header class="main-header" style="width: 100%; position: fixed;"
+>
     <!-- Logo -->
     <a class="logo" style="background: #34393a;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>La Reserva</b></span>
+      <span class="logo-lg"><b>SINGESPRO</b></span>
       
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" style="background: #34393a">
       <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle navegador" data-toggle="push-menu" role="button">
-            <span class="sr-only">Menu navegacion</span>
-          </a>
+          
           
             <nav>
                 <ul class="nava ul">
-                  <li class="licreated"><a class="label-info label abg"><span><?php $user_id = $this->session->userdata('id');
+                  <li class="licreated"><a class="label-info label abg"><span style="padding-right: 25px;"><?php $user_id = $this->session->userdata('id');
                                           $user_data = $this->model_users->getUserData($user_id);
                                           $this->data['user_data'] = $user_data;
 

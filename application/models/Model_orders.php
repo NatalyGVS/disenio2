@@ -9,38 +9,38 @@ class Model_orders extends CI_Model
 	public function getOrdersData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM orders WHERE id = ?";
-			$query = $this->db->query($sql, array($id));
+			//$sql = "SELECT * FROM orders WHERE id = ?";
+			//$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
-		$sql = "SELECT * FROM orders ORDER BY id DESC";
-		$query = $this->db->query($sql);
+		//$sql = "SELECT * FROM orders ORDER BY id DESC";
+		//$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
 	public function getOrdersData2($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='0' or   estado_orden='1') ";
-			$query = $this->db->query($sql, array($id));
+			/*$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='0' or   estado_orden='1') ";
+			$query = $this->db->query($sql, array($id));*/
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM orders WHERE estado_orden='0' or   estado_orden='1'  ORDER BY id DESC";
-		$query = $this->db->query($sql);
+		/*$sql = "SELECT * FROM orders WHERE estado_orden='0' or   estado_orden='1'  ORDER BY id DESC";
+		$query = $this->db->query($sql);*/
 		return $query->result_array();
 	}
 
 	public function getOrdersData3($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='3' and   paid_status='2') ";
-			$query = $this->db->query($sql, array($id));
+			/*$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='3' and   paid_status='2') ";
+			$query = $this->db->query($sql, array($id));*/
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM orders WHERE estado_orden='2' and   paid_status='2'  ORDER BY id DESC";
-		$query = $this->db->query($sql);
+		/*$sql = "SELECT * FROM orders WHERE estado_orden='2' and   paid_status='2'  ORDER BY id DESC";
+		$query = $this->db->query($sql);*/
 		return $query->result_array();
 	}
 
@@ -50,13 +50,13 @@ class Model_orders extends CI_Model
 		if(!$order_id) {
 			return false;
 		}
-		$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-		$query = $this->db->query($sql, array($order_id));
+		/*$sql = "SELECT * FROM orders_item WHERE order_id = ?";
+		$query = $this->db->query($sql, array($order_id));*/
 		return $query->result_array();
 	}
 	public function create()
 	{
-		$name_mesa = $this->input->post('id_mesa');
+			$name_mesa = $this->input->post('id_mesa');
 		$this->load->model('model_mesas');
 		$mesa = $this->model_mesas->getMesaforName($name_mesa) ;
 			  
@@ -118,8 +118,8 @@ class Model_orders extends CI_Model
 	public function countOrderItem($order_id)
 	{
 		if($order_id) {
-			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-			$query = $this->db->query($sql, array($order_id));
+			/*$sql = "SELECT * FROM orders_item WHERE order_id = ?";
+			$query = $this->db->query($sql, array($order_id));*/
 			return $query->num_rows();
 		}
 	}
@@ -334,8 +334,9 @@ class Model_orders extends CI_Model
 
 	public function countTotalPaidOrders()
 	{
-		$sql = "SELECT * FROM orders WHERE paid_status = ?";
-		$query = $this->db->query($sql, array(1));
-		return $query->num_rows();
+		/*$sql = "SELECT * FROM orders WHERE paid_status = ?";
+		$query = $this->db->query($sql, array(1));*/
+		//return $query->num_rows();
+		return null;
 	}
 }

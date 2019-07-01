@@ -94,22 +94,13 @@
             <?php endif; ?>
 
           <?php if(in_array('createGroup', $user_permission) || in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-            <li class="treeview" id="mainGroupNav">
-              <a href="#">
+            <li id="mainGroupNav">
+              <a href="<?php echo base_url('groups') ?>">
                <img  class="fa" src="/disenio2/assets/images/icons/groups.png">
-                <span style="margin-left: 15px;">Grupos de Usuarios</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
+                <span style="margin-left: 15px;">
+                Gestionar Grupos
+              </span>
               </a>
-              <ul class="treeview-menu">
-                <?php if(in_array('createGroup', $user_permission)): ?>
-                  <li id="addGroupNav"><a href="<?php echo base_url('groups/create') ?>"><i class="fa fa-circle-o"></i> Añadir grupo</a></li>
-                <?php endif; ?>
-                <?php if(in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('groups') ?>"><i class="fa fa-circle-o"></i> Administrar grupos</a></li>
-                <?php endif; ?>
-              </ul>
             </li>
           <?php endif; ?>
 
@@ -121,7 +112,7 @@
               <a href="<?php echo base_url('category/') ?>">
                 <img  class="fa" src="/disenio2/assets/images/icons/categories.png">
                 <span style="margin-left: 15px;">
-                  Categorías de Productos
+                  Gestionar Categorías
                 </span>
               </a>
             </li>
@@ -191,18 +182,7 @@
           <?php endif; ?>
           <!--Menu Reportes e Informes-->
 
-          <!--Menu Restaurant-->
-          <?php if(in_array('updateCompany', $user_permission)): ?>
-              <li id="companyNav">
-                  <a href="<?php echo base_url('company/') ?>">
-                      <img  class="fa" src="/disenio2/assets/images/icons/restaurant.png">
-                      <span style="margin-left: 15px;">
-                          Restaurante
-                      </span>
-                  </a>
-              </li>
-          <?php endif; ?>
-          <!--Menu Restaurant-->
+
         <?php endif; ?>
       </ul>
     </section>

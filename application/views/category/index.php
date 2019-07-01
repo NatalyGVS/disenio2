@@ -1,24 +1,24 @@
 
-
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style=
+     "background-color: #ffffff; padding-top: 35px;">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-      Gestionar Categoría
-    </h1>
+    <h2>
+      <label style="font-size: 35px;">
+       Gestionar Categorías</label>
+      
+    </h2>
 
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li class="active">Categoría</li>
-    </ol>
+
+    <hr/>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-md-12 col-xs-12">
+      <div class="limiter col-md-12 col-xs-12">
 
         <div id="messages"></div>
 
@@ -34,30 +34,53 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createCategory', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">añadir categoría</button>
-          <br /> <br />
-        <?php endif; ?>
-
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">Gestionar categorías</h3>
-          </div>
+        <div class="container-login100">
           <!-- /.box-header -->
-          <div class="box-body">
-            <table id="manageTable" class="table table-bordered table-striped">
+          <div class="wrap-login100">
+            <div class="box-body col-sm-3">
+
+                <?php if(in_array('createCategory', $user_permission)): ?>
+                <!-- create brand modal -->
+                <div tabindex="-1" role="dialog" id="addModal">
+                  <div  role="document">
+                    <div class="modal-content">
+
+                      <form role="form" action="<?php echo base_url('category/create') ?>" method="post" id="createForm">
+
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <label for="brand_name">Nombre de la categoría</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Ingrese nombre de la categoría" required>
+                          </div>
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Registrar en el sistema</button>
+                        </div>
+
+                      </form>
+
+
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <?php endif; ?>
+            </div>
+          <div class="box-body  col-sm-6 col-xs-8">
+            <table id="manageTable" class="table table-bordered table-striped table-hover">
               <thead>
               <tr>
-                <th>nombre de la categoría</th>
-                <th>Estado</th>
+                <th>COD</th>
+                <th>NOMBRE DE LA CATEGORÍA</th>
                 <?php if(in_array('updateCategory', $user_permission) || in_array('deleteCategory', $user_permission)): ?>
-                  <th>Action</th>
+                  <th>Acciones</th>
                 <?php endif; ?>
               </tr>
               </thead>
 
             </table>
           </div>
+        </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -72,45 +95,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('createCategory', $user_permission)): ?>
-<!-- create brand modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="addModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">añadir categoría</h4>
-      </div>
 
-      <form role="form" action="<?php echo base_url('category/create') ?>" method="post" id="createForm">
-
-        <div class="modal-body">
-
-          <div class="form-group">
-            <label for="brand_name">nombre de la categoría</label>
-            <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter category name" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="active">Estado</label>
-            <select class="form-control" id="active" name="active">
-              <option value="1">Activo</option>
-              <option value="2">Inactivo</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        </div>
-
-      </form>
-
-
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<?php endif; ?>
 
 <?php if(in_array('updateCategory', $user_permission)): ?>
 <!-- edit brand modal -->
@@ -119,7 +104,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Editar categoria</h4>
+        <h4 class="modal-title">Editar Categoría Seleccionada</h4>
       </div>
 
       <form role="form" action="<?php echo base_url('category/update') ?>" method="post" id="updateForm">
@@ -128,15 +113,8 @@
           <div id="messages"></div>
 
           <div class="form-group">
-            <label for="edit_brand_name">nombre de la categoría</label>
+            <label for="edit_brand_name">Nuevo nombre de la categoría</label>
             <input type="text" class="form-control" id="edit_category_name" name="edit_category_name" placeholder="Enter category name" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="edit_active">Estado</label>
-            <select class="form-control" id="edit_active" name="edit_active">
-              <option value="1">Activo</option>
-              <option value="2">Inactivo</option>
-            </select>
           </div>
         </div>
 
@@ -178,6 +156,9 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <?php endif; ?>
+
+  
+
 
 
 <script type="text/javascript">
@@ -264,7 +245,7 @@ function editFunc(id)
     success:function(response) {
 
       $("#edit_category_name").val(response.name);
-      $("#edit_active").val(response.active);
+
 
       // submit the edit from 
       $("#updateForm").unbind('submit').bind('submit', function() {

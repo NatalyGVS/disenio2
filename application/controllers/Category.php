@@ -61,19 +61,18 @@ class Category extends Admin_Controller
 			$buttons = '';
 
 			//if(in_array('updateCategory', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
+				$buttons .= '<button type="button" class="btn btn-green" onclick="editFunc('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i><span> Editar</span></button>';
 			//}
 
 			//if(in_array('deleteCategory', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+				$buttons .= ' <button type="button" class="btn btn-danger" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i><span> Eliminar</span></button>';
 			//}
 				
 
-			$status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
 			$result['data'][$key] = array(
-				$value['name'],
-				$status,
+				$value['id'],
+				$value['nombre'],
 				$buttons
 			);
 		} // /foreach
@@ -94,15 +93,13 @@ class Category extends Admin_Controller
 
 		$response = array();
 
-		$this->form_validation->set_rules('category_name', 'Category name', 'trim|required');
-		$this->form_validation->set_rules('active', 'Active', 'trim|required');
+		$this->form_validation->set_rules('nombre', 'nombre categoria', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
         	$data = array(
-        		'name' => $this->input->post('category_name'),
-        		'active' => $this->input->post('active'),	
+        		'nombre' => $this->input->post('nombre'),
         	);
 
         	$create = $this->model_category->create($data);
@@ -140,15 +137,13 @@ class Category extends Admin_Controller
 		$response = array();
 
 		if($id) {
-			$this->form_validation->set_rules('edit_category_name', 'Category name', 'trim|required');
-			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
+			$this->form_validation->set_rules('edit_category_name', 'nombre categoria', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
-	        		'name' => $this->input->post('edit_category_name'),
-	        		'active' => $this->input->post('edit_active'),	
+	        		'nombre' => $this->input->post('edit_category_name'),
 	        	);
 
 	        	$update = $this->model_category->update($data, $id);

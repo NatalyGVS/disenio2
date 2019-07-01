@@ -7,14 +7,6 @@ class Model_category extends CI_Model
 		parent::__construct();
 	}
 
-	/* get active brand infromation */
-	public function getActiveCategroy()
-	{
-		$sql = "SELECT * FROM categories WHERE active = ?";
-		$query = $this->db->query($sql, array(1));
-		return $query->result_array();
-	}
-
 	/* get the brand data */
 	public function getCategoryData($id = null)
 	{
