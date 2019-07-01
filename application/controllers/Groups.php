@@ -58,16 +58,16 @@ class Groups extends Admin_Controller
         	$create = $this->model_groups->create($data);
         	if($create == true) {
         		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('groups/', 'refresh');
+        		redirect('groups/index', 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('groups/create', 'refresh');
+        		redirect('groups/index', 'refresh');
         	}
         }
         else {
             // false case
-            $this->render_template('groups/create', $this->data);
+            //$this->render_template('groups/index', $this->data);
         }	
 	}
 

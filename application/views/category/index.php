@@ -9,8 +9,6 @@
        Gestionar Categorías</label>
       
     </h2>
-
-
     <hr/>
   </section>
 
