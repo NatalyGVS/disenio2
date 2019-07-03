@@ -62,8 +62,8 @@ class productosnew extends Admin_Controller
 			$result['data'][$key] = array(
 				$img,
                 $value['nombre'],
-                $categoria['nombre'],
-				// $value['category_id'],
+                // $categoria['nombre'],
+				 $value['category_id'],
 				$value['material'],
                 $value['unidad_medida'],
     //             $store_data['name'],
