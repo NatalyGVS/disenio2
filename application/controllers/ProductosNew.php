@@ -51,22 +51,29 @@ class productosnew extends Admin_Controller
             if(in_array('deleteProduct', $this->permission)) { 
     			 $buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
             }
-			
+            
+           
             // $img = '' ; 
-			   $img = '<img src="'.base_url($value['image']).'" alt="'.$value['nombre'].'" class="img-circle" width="50" height="50" />';
-             
+               $img = '<img src="'.base_url($value['image']).'" alt="'.$value['nombre'].'" class="img-circle" width="50" height="50" />';
+
+            //    $idCategoria= intval($value['category_id']);
+            //    $idCategoria= intval("6");
+
+            // $idCategoria= array_values($value['category_id'])[0];
             //    $categoria = $this->model_category->getCategoryData($value['category_id']) ;
-               $categoria = $this->model_category->getCategoryData($value['category_id']) ;
+            // $categoria = $this->model_category->getCategoryData($idCategoria) ;
 
 
 			$result['data'][$key] = array(
 				$img,
                 $value['nombre'],
-                // $categoria['nombre'],
-				 $value['category_id'],
+                
+                // $categoria,
+                // intval( $value['category_id']),
+                 $value['category_id'],
 				$value['material'],
                 $value['unidad_medida'],
-    //             $store_data['name'],
+ 
 				$buttons
 			);
 		} // /foreach

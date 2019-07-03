@@ -61,12 +61,14 @@
 
                 <div class="form-group">
                   <label for="category">Categoría</label>
-                  <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
+                  <select class="form-control select_group " id="category" name="category[]">
                     <?php foreach ($category as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ?></option>
                     <?php endforeach ?>
                   </select>
                 </div>
+
+
 
                 <label for="tipo_proveedor">Material del Producto</label>
                   <select class="form-control" id="material" name="material">
