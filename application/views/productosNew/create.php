@@ -60,30 +60,40 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="sku">Unidad  (antes SKU)</label>
-                  <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" autocomplete="off" />
+                  <label for="category">Categoría</label>
+                  <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
+                    <?php foreach ($category as $k => $v): ?>
+                      <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ?></option>
+                    <?php endforeach ?>
+                  </select>
                 </div>
 
-                <div class="form-group">
-                  <label for="price">Precio</label>
-                  <input type="text" class="form-control" id="price" name="price" placeholder="Precio" autocomplete="off" />
-                </div>
+                <label for="tipo_proveedor">Material del Producto</label>
+                  <select class="form-control" id="material" name="material">
+                    <option value="1">laton</option>
+                    <option value="2">acero</option>
+                    <option value="3">cobre</option>
+                  </select>
+           </div>
+
+          <div class="form-group">
+            <label for="tipo_proveedor">Unidad de Medida</label>
+            <select class="form-control" id="unidad_medida" name="unidad_medida">
+              <option value="1">Kg</option>
+              <option value="2">L</option>
+            </select>
+          </div>
 
                 <div class="form-group">
-                  <label for="qty">Cantidad</label>
-                  <input type="text" class="form-control" id="qty" name="qty" placeholder="Cantidad" autocomplete="off" />
-                </div>
-
-                <div class="form-group">
-                  <label for="description">Descripción
+                  <label for="descripcion">Descripción
                   </label>
-                  <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter 
-                  description" autocomplete="off">
+                  <textarea type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Enter 
+                  descripcion" autocomplete="off">
                   </textarea>
                 </div>
 
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="category">Categoría</label>
                   <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
                     <?php foreach ($category as $k => $v): ?>
@@ -100,14 +110,14 @@
                     <option value="1">si</option>
                     <option value="2">No</option>
                   </select>
-                </div>
+                </div> -->
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="<?php echo base_url('products/') ?>" class="btn btn-warning">Atras</a>
+                <a href="<?php echo base_url('productosnew/') ?>" class="btn btn-warning">Atras</a>
               </div>
             </form>
           <!-- /.box-body -->
@@ -127,10 +137,10 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $(".select_group").select2();
-    $("#description").wysihtml5();
+    $("#descripcion").wysihtml5();
 
-    $("#mainProductNav").addClass('active');
-    $("#addProductNav").addClass('active');
+    $("#mainProductosNewNav").addClass('active');
+    $("#addProductosNewNav").addClass('active');
     
     var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
         'onclick="alert(\'Call your custom code here.\')">' +

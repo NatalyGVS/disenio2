@@ -27,7 +27,7 @@
             <?php if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
                 <li id="proveedoresNav" >
                     <a href="<?php echo base_url('proveedores/') ?>">
-                      <img class="fa" src="/disenio2/assets/images/icons/table.png">
+                      <img class="fa" src="/disenio2/assets/images/icons/provider.png">
                       <span style="margin-left: 15px;">
                         Proveedores
                       </span>
@@ -95,6 +95,15 @@
             </li>
           <?php endif; ?>
 
+        <!--Menu Productos New-->
+      <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
+            <li id="mainProductosNewNav">
+              <a href="<?php echo base_url('productosnew') ?>">
+                <img class="fa" src="/disenio2/assets/images/icons/key.png">
+                <span style="margin-left: 15px;">productos New</span>
+              </a>
+            </li>
+          <?php endif; ?>
 
            <!--Menu Productos totales-->
           <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
