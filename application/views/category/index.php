@@ -1,7 +1,7 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style=
-     "background-color: #ffffff; padding-top: 35px;">
+     "background-color: #f8f8f8; padding-top: 35px; height: 100%;">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h2>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Registrar en el sistema</button>
+                          <button type="submit" class="btn btn-primary">Agregar nueva categoría</button>
                         </div>
 
                       </form>

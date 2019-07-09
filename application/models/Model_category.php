@@ -21,9 +21,9 @@ class Model_category extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getActiveCategory()
+	public function getCategory()
 	{
-		$sql = "SELECT * FROM categories WHERE active = ?";
+		$sql = "SELECT * FROM categories";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}

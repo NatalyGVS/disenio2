@@ -1,18 +1,14 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style=
+     "background-color: #ffffff; padding-top: 35px;">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Gestionar Proveedores
-    </h1>
+  <section class="content-header" >
+      <h2>
+         <label style="font-size: 35px;">
+        Gestor de Proveedores</label>
+      </h2>
 
-   
-
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li class="active">Proveedores</li>
-    </ol>
-  </section>
+    </section>
   
 
   <!-- Main content -->

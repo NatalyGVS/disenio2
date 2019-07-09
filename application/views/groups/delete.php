@@ -1,19 +1,15 @@
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style=
+     "background-color: #ffffff; padding-top: 35px;">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Gestionar
+    <section class="content-header" >
+      <h2>
+         <label style="font-size: 35px;">
+        Eliminar Grupo</label>
+      </h2>
 
-        <small>Los grupos</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="<?php echo base_url('groups/') ?>">Los grupos</a></li>
-        <li class="active">Borrar</li>
-      </ol>
     </section>
 
     <!-- Main content -->

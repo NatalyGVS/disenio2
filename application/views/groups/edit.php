@@ -1,18 +1,15 @@
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style=
+     "background-color: #ffffff; padding-top: 35px;">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Gestionar
-        <small>Los grupos</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="<?php echo base_url('groups/') ?>">Los grupos</a></li>
-        <li class="active">Editar</li>
-      </ol>
+    <section class="content-header" >
+      <h2>
+         <label style="font-size: 35px;">
+        Editar Grupo</label>
+      </h2>
+
     </section>
 
     <!-- Main content -->
@@ -34,9 +31,7 @@
           <?php endif; ?>
 
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Grupo de edición</h3>
-            </div>
+
             <form role="form" action="<?php base_url('groups/update') ?>" method="post">
               <div class="box-body">
 

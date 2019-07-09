@@ -1,14 +1,14 @@
 <header class="main-header" style="width: 100%; position: fixed;"
 >
     <!-- Logo -->
-    <a class="logo" style="background: #34393a;">
+    <a class="logo" style="background: #171717;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>SINGESPRO</b></span>
       
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" style="background: #34393a">
+    <nav class="navbar navbar-static-top" style="background: #171717">
       <!-- Sidebar toggle button-->
           
           
@@ -49,7 +49,7 @@
                 </ul> 
             </nav>
     </nav>
-     <div class="bg-orange" style="font-size: 5px; background-color: #f39c12 !important;" align="right"> <label> </label></div>
+     <div class="bg-orange" style="font-size: 5px; background-color: #39ace7!important;" align="right"> <label> </label></div>
 </header>
   <!-- Left side column. contains the logo and sidebar -->
   

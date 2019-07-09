@@ -1,16 +1,15 @@
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style=
+     "background-color: #f8f8f8; padding-top: 35px;">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Gestionar Usuarios
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li class="active">Usuarios</li>
-      </ol>
+    <section class="content-header" >
+      <h2>
+         <label style="font-size: 35px;">
+        Gestor de Usuarios</label>
+      </h2>
+
     </section>
 
     <!-- Main content -->
@@ -32,25 +31,15 @@
             </div>
 
           <?php endif; ?>
-
-
-          
-          <?php if(in_array('createUser', $user_permission)): ?>
-            <a href="<?php echo base_url('users/create') ?>" class="btn btn-primary">Agregar usuario</a>
-            <br /> <br />
-          <?php endif; ?>
-
+        
 
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Administrar usuarios</h3>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="userTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-              
+                  <th> Código </th>
                   <th> Nombre de usuario </th>
                   <th> Email </th>
                   <th> Nombre </th>
@@ -58,7 +47,7 @@
                   <th> Grupo </th>
 
                   <?php if(in_array('updateUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
-                  <th>Action</th>
+                  <th>Acciones</th>
                   <?php endif; ?>
                 </tr>
 
@@ -67,6 +56,7 @@
                   <?php if($user_data): ?>                  
                     <?php foreach ($user_data as $k => $v): ?>
                       <tr>
+                         <td><?php echo $v['user_info']['id']; ?></td>
                         <td><?php echo $v['user_info']['username']; ?></td>
                         <td><?php echo $v['user_info']['email']; ?></td>
                         <td><?php echo $v['user_info']['firstname'] .' '. $v['user_info']['lastname']; ?></td>
@@ -77,10 +67,10 @@
 
                         <td>
                           <?php if(in_array('updateUser', $user_permission)): ?>
-                            <a href="<?php echo base_url('users/edit/'.$v['user_info']['id']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                            <a href="<?php echo base_url('users/edit/'.$v['user_info']['id']) ?>" class="btn btn-default"><i class="fa fa-edit"></i> Editar</a>
                           <?php endif; ?>
                           <?php if(in_array('deleteUser', $user_permission)): ?>
-                            <a href="<?php echo base_url('users/delete/'.$v['user_info']['id']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                            <a href="<?php echo base_url('users/delete/'.$v['user_info']['id']) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</a>
                           <?php endif; ?>
                         </td>
                       <?php endif; ?>

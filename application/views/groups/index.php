@@ -2,12 +2,12 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style=
-     "background-color: #ffffff; padding-top: 35px;">
+     "background-color: #f8f8f8; padding-top: 35px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h2>
       <label style="font-size: 35px;">
-       Gestionar Grupos de Trabajadores</label>
+       Gestor de Grupos de Trabajadores</label>
       
     </h2>
     <hr/>
@@ -114,7 +114,7 @@
 
                         <div class="modal-footer">
                           <label class="btn btn-default" for="permission">Seleccionar Todos los Permiso</label>
-                          <button type="submit" class="btn btn-primary">Registrar en el sistema</button>
+                          <button type="submit" class="btn btn-primary">Crear grupo de trabajadores</button>
                         </div>
 
                       </form>
@@ -128,7 +128,7 @@
               <table id="groupTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>COD</th>
+                  <th>Código</th>
                   <th>Nombre del grupo</th>
                   <?php if(in_array('updateGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
                     <th>Acciones</th>

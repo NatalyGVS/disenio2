@@ -167,7 +167,7 @@
     $(".select_group").select2();
     $("#description").wysihtml5();
 
-    $("#mainProductNav").addClass('active');
+    $("#mainProductNewNav").addClass('active');
     $("#manageProductNav").addClass('active');
     
     var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
