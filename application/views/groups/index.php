@@ -125,7 +125,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body col-sm-7 col-xs-8">
-              <table id="groupTable" class="table table-bordered table-striped">
+              <table id="groupTable" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
                   <th>Código</th>
