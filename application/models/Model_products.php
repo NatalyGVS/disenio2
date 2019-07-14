@@ -58,7 +58,11 @@ class Model_products extends CI_Model
  */
 	public function create()
 	{    
-		$upload_image = $this->upload_image();
+		
+
+		
+			$upload_image = $this->upload_image();
+		
 		// $user_id = $this->session->userdata('id');
 		// $bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
     	$data = array(
@@ -133,7 +137,9 @@ class Model_products extends CI_Model
         if ( ! $this->upload->do_upload('product_image'))
         {  // NO SELECCIONO FOTO
             $error = $this->upload->display_errors();
-            return $error;
+			// return $error;
+			
+			return 'assets/images/product_image/defecto.jpg';
         }
         else  // si SELECCIONO FOTO
         {

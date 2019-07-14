@@ -267,7 +267,7 @@ class Products extends Admin_Controller
             $delete = $this->model_products->remove($product_id);
             if($delete == true) {
                 $response['success'] = true;
-                $response['messages'] = "Successfully removed"; 
+                $response['messages'] = "Eliminado con exito"; 
             }
             else {
                 $response['success'] = false;
