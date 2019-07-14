@@ -29,16 +29,6 @@ CREATE TABLE `productosnew`(
   `image` text NOT NULL
 )
 
--- CREATE TABLE `productosnew`(
---   `id` varchar(255) NOT NULL,
---   `id_categoria` varchar(255) NOT NULL,
---   `material` varchar(255),
---   `unidad_medida` varchar(255) NOT NULL,
---   `descripcion` varchar(255),
---    `imagen` text NOT NULL
--- )
-
-
 CREATE TABLE `producto_insumo`(
   `id` varchar(255) NOT NULL,
   `insumo_id` varchar(255) NOT NULL,
