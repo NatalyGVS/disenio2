@@ -56,7 +56,7 @@ class Model_orders extends CI_Model
 	}
 	public function create()
 	{
-			$name_mesa = $this->input->post('id_mesa');
+		$name_mesa = $this->input->post('id_mesa');
 		$this->load->model('model_mesas');
 		$mesa = $this->model_mesas->getMesaforName($name_mesa) ;
 			  
@@ -172,7 +172,8 @@ class Model_orders extends CI_Model
 	    			'rate' => $this->input->post('rate_value')[$x],
 	    			'amount' => $this->input->post('amount_value')[$x],
 	    		);
-	    		$this->db->insert('orders_item', $items);
+				$this->db->insert('orders_item', $items);
+				
 	    		// now decrease the stock from the product
 	    		$product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
 	    		$qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];

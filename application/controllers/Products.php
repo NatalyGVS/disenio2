@@ -87,7 +87,7 @@ class Products extends Admin_Controller
 		if(!in_array('createProduct', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
-
+        $this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
         $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
         
         $this->form_validation->set_rules('material', 'material', 'trim|required');
@@ -95,54 +95,45 @@ class Products extends Admin_Controller
 		
 	
         if ($this->form_validation->run() == TRUE) {
-            // true case
-        	$upload_image = $this->upload_image();
+          // true case
+            $order_id = $this->model_products->create();  
 
-        	$data = array(
-               
-        		'nombre' => $this->input->post('product_name'),
-                'category_id' => $this->input->post('category_id'),
-                'material' => $this->input->post('material'),
-				'unidad_medida' => $this->input->post('unidad_medida'),
-                'descripcion' => $this->input->post('descripcion')    ,
-                'image' => $upload_image   		
-        		
-        	);
-
-        	$create = $this->model_products->create($data);
-        	if($create == true) {
-        		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('products/', 'refresh');
+            if($order_id) {
+				$this->session->set_flashdata('success', 'Successfully created');
+				redirect('products', 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('productsw/create', 'refresh');
-        	}
+        		redirect('products/create/', 'refresh');
+            }
+       
         }
         else {
             // false case
-
-        	// attributes 
-        	// $attribute_data = $this->model_attributes->getActiveAttributeData();
-
-        	// $attributes_final_data = array();
-        	// foreach ($attribute_data as $k => $v) {
-        	// 	// $attributes_final_data[$k]['attribute_data'] = $v;
-
-        	// 	// $value = $this->model_attributes->getAttributeValueData($v['id']);
-
-        	// 	// $attributes_final_data[$k]['attribute_value'] = $value;
-        	// }
-
-        	// $this->data['attributes'] = $attributes_final_data;
-			// $this->data['brands'] = $this->model_brands->getActiveBrands();        	      	
-			// $this->data['stores'] = $this->model_stores->getActiveStore();
+            $this->data['products'] = $this->model_products->getActiveInsumoData();   
+            
             $category = $this->model_category->getCategory();
             $this->data['category'] = $this->model_category->getCategory();
             $this->render_template('products/create', $this->data);
         }	
 	}
 
+
+    public function getTableProductRow()
+	{
+		$products = $this->model_products->getActiveInsumoData();
+		echo json_encode($products);
+    }
+    
+    public function getProductValueById()
+	{   $product_id = $this->input->post('product_id');
+		
+		if($product_id) {
+			$product_data = $this->model_products->getInsumoData($product_id);
+			echo json_encode($product_data);
+		}
+    }
+    
     /*
     * This function is invoked from another function to upload the image into the assets folder
     * and returns the image path
