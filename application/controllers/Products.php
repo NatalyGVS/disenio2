@@ -62,6 +62,27 @@ class Products extends Admin_Controller
             // $idCategoria= array_values($value['category_id'])[0];
             //    $categoria = $this->model_category->getCategoryData($value['category_id']) ;
             // $categoria = $this->model_category->getCategoryData($idCategoria) ;
+            if($value['material']==1) {
+                $material = '<span class="label label-default" style= "font-size: 15px;">Material de Laton</span>';
+            }
+            else{
+                if ($value['material'] == 2){
+                    $material = '<span class="label label-info " style= "font-size: 15px;">Material de Acero</span>';
+				}else if ($value['material'] == 3){
+                    $material = '<span class="label label-warning " style= "font-size: 15px;">Material de Cobre</span>';
+				}	
+            }
+
+           $categoria = $this->model_category->getCategoryData($value['category_id']) ;
+
+           if($value['unidad_medida']==1) {
+            $medida = '<p class="" style= "font-size: 15px;">Medidas en Kilogramo (Kg)</p>';
+        }
+        else{
+            if ($value['unidad_medida'] == 2){
+                $medida = '<p class=" " style= "font-size: 15px;">Medidas en Litro (L)</p>';
+            }
+        }
 
 
 			$result['data'][$key] = array(
@@ -69,11 +90,10 @@ class Products extends Admin_Controller
 				$img,
                 $value['nombre'],
                 
-                // $categoria,
-                // intval( $value['category_id']),
-                 $value['category_id'],
-				$value['material'],
-                $value['unidad_medida'],
+                $categoria['nombre'],
+                
+                $material,
+                $medida,
  
 				$buttons
 			);
@@ -175,20 +195,20 @@ class Products extends Admin_Controller
     */
 	public function update($product_id)
 	{      
-        if(!in_array('updateProduct', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
+        // if(!in_array('updateProduct', $this->permission)) {
+        //     redirect('dashboard', 'refresh');
+        // }
 
         if(!$product_id) {
             redirect('dashboard', 'refresh');
         }
 
+        $this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
         $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
-        $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-        $this->form_validation->set_rules('price', 'Price', 'trim|required');
-        $this->form_validation->set_rules('qty', 'Qty', 'trim|required');
-        // $this->form_validation->set_rules('store', 'Store', 'trim|required');
-        $this->form_validation->set_rules('availability', 'Availability', 'trim|required');
+       
+        $this->form_validation->set_rules('material', 'material', 'trim|required');
+        $this->form_validation->set_rules('unidad_medida', 'unidad_medida', 'trim|required');
+
 
         if ($this->form_validation->run() == TRUE) {
             // true case
@@ -240,9 +260,11 @@ class Products extends Admin_Controller
             // false case
             // $this->data['attributes'] = $attributes_final_data;
             // $this->data['brands'] = $this->model_brands->getActiveBrands();         
-            $this->data['category'] = $this->model_category->getActiveCategroy();           
-            // $this->data['stores'] = $this->model_stores->getActiveStore();          
-
+          
+          
+            // $this->data['category'] = $this->model_category->getActiveCategory(); 
+       
+            $this->data['category'] = $this->model_category->getCategoryData();         
             $product_data = $this->model_products->getProductData($product_id);
             $this->data['product_data'] = $product_data;
             

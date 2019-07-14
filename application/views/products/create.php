@@ -52,13 +52,16 @@
                       </div>
                   </div>
                 </div>
+
+
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
-                <div class="form-group">
-                  <label for="product_name">Nombre del producto</label>
-                  <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Nombre del producto" required/>
+                    <div class="form-group">
+                      <label for="product_name">Nombre del producto</label>
+                      <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Nombre del producto" required/>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
               <div class="col-md-4 col-xs-4">
                 <label for="tipo_proveedor">Material del Producto</label>
@@ -68,8 +71,9 @@
                     <option value="3">Material de Cobre</option>
                   </select>
               </div>
-        <div class="col-md-2 col-xs-2">
-               <div class="form-group">
+
+               <div class="col-md-2 col-xs-2">
+                  <div class="form-group">
                   <label for="store">Disponible</label>
                   <select class="form-control" id="availability" name="availability" required>
                     <option value="1">si</option>
@@ -77,7 +81,8 @@
                   </select>
                 </div>
               </div>
-              </div>
+
+
               <div class="row">
               <div class="col-md-6 col-xs-6">
                 <div class="form-group">
@@ -89,16 +94,18 @@
                   </select>
                 </div>
               </div>
-<div class="col-md-6 col-xs-6">
-               <div class="form-group">
+              </div>
+              
+        <div class="col-md-6 col-xs-6">
+            <div class="form-group">
             <label for="tipo_proveedor">Unidad de Medida</label>
-            <select class="form-control" id="unidad_medida" name="unidad_medida">
-              <option value="1">Medidas en Kilogramo (Kg)</option>
-              <option value="2">Medidas en Litro (L)</option>
-            </select>
+                <select class="form-control" id="unidad_medida" name="unidad_medida">
+                  <option value="1">Medidas en Kilogramo (Kg)</option>
+                  <option value="2">Medidas en Litro (L)</option>
+                </select>
           </div>
         </div>
-            </div>
+    
            
         <div class="row">
           <div class="col-md-12 col-xs-12">
@@ -228,9 +235,9 @@ var base_url = "<?php echo base_url(); ?>";
                     '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
                         '<option value=""></option>';
                         $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.nombre+'</option>';             
+                          html += '<option value="'+value.id+'">'+value.nombre+ '--' +value.unidad_medida +'</option>';             
                         });
-                        
+                  
                       html += '</select>'+
                     '</td>'+ 
                     '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
@@ -297,6 +304,11 @@ var base_url = "<?php echo base_url(); ?>";
         } // /success
       }); // /ajax function to fetch the product data 
     }
+  }
+  function removeRow(tr_id)
+  {
+    $("#product_info_table tbody tr#row_"+tr_id).remove();
+    // subAmount();
   }
 
 </script>

@@ -61,82 +61,55 @@
 
                 <div class="form-group">
                   <label for="product_name">Nombre del producto</label>
-                  <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Nombre del producto" value="<?php echo $product_data['name']; ?>"  autocomplete="off"/>
+                  <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Nombre del producto" value="<?php echo $product_data['nombre']; ?>"  autocomplete="off"/>
                 </div>
+
+              
 
                 <div class="form-group">
-                  <label for="sku">SKU</label>
-                  <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
-                </div>
-
-                <div class="form-group">
-                  <label for="price">Precio</label>
-                  <input type="text" class="form-control" id="price" name="price" placeholder="Precio" value="<?php echo $product_data['price']; ?>" autocomplete="off" />
-                </div>
-
-                <div class="form-group">
-                  <label for="qty">Cantidad</label>
-                  <input type="text" class="form-control" id="qty" name="qty" placeholder="Cantidad" value="<?php echo $product_data['qty']; ?>" autocomplete="off" />
-                </div>
-
-                <div class="form-group">
-                  <label for="description">Descripción</label>
-                  <textarea type="text" class="form-control" id="description" name="description" placeholder="Descripción" autocomplete="off">
-                    <?php echo $product_data['description']; ?>
-                  </textarea>
-                </div>
-
-            <!--     <?php $attribute_id = json_decode($product_data['attribute_value_id']); ?>
-                <?php if($attributes): ?>
-                  <?php foreach ($attributes as $k => $v): ?>
-                    <div class="form-group">
-                      <label for="groups"><?php echo $v['attribute_data']['name'] ?></label>
-                      <select class="form-control select_group" id="attributes_value_id" name="attributes_value_id[]" multiple="multiple">
-                        <?php foreach ($v['attribute_value'] as $k2 => $v2): ?>
-                          <option value="<?php echo $v2['id'] ?>" <?php if(in_array($v2['id'], $attribute_id)) { echo "selected"; } ?>><?php echo $v2['value'] ?></option>
-                        <?php endforeach ?>
-                      </select>
-                    </div>    
-                  <?php endforeach ?>
-                <?php endif; ?> -->
-
-              <!--   <div class="form-group">
-                  <label for="brands">Las marcas</label>
-                  <?php $brand_data = json_decode($product_data['brand_id']); ?>
-                  <select class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
-                    <?php foreach ($brands as $k => $v): ?>
-                      <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $brand_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
-                    <?php endforeach ?>
+                  <label for="material">Material del Producto</label>
+                  <select class="form-control" id="material" name="material">
+                    <option value="1" <?php if($product_data['material'] == 1) { echo "selected='selected'"; } ?>>Material de Laton</option>
+                    <option value="2" <?php if($product_data['material'] == 2) { echo "selected='selected'"; } ?>>Material de Acero</option>
+                    <option value="3" <?php if($product_data['material'] == 3) { echo "selected='selected'"; } ?>>Material de Cobre</option>
                   </select>
-                </div> -->
+                </div>
+
 
                 <div class="form-group">
                   <label for="category">Categoría</label>
-                  <?php $category_data = json_decode($product_data['category_id']); ?>
-                  <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
+                  <?php $category_data = json_decode($product_data['category_id']);  ?>
+                  <select class="form-control select_group" id="category" name="category[]">
                     <?php foreach ($category as $k => $v): ?>
-                      <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $category_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
+                   
+                      <option value="<?php echo $v['id'] ?>" <?php if($category_data == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
+                           
                     <?php endforeach ?>
                   </select>
                 </div>
 
-          <!--       <div class="form-group">
-                  <label for="store">Almacenar</label>
-                  <select class="form-control select_group" id="store" name="store">
-                    <?php foreach ($stores as $k => $v): ?>
-                      <option value="<?php echo $v['id'] ?>" <?php if($product_data['store_id'] == $v['id']) { echo "selected='selected'"; } ?> ><?php echo $v['name'] ?></option>
-                    <?php endforeach ?>
-                  </select>
-                </div> -->
+
 
                 <div class="form-group">
-                  <label for="store">Disponibilidad</label>
-                  <select class="form-control" id="availability" name="availability">
-                    <option value="1" <?php if($product_data['availability'] == 1) { echo "selected='selected'"; } ?>>si</option>
-                    <option value="2" <?php if($product_data['availability'] != 1) { echo "selected='selected'"; } ?>>No</option>
+                  <label for="unidad_medida">Medidas</label>
+                  <select class="form-control" id="unidad_medida" name="unidad_medida">
+                    <option value="1" <?php if($product_data['unidad_medida'] == 1) { echo "selected='selected'"; } ?>>Medidas en Kilogramo (Kg)</option>
+                    <option value="2" <?php if($product_data['unidad_medida'] = 2) { echo "selected='selected'"; } ?>>Medidas en Litro (L)</option>
                   </select>
                 </div>
+                
 
+           
+                <div class="row">
+                  <div class="col-md-12 col-xs-12">
+                   <div class="form-group">
+                      <label for="descripcion">Descripción
+                      </label>
+                      <textarea type="text" class="form-control" name="descripcion" placeholder="Descripción del producto (opcional)" value="<?php echo $product_data['descripcion']; ?>" autocomplete="off" style="resize: none;"></textarea>
+                  </div>
+                </div>
+              </div>
+            
 
 
               </div>
@@ -144,7 +117,7 @@
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="<?php echo base_url('xusers/') ?>" class="btn btn-warning">Atras</a>
+                <a href="<?php echo base_url('products/') ?>" class="btn btn-warning">Atras</a>
               </div>
             </form>
           <!-- /.box-body -->
