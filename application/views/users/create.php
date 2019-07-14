@@ -1,23 +1,22 @@
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style=
+     "background-color: #f8f8f8; padding-top: 35px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Gestionar Usuarios
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li class="active">Usuarios</li>
-      </ol>
+      <h2>
+         <label style="font-size: 35px;">
+        Agregar usuario</label>
+      </h2>
+
     </section>
 
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-md-12 col-xs-12">
+        <div class="col-md-6 col-xs-6">
           
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
@@ -32,18 +31,14 @@
           <?php endif; ?>
 
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Agregar usuario</h3>
-            </div>
             <form role="form" action="<?php base_url('users/create') ?>" method="post">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
 
                 <div class="row">
-                <div class="form-group col-lg-4 col-xs-4">
-                  <label for="groups">Los grupos</label>
-                  <select class="form-control" id="groups" name="groups">
+                <div class="form-group col-lg-6 col-xs-6">
+                  <select class="form-control" name="groups">
                     <option value="">Seleccionar grupos</option>
                     <?php foreach ($group_data as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['group_name'] ?></option>
@@ -51,57 +46,44 @@
                   </select>
                 </div>
               </div>
-
+            <hr/>
               <div class="row">
-                  <div class="form-group col-xs-4">
-                    <label for="fname">Nombre </label>
-                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Nombre " required>
-                  </div>
+                <div class="form-group col-xs-6 col-lg-6">
 
-                  <div class="form-group col-xs-3 ">
-                    <label for="lname">Apellido</label>
-                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Apellido" required>
-                  </div>
-
-                  <div class="form-group col-xs-3">
-                  <label for="username">Nombre de usuario</label>
                   <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>
                 </div>
-                </div>
-
+              </div>
               <div class="row">
-                  <div class="form-group col-xs-4">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                  <div class="form-group col-xs-6 col-lg-6">
+                    <label for="fname">Nombres </label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Nombres completos " required>
                   </div>
 
-                  <div class="form-group col-xs-3" >
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  <div class="form-group col-xs-6 col-lg-6">
+                    <label for="lname">Apellidos</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Apellidos completos" required>
                   </div>
 
-                  <div class="form-group col-xs-3">
-                    <label for="cpassword">Confirme password</label>
-                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirme Password" required>
-                  </div>
+                  
                 </div>
+
 
                 <div class="row">
-                  <div class="form-group col-xs-2">
+                  <div class="form-group col-xs-6">
                   <label for="phone">Teléfono</label>
                   <input type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono" required>
                 </div>
 
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                   <label for="gender">Género</label>
                   <div class="radio">
-                    <div class= "col-xs-3">
+                    <div class= "col-xs-6">
                       <label>
                       <input type="radio" name="gender" id="male" value="1">
                       Masculino
                     </label>
                   </div>
-                  <div class= "col-xs-3">
+                  <div class= "col-xs-6">
                     <label>
                       <input type="radio" name="gender" id="female" value="2">
                      Femenino
@@ -111,17 +93,43 @@
                   </div>
                 </div>
                 </div>
+              <hr/>
+              <div class="row">
+                  <div class="form-group col-xs-6 col-lg-6">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="example@unmsm.edu.pe" required>
+                  </div>
+                </div>
+<div class="row">
+                <div class="form-group col-xs-6 col-lg-6" >
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  </div>
+
+                  <div class="form-group col-xs-6 col-lg-6">
+                    <label for="cpassword">Confirme password</label>
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirme Password" required>
+                  </div>
+                </div>
+
 
               </div>
               <!-- /.box-body -->
 
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="<?php echo base_url('users/') ?>" class="btn btn-warning">Atras</a>
+              <div class="box-footer" align="right">     
+   
+                <button type="submit" style="background-color: #39ace7; width: 47%;" class="btn btn-primary">Agrega usuario</button>
               </div>
             </form>
           </div>
           <!-- /.box -->
+        </div>
+
+        <div class="col-md-6 col-xs-6">
+          <div class="avatar pull-left" align="center">
+            
+        <img src="<?php echo base_url('assets/images/icons/create_user.png');?>" style="width: 90%; height: auto;" />
+  </div>
         </div>
         <!-- col-md-12 -->
       </div>

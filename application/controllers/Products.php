@@ -32,11 +32,8 @@ class Products extends Admin_Controller
 		$this->render_template('products/index', $this->data);	
 	}
 
-    /*
-    * It Fetches the products data from the product table 
-    * this function is called from the datatable ajax function
-    */
-	public function fetchProductData()
+
+    public function fetchProductData()
 	{
 		$result = array('data' => array());
 
@@ -48,58 +45,53 @@ class Products extends Admin_Controller
 			// button
             $buttons = '';
             if(in_array('updateProduct', $this->permission)) {
-    			$buttons .= '<a href="'.base_url('products/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+    			 $buttons .= '<a href="'.base_url('products/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
             }
 
             if(in_array('deleteProduct', $this->permission)) { 
-    			$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+    			 $buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
             }
-			
+            
+           
+            // $img = '' ; 
+               $img = '<img src="'.base_url($value['image']).'" alt="'.$value['nombre'].'" class="img-circle" width="50" height="50" />';
 
-			$img = '<img src="'.base_url($value['image']).'" alt="'.$value['name'].'" class="img-circle" width="50" height="50" />';
+            //    $idCategoria= intval($value['category_id']);
+            //    $idCategoria= intval("6");
 
-            $availability = ($value['availability'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
-
-            $qty_status = '';
-            if($value['qty'] <= 10) {
-                $qty_status = '<span class="label label-warning">Low !</span>';
-            } else if($value['qty'] <= 0) {
-                $qty_status = '<span class="label label-danger">Out of disenio2 !</span>';
-            }
+            // $idCategoria= array_values($value['category_id'])[0];
+            //    $categoria = $this->model_category->getCategoryData($value['category_id']) ;
+            // $categoria = $this->model_category->getCategoryData($idCategoria) ;
 
 
 			$result['data'][$key] = array(
+                 $value['id'],
 				$img,
-				$value['sku'],
-				$value['name'],
-				$value['price'],
-                $value['qty'] . ' ' . $qty_status,
-    //             $store_data['name'],
-				$availability,
+                $value['nombre'],
+                
+                // $categoria,
+                // intval( $value['category_id']),
+                 $value['category_id'],
+				$value['material'],
+                $value['unidad_medida'],
+ 
 				$buttons
 			);
 		} // /foreach
 
 		echo json_encode($result);
-	}	
-
-    /*
-    * If the validation is not valid, then it redirects to the create page.
-    * If the validation for each input field is valid then it inserts the data into the database 
-    * and it stores the operation message into the session flashdata and display on the manage product page
-    */
+    }	
+    
 	public function create()
 	{
 		if(!in_array('createProduct', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
 
-		$this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
-		$this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-		$this->form_validation->set_rules('price', 'Price', 'trim|required');
-		$this->form_validation->set_rules('qty', 'Qty', 'trim|required');
-        // $this->form_validation->set_rules('store', 'Store', 'trim|required');
-		$this->form_validation->set_rules('availability', 'Availability', 'trim|required');
+        $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
+        
+        $this->form_validation->set_rules('material', 'material', 'trim|required');
+        $this->form_validation->set_rules('unidad_medida', 'unidad_medida', 'trim|required');
 		
 	
         if ($this->form_validation->run() == TRUE) {
@@ -107,17 +99,14 @@ class Products extends Admin_Controller
         	$upload_image = $this->upload_image();
 
         	$data = array(
-        		'name' => $this->input->post('product_name'),
-        		'sku' => $this->input->post('sku'),
-        		'price' => $this->input->post('price'),
-        		'qty' => $this->input->post('qty'),
-        		'image' => $upload_image,
-        		'description' => $this->input->post('description'),
-        		// 'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
-        		// 'brand_id' => json_encode($this->input->post('brands')),
-        		'category_id' => json_encode($this->input->post('category')),
-                // 'store_id' => $this->input->post('store'),
-        		'availability' => $this->input->post('availability'),
+               
+        		'nombre' => $this->input->post('product_name'),
+                'category_id' => $this->input->post('category_id'),
+                'material' => $this->input->post('material'),
+				'unidad_medida' => $this->input->post('unidad_medida'),
+                'descripcion' => $this->input->post('descripcion')    ,
+                'image' => $upload_image   		
+        		
         	);
 
         	$create = $this->model_products->create($data);
@@ -127,7 +116,7 @@ class Products extends Admin_Controller
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('products/create', 'refresh');
+        		redirect('productsw/create', 'refresh');
         	}
         }
         else {
@@ -146,10 +135,10 @@ class Products extends Admin_Controller
         	// }
 
         	// $this->data['attributes'] = $attributes_final_data;
-			// $this->data['brands'] = $this->model_brands->getActiveBrands();        	
-			$this->data['category'] = $this->model_category->getActiveCategory();        	
-			// $this->data['stores'] = $this->model_stores->getActiveStore();        	
-
+			// $this->data['brands'] = $this->model_brands->getActiveBrands();        	      	
+			// $this->data['stores'] = $this->model_stores->getActiveStore();
+            $category = $this->model_category->getCategory();
+            $this->data['category'] = $this->model_category->getCategory();
             $this->render_template('products/create', $this->data);
         }	
 	}

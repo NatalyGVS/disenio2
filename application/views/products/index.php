@@ -1,17 +1,16 @@
 
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style=
+     "background-color: #f8f8f8; padding-top: 35px;">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Gestionar Productos
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li class="active">Productos</li>
-    </ol>
-  </section>
+  <section class="content-header" >
+      <h2>
+         <label style="font-size: 35px;">
+        Gestor de Productos</label>
+      </h2>
+
+    </section>
 
   <!-- Main content -->
   <section class="content">
@@ -47,16 +46,17 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-             <th> Imagen </th>
-                 <th> SKU </th>
+                <th> Código </th>
+                 <th> Imagen </th>
                  <th> Nombre del producto </th>
-                 <th> Precio </th>
-                 <th> Cantidad </th>
-                 <!-- <th> Tienda </th> -->
-                 <th> Disponibilidad </th>
-                <?php if(in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
-                  <th>Action</th>
-                <?php endif; ?>
+                 <th> Categoria </th>
+                 <th> Material </th>
+                 <th> Unidad de Medida </th>
+
+                 
+                <!-- <?php if(in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?> -->
+                  <th>Acción</th>
+                <!-- <?php endif; ?> -->
               </tr>
               </thead>
 

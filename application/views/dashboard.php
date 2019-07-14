@@ -1,9 +1,6 @@
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style=
-     "background-color: #ffffff; 
-    background-position: center;
-      background-repeat: repeat;">
+  <div class="content-wrapper" style= "background-color: #f8f8f8; padding-top: 35px;">
 
 <!-- "background-color: #ffffff; "> -->
 
@@ -14,8 +11,6 @@
         Panel de Control</label>
         <!-- <small>Panel de control</small> -->
       </h2>
-
-      <br><br><br><br>
       <ol class="breadcrumb" style="font-size: 15px;">
         <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li class="active">Panel de Control</li>

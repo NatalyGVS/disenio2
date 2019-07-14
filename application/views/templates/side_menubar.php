@@ -1,9 +1,9 @@
-<aside class="main-sidebar" style="background-color: #34393a;">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar" >
+<aside class="main-sidebar" style="background-color: #171717; height: 120% !important;">
+    <!-- sidebar: style can be found in sidebar.less --> 
+    <section class="sidebar">
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" style="background-color: #34393a; font-size: 15px; margin-top:15px ; " data-widget="tree">
+      <ul class="sidebar-menu" style=" font-size: 15px; margin-top:15px;" data-widget="tree">
                     
                      
             <li id="dashboardMainMenu" >
@@ -13,16 +13,6 @@
                 </a>
             </li>
 
-            <?php if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
-                <li id="mesasNav" >
-                    <a href="<?php echo base_url('mesas/') ?>">
-                      <img class="fa" src="/disenio2/assets/images/icons/table.png">
-                      <span style="margin-left: 15px;">
-                        Mesas del Restaurante
-                      </span>
-                    </a>
-                </li>
-            <?php endif;?>
 
             <?php if(in_array('createMesas', $user_permission) || in_array('updateMesas', $user_permission) || in_array('viewCategory', $user_permission) || in_array('deleteMesas', $user_permission)): ?>
                 <li id="proveedoresNav" >
@@ -95,79 +85,23 @@
             </li>
           <?php endif; ?>
 
-        <!--Menu Productos New-->
-      <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
-            <li id="mainProductosNewNav">
-              <a href="<?php echo base_url('productosnew') ?>">
-                <img class="fa" src="/disenio2/assets/images/icons/key.png">
-                <span style="margin-left: 15px;">productos New</span>
-              </a>
-            </li>
-          <?php endif; ?>
+      
 
            <!--Menu Productos totales-->
           <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
             <li id="mainProductNav">
-              <a href="<?php echo base_url('products') ?>">
+              <a href="<?php echo base_url('products/') ?>">
                 <img class="fa" src="/disenio2/assets/images/icons/products.png">
                 <span style="margin-left: 15px;">Productos Totales</span>
               </a>
             </li>
           <?php endif; ?>
+
           <!--Menu Productos totales-->
 
 
-          <!--Menu Pedidos y Ordenes-->
-          <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-            <li class="manageOrdersNav" id="mainOrdersNav">
-              <a href="<?php echo base_url('orders') ?>">
-                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
-                <span style="margin-left: 15px;">
-                  Registro de Ordenes
-                </span>
-              </a>
-            </li>
-          <?php endif; ?>
-         
 
-
-       <!--Menu Pedidos y Ordenes-->
-       <!-- <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?> -->
-            <li class="mainEstadoNav" id="mainEstadoNav">
-              <a href="<?php echo base_url('estado') ?>">
-                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
-                <span style="margin-left: 15px;">
-                  Estados Ordenes
-                </span>
-              </a>
-            </li>
-          <!-- <?php endif; ?> -->
-
-   <!--Menu Pedidos y Ordenes-->
-       <!-- <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?> -->
-       <li class="mainEstadoNav" id="mainCancelarNav">
-              <a href="<?php echo base_url('cancelar') ?>">
-                <img  class="fa" src="/disenio2/assets/images/icons/orders.png">
-                <span style="margin-left: 15px;">
-                  Cancelar pedido
-                </span>
-              </a>
-            </li>
-          <!-- <?php endif; ?> -->
-
-
-          <?php if(in_array('viewReports', $user_permission)): ?>
-              <li id="reportNav">
-                  <a href="<?php echo base_url('orders/') ?>">
-                      <img  class="fa" src="/disenio2/assets/images/icons/reports.png">
-                      <span style="margin-left: 15px;">
-                          Informes/Reportes
-                      </span>
-                  </a>
-              </li>
-          <?php endif; ?>
-          <!--Menu Reportes e Informes-->
-
+  
 
         <?php endif; ?>
       </ul>
