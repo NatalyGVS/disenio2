@@ -132,7 +132,7 @@
                         <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
                             <option value=""></option>
                             <?php foreach ($products as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ?></option>
+                              <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ; echo '--' ; echo $v['unidad_medida'] ;?></option>
                             <?php endforeach ?>
                           </select>
                         </td>
@@ -265,13 +265,13 @@ var base_url = "<?php echo base_url(); ?>";
   {
     var product_id = $("#product_"+row_id).val();    
     if(product_id == "") {
-      $("#rate_"+row_id).val("");
-      $("#rate_value_"+row_id).val("");
+      // $("#rate_"+row_id).val("");
+      // $("#rate_value_"+row_id).val("");
 
       $("#qty_"+row_id).val("");           
 
-      $("#amount_"+row_id).val("");
-      $("#amount_value_"+row_id).val("");
+      // $("#amount_"+row_id).val("");
+      // $("#amount_value_"+row_id).val("");
 
     } else {
       $.ajax({
