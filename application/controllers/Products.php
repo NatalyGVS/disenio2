@@ -99,12 +99,14 @@ class Products extends Admin_Controller
             $order_id = $this->model_products->create();  
 
             if($order_id) {
-				$this->session->set_flashdata('success', 'Successfully created');
-				redirect('products', 'refresh');
+				
+                redirect('products', 'refresh');
+                $this->session->set_flashdata('success', 'Creado Satisfactoriamente');
         	}
         	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('products/create/', 'refresh');
+        	
+                redirect('products/', 'refresh');
+                $this->session->set_flashdata('error', 'Ocurrio Error!!!');
             }
        
         }

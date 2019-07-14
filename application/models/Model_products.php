@@ -57,7 +57,7 @@ class Model_products extends CI_Model
 	}
  */
 	public function create()
-	{
+	{    
 		$upload_image = $this->upload_image();
 		// $user_id = $this->session->userdata('id');
 		// $bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
@@ -70,7 +70,8 @@ class Model_products extends CI_Model
 				, 'image' => $upload_image  
     	);
 
-		$insert = $this->db->insert('productosnew', $data);
+		$insert = $this->db->insert('productosnew', $data);   
+	
 		$order_id = $this->db->insert_id();
 
 		$this->load->model('model_products');
@@ -83,24 +84,36 @@ class Model_products extends CI_Model
     			'cantidad' => $this->input->post('qty')[$x],
     			
     		);
-    		$this->db->insert('producto_insumo', $items);
+			// $this->db->insert('producto_insumo', $items);
 
 			// now decrease the stock from the insumogetInsumoData
 			
 			$product_data = $this->model_products->getInsumoData($this->input->post('product')[$x]); // id del insumo
 			
     		$qty = (int) $product_data['cantidad'] - (int) $this->input->post('qty')[$x];
-			if($qty>=0){
+			if($qty>=0){ // lo descuenta de insumos
 				$update_product = array('cantidad' => $qty);
 		
 				$this->db->where('id', $this->input->post('product')[$x]);
 				$this->db->update('insumos', $update_product);
 					// $this->model_products->update($update_product, $this->input->post('product')[$x]); 
+			} // no lo descuenta de insumos
+			else {
+				//ELIMINAR PRODUCTO YA CREADO
+				$this->db->where('id', $order_id);
+				$delete = $this->db->delete('productosnew');
+				return false;
 			}
-			else return false;
-    	
-    	}
 
+			// SI ESTA BIEN RECIEN AGREGA A LA TABLA PRODUCTO_INSUMO
+			$this->db->insert('producto_insumo', $items);
+    	
+		}
+		////
+	    
+
+		/////
+		
 		return ($order_id) ? $order_id : false;
 	}
 
@@ -118,11 +131,11 @@ class Model_products extends CI_Model
 
         $this->load->library('upload', $config);
         if ( ! $this->upload->do_upload('product_image'))
-        {
+        {  // NO SELECCIONO FOTO
             $error = $this->upload->display_errors();
             return $error;
         }
-        else
+        else  // si SELECCIONO FOTO
         {
             $data = array('upload_data' => $this->upload->data());
             $type = explode('.', $_FILES['product_image']['name']);
