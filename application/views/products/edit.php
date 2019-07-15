@@ -117,7 +117,7 @@
                   <thead>
                     <tr>
                       <th style="width:50%">Producto</th>
-                      <th style="width:10%">Qty</th>
+                      <th style="width:10%">Cantidad</th>
                       <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
                     </tr>
                   </thead>
@@ -127,13 +127,14 @@
                     <?php if(isset($order_data['order_item'])): ?>
                       <?php $x = 1; ?>
                       <?php foreach ($order_data['order_item'] as $key => $val): ?>
-                        <?php //print_r($v); ?>
+
+                  
                        <tr id="row_<?php echo $x; ?>">
                          <td>
                           <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
                               <option value=""></option>
                               <?php foreach ($products as $k => $v): ?>
-                                <option value="<?php echo $v['id'] ?>" <?php if($val['product_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['name'] ?></option>
+                                <option value="<?php echo $v['id'] ?>" <?php if($val['producto_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
                               <?php endforeach ?>
                             </select>
                           </td>
@@ -173,14 +174,21 @@
 <!-- /.content-wrapper -->
 
 <script type="text/javascript">
-  
+    var base_url = "<?php echo base_url(); ?>";
+
   $(document).ready(function() {
     $(".select_group").select2();
     $("#description").wysihtml5();
 
-    $("#mainProductNewNav").addClass('active');
-    $("#manageProductNav").addClass('active');
+    // $("#mainProductNewNav").addClass('active');
+    // $("#manageProductNav").addClass('active');
     
+
+    $("#category").select2();
+
+$("#mainProductsNav").addClass('active');
+$("#addProductsNav").addClass('active');
+
     var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
         'onclick="alert(\'Call your custom code here.\')">' +
         '<i class="glyphicon glyphicon-tag"></i>' +
@@ -200,6 +208,51 @@
         // defaultPreviewContent: '<img src="/uploads/default_avatar_male.jpg" alt="Your Avatar">',
         layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
         allowedFileExtensions: ["jpg", "png", "gif"]
+    });
+
+
+ // Add new row in the table 
+ $("#add_row").unbind('click').bind('click', function() {
+      var table = $("#product_info_table");
+      var count_table_tbody_tr = $("#product_info_table tbody tr").length;
+      var row_id = count_table_tbody_tr + 1;
+
+
+      $.ajax({
+          url: base_url + '/products/getTableProductRow/',
+          type: 'post',
+          dataType: 'json',
+          success:function(response) {
+            
+
+              // console.log(reponse.x);
+               var html = '<tr id="row_'+row_id+'">'+
+                   '<td>'+ 
+                    '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
+                        '<option value=""></option>';
+                        $.each(response, function(index, value) {
+                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
+                        });
+                        
+                      html += '</select>'+
+                    '</td>'+ 
+                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
+                    '</tr>';
+
+                if(count_table_tbody_tr >= 1) {
+                $("#product_info_table tbody tr:last").after(html);  
+              }
+              else {
+                $("#product_info_table tbody").html(html);
+              }
+
+              $(".product").select2();
+
+          }
+        });
+
+      return false;
     });
 
   });
@@ -242,5 +295,11 @@
         } // /success
       }); // /ajax function to fetch the product data 
     }
+  }
+
+  function removeRow(tr_id)
+  {
+    $("#product_info_table tbody tr#row_"+tr_id).remove();
+    // subAmount();
   }
 </script>

@@ -43,10 +43,24 @@ class Model_products extends CI_Model
 
 	public function getActiveInsumoData()
 	{
-	    $sql = "SELECT * FROM insumos where cantidad>0  ORDER BY id DESC"; 
+	    $sql = "SELECT * FROM insumos where cantidad > 0  ORDER BY id DESC"; 
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
+
+
+		// get the orders item data
+		public function getProductsItemData($producto_id = null)
+		{
+			if(!$producto_id) {
+				return false;
+			}
+			$sql = "SELECT * FROM producto_insumo WHERE producto_id = ?";
+			$query = $this->db->query($sql, array($producto_id));
+			return $query->result_array();
+		}
+
+
 /*
 	public function create($data)
 	{

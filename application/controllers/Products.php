@@ -146,6 +146,8 @@ class Products extends Admin_Controller
 		$products = $this->model_products->getActiveInsumoData();
 		echo json_encode($products);
     }
+
+    
     
     public function getProductValueById()
 	{   $product_id = $this->input->post('insumo_id');
@@ -256,29 +258,27 @@ class Products extends Admin_Controller
             }
         }
         else {
-            // attributes 
-            // $attribute_data = $this->model_attributes->getActiveAttributeData();
 
-            // $attributes_final_data = array();
-            // foreach ($attribute_data as $k => $v) {
-            //     $attributes_final_data[$k]['attribute_data'] = $v;
-
-            //     $value = $this->model_attributes->getAttributeValueData($v['id']);
-
-            //     $attributes_final_data[$k]['attribute_value'] = $value;
-            // }
-            
-            // false case
-            // $this->data['attributes'] = $attributes_final_data;
-            // $this->data['brands'] = $this->model_brands->getActiveBrands();         
-          
-          
-            // $this->data['category'] = $this->model_category->getActiveCategory(); 
        
             $this->data['category'] = $this->model_category->getCategoryData();         
             $product_data = $this->model_products->getProductData($product_id);
             $this->data['product_data'] = $product_data;
-            
+            //
+            $result = array();
+            /*
+        	$orders_data = $this->model_products->getProductData($id);
+    		$result['order'] = $orders_data;
+    		$orders_item = $this->model_orders->getProductsItemData($orders_data['id']);
+    		foreach($orders_item as $k => $v) {
+    			$result['order_item'][] = $v;
+    		}
+    		$this->data['order_data'] = $result;
+
+*/
+
+            //
+
+            $this->data['products'] = $this->model_products->getActiveInsumoData();   
             $this->render_template('products/edit', $this->data); 
         }   
 	}
