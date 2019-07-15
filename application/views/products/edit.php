@@ -105,11 +105,12 @@
                    <div class="form-group">
                       <label for="descripcion">Descripción
                       </label>
-                      <textarea type="text" class="form-control" name="descripcion" placeholder="Descripción del producto (opcional)" value="<?php echo $product_data['descripcion']; ?>" autocomplete="off" style="resize: none;"></textarea>
+                      <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción del producto" value="<?php echo $product_data['descripcion']; ?>"  autocomplete="off"/>
+              
+                 
                   </div>
                 </div>
               </div>
-            
 
 
               </div>
