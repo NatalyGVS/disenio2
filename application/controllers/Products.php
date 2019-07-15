@@ -148,13 +148,24 @@ class Products extends Admin_Controller
     }
     
     public function getProductValueById()
-	{   $product_id = $this->input->post('product_id');
+	{   $product_id = $this->input->post('insumo_id');
 		
 		if($product_id) {
 			$product_data = $this->model_products->getInsumoData($product_id);
 			echo json_encode($product_data);
 		}
     }
+
+
+      public function getInsumoValueById()
+    {   $product_id = $this->input->post('insumo_id');
+        // $product_id = $this->input->post('product_id');
+		
+		if($product_id) {
+			$product_data = $this->model_products->getProductData($product_id);
+			echo json_encode($product_data);
+		}
+	}
     
     /*
     * This function is invoked from another function to upload the image into the assets folder

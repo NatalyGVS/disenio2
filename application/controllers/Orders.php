@@ -261,7 +261,8 @@ class Orders extends Admin_Controller
         	$this->data['company_data'] = $company;
         	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
-        	$result = array();
+			
+			$result = array();
         	$orders_data = $this->model_orders->getOrdersData($id);
     		$result['order'] = $orders_data;
     		$orders_item = $this->model_orders->getOrdersItemData($orders_data['id']);

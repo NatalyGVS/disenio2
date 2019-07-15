@@ -98,8 +98,6 @@
                   </select>
                 </div>
                 
-
-           
                 <div class="row">
                   <div class="col-md-12 col-xs-12">
                    <div class="form-group">
@@ -112,6 +110,45 @@
                 </div>
               </div>
 
+
+             <!-- dsadsdas -->
+
+             <table class="table table-bordered" id="product_info_table">
+                  <thead>
+                    <tr>
+                      <th style="width:50%">Producto</th>
+                      <th style="width:10%">Qty</th>
+                      <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
+                    </tr>
+                  </thead>
+
+                   <tbody>
+
+                    <?php if(isset($order_data['order_item'])): ?>
+                      <?php $x = 1; ?>
+                      <?php foreach ($order_data['order_item'] as $key => $val): ?>
+                        <?php //print_r($v); ?>
+                       <tr id="row_<?php echo $x; ?>">
+                         <td>
+                          <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
+                              <option value=""></option>
+                              <?php foreach ($products as $k => $v): ?>
+                                <option value="<?php echo $v['id'] ?>" <?php if($val['product_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['name'] ?></option>
+                              <?php endforeach ?>
+                            </select>
+                          </td>
+                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                         
+                          <td><button type="button" class="btn btn-default" onclick="removeRow('<?php echo $x; ?>')"><i class="fa fa-close"></i></button></td>
+                       </tr>
+                       <?php $x++; ?>
+                     <?php endforeach; ?>
+                   <?php endif; ?>
+                   </tbody>
+                </table>
+
+             <!-- dasfdasfdsaf -->
+           
 
               </div>
               <!-- /.box-body -->
@@ -166,4 +203,44 @@
     });
 
   });
+
+
+
+  function getProductData(row_id)
+  {
+    var product_id = $("#product_"+row_id).val();    
+    if(product_id == "") {
+      // $("#rate_"+row_id).val("");
+      // $("#rate_value_"+row_id).val("");
+
+      $("#qty_"+row_id).val("");           
+
+      // $("#amount_"+row_id).val("");
+      // $("#amount_value_"+row_id).val("");
+
+    } else {
+      $.ajax({
+        url: base_url + 'products/getInsumoValueById',
+        type: 'post',
+        data: {product_id : product_id},
+        dataType: 'json',
+        success:function(response) {
+          // setting the rate value into the rate input field
+          
+          // $("#rate_"+row_id).val(response.price);
+          // $("#rate_value_"+row_id).val(response.price);
+
+          $("#qty_"+row_id).val(1);
+          $("#qty_value_"+row_id).val(1);
+
+          // var total = Number(response.price) * 1;
+          // total = total.toFixed(2);
+          // $("#amount_"+row_id).val(total);
+          // $("#amount_value_"+row_id).val(total);
+          
+          // subAmount();
+        } // /success
+      }); // /ajax function to fetch the product data 
+    }
+  }
 </script>
