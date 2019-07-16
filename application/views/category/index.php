@@ -112,7 +112,7 @@
 
           <div class="form-group">
             <label for="edit_brand_name">Nuevo nombre de la categoría</label>
-            <input type="text" class="form-control" id="edit_category_name" name="edit_category_name" placeholder="Enter category name" autocomplete="off">
+            <input type="text" class="form-control" id="edit_category_name" name="edit_category_name" placeholder="Ingresa el Nombre de la Categoria" autocomplete="off">
           </div>
         </div>
 

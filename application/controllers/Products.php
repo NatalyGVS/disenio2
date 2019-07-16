@@ -81,6 +81,11 @@ class Products extends Admin_Controller
         else{
             if ($value['unidad_medida'] == 2){
                 $medida = '<p class=" " style= "font-size: 15px;">Medidas en Litro (L)</p>';
+            }else {
+                if ($value['unidad_medida'] == 0){
+                    $medida = '<p class=" " style= "font-size: 15px;">Unidad (u)</p>';
+                }
+
             }
         }
 
@@ -89,7 +94,7 @@ class Products extends Admin_Controller
                  $value['id'],
 				$img,
                 $value['nombre'],
-                
+                $value['precio_unitario'],
                 $categoria['nombre'],
                 
                 $material,

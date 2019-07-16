@@ -35,11 +35,11 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Gestionar pedidos</h3>
+            <h3 class="box-title">Gestionar Pedidos</h3>
           </div>
 
           <?php if(in_array('createOrder', $user_permission)): ?>
-          <a href="<?php echo base_url('pedidos/create') ?>" class="btn btn-primary">Añadir orden</a>
+          <a href="<?php echo base_url('pedidos/create') ?>" class="btn btn-primary">Añadir Pedido</a>
           <br /> <br />
         <?php endif; ?>
 
@@ -49,15 +49,15 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                 <th> no Cuenta  </th>
-                 <th> id Mesa </th>
-                 <th> id Usuario </th>
+                 <th> Codigo de Pedido </th>
+                 <th> Fecha de Emision </th>
                  <th> Nombre del cliente </th>
-                 <th> Fecha y hora </th>
-                 <th> Total de productos </th>
-                 <th> Cantidad total </th>
-                 <th> Estado de pago </th>
-                 <th> Estado Pedido </th>
+                 <th> Direccion del Cliente </th>
+                 <th> Telefono del Cliente</th>
+                 <th> RUC  </th>
+                 <th> Estado Pedido </th>
+                 <th> Estado de pago </th>
+                  <th> Cantidad Neta </th> 
                   
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                   <th>Acción</th>
@@ -124,7 +124,7 @@ $(document).ready(function() {
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': base_url + 'pedidos/fetchOrdersData',
+    'ajax': base_url + 'pedidos/fetchPedidosData',
     'order': [],
     "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

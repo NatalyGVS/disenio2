@@ -105,7 +105,7 @@ class Category extends Admin_Controller
         	$create = $this->model_category->create($data);
         	if($create == true) {
         		$response['success'] = true;
-        		$response['messages'] = 'Succesfully created';
+        		$response['messages'] = 'Creado satisfactoriamente';
         	}
         	else {
         		$response['success'] = false;
@@ -149,7 +149,7 @@ class Category extends Admin_Controller
 	        	$update = $this->model_category->update($data, $id);
 	        	if($update == true) {
 	        		$response['success'] = true;
-	        		$response['messages'] = 'Succesfully updated';
+	        		$response['messages'] = 'Actualizado Satisfactoriamente';
 	        	}
 	        	else {
 	        		$response['success'] = false;
@@ -188,7 +188,7 @@ class Category extends Admin_Controller
 			$delete = $this->model_category->remove($category_id);
 			if($delete == true) {
 				$response['success'] = true;
-				$response['messages'] = "Successfully removed";	
+				$response['messages'] = "Eliminado Satisfactoriamente";	
 			}
 			else {
 				$response['success'] = false;

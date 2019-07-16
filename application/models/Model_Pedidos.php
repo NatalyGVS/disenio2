@@ -54,6 +54,57 @@ class Model_pedidos extends CI_Model
 		$query = $this->db->query($sql, array($order_id));*/
 		return $query->result_array();
 	}
+
+
+	public function create()
+	{
+		
+		$bill_no = 'FISI-PED-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
+    	$data = array(
+			'codPedido' => $bill_no,
+			'fecha' => strtotime(date('d-m-Y h:i:s a')),
+    		'nombre_cli' => $this->input->post('customer_name'),
+    		'direccion_cli' => $this->input->post('customer_address'),
+			'telefono_cli' => $this->input->post('customer_phone'),
+			'ruc_cli' => strtotime(date('Y-m-d h:i:s a')),
+    		'estado_pedido' => $this->input->post('gross_amount_value'),
+    		'estado_pago' => $this->input->post('service_charge_rate'),
+			/*
+			'gross_amount' => $this->input->post('gross_amount_value'),
+    		'service_charge_rate' => $this->input->post('service_charge_rate'),
+			'service_charge' => ($this->input->post('service_charge_value') > 0) ?$this->input->post('service_charge_value'):0,
+    		'vat_charge_rate' => $this->input->post('vat_charge_rate'),
+    		'vat_charge' => ($this->input->post('vat_charge_value') > 0) ? $this->input->post('vat_charge_value') : 0,
+    		'net_amount' => $this->input->post('net_amount_value'),
+    		'discount' => $this->input->post('discount'), */
+    		
+    	);
+
+		$insert = $this->db->insert('pedidos', $data);
+		$order_id = $this->db->insert_id(); // id del pedido
+
+		$this->load->model('model_products');
+
+		$count_product = count($this->input->post('product'));
+    	for($x = 0; $x < $count_product; $x++) {
+    		$items = array(
+    			'pedido_id' => $order_id,
+    			'producto_id' => $this->input->post('product')[$x],
+    			'cantidad' => $this->input->post('qty')[$x],
+    			'pu' => $this->input->post('rate_value')[$x],
+    			'monto' => $this->input->post('amount_value')[$x],
+    		);
+
+    		$this->db->insert('pedidos_item', $items);
+
+ 
+    	}
+
+		return ($order_id) ? $order_id : false;
+	}
+
+
+/*
 	public function create()
 	{
 		$name_mesa = $this->input->post('id_mesa');
@@ -94,6 +145,7 @@ class Model_pedidos extends CI_Model
     	);
  
 		// ******
+
 		$insert = $this->db->insert('orders', $data);
 		$order_id = $this->db->insert_id();
 		$this->load->model('model_products');
@@ -115,6 +167,8 @@ class Model_pedidos extends CI_Model
     	}
 		return ($order_id) ? $order_id : false;
 	}
+
+	*/
 	public function countOrderItem($order_id)
 	{
 		if($order_id) {

@@ -63,6 +63,15 @@
                   </div>
                 </div>
 
+                <div class="row">
+                  <div class="col-md-4 col-xs-4">
+                    <div class="form-group">
+                      <label for="product_name">Precio del producto</label>
+                      <input type="number" min="0" max="500" step="0.01" class="form-control" id="precio" name="precio" placeholder="Precio del producto" required/>
+                    </div>
+                  </div>
+                </div>
+
               <div class="col-md-4 col-xs-4">
                 <label for="tipo_proveedor">Material del Producto</label>
                   <select class="form-control" id="material" name="material" required>
@@ -72,17 +81,7 @@
                   </select>
               </div>
 
-               <div class="col-md-2 col-xs-2">
-                  <div class="form-group">
-                  <label for="store">Disponible</label>
-                  <select class="form-control" id="availability" name="availability" required>
-                    <option value="1">si</option>
-                    <option value="2">No</option>
-                  </select>
-                </div>
-              </div>
-
-
+          
               <div class="row">
               <div class="col-md-6 col-xs-6">
                 <div class="form-group">
@@ -100,6 +99,7 @@
             <div class="form-group">
             <label for="tipo_proveedor">Unidad de Medida</label>
                 <select class="form-control" id="unidad_medida" name="unidad_medida">
+                  <option value="0">Unidad (u)</option>
                   <option value="1">Medidas en Kilogramo (Kg)</option>
                   <option value="2">Medidas en Litro (L)</option>
                 </select>
@@ -143,13 +143,13 @@
                             <?php endforeach ?>
                           </select>
                         </td>
-                        <td><input type="number" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td><input type="number" min="0" max="500"name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
                         <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
                      </tr>
                    </tbody>
                 </table>
 
-
+              
 
 
 
@@ -240,7 +240,7 @@ var base_url = "<?php echo base_url(); ?>";
                   
                       html += '</select>'+
                     '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input   type="number" min="0" max="500" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
 
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
                     '</tr>';

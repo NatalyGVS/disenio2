@@ -49,6 +49,7 @@
                 <th> Código </th>
                  <th> Imagen </th>
                  <th> Nombre del producto </th>
+                  <th> Precio del producto </th>
                  <th> Categoria </th>
                  <th> Material </th>
                  <th> Unidad de Medida </th>

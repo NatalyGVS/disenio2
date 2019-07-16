@@ -75,7 +75,7 @@ class Pedidos extends Admin_Controller
 	}
 
 
-	public function fetchOrdersData()
+	public function fetchPedidosData()
 	{   
 
 		$result = array('data' => array());
@@ -160,10 +160,11 @@ class Pedidos extends Admin_Controller
 	*/
 	public function create()
 	{
-		if(!in_array('createOrder', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
+		// if(!in_array('createOrder', $this->permission)) {
+        //     redirect('dashboard', 'refresh');
+        // }
 		$this->data['page_title'] = 'Agregar Orden';
+
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	
@@ -182,13 +183,12 @@ class Pedidos extends Admin_Controller
         }
         else {
             // false case
-        	$company = $this->model_company->getCompanyData(1);
-        	$this->data['company_data'] = $company; 
-        	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
-        	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
-			$this->data['products'] = $this->model_products->getActiveProductData();   
-			$this->data['mesas'] = $this->model_mesas->getActiveMesas();   	
-            $this->render_template('orders/create', $this->data);
+        	 $company = $this->model_company->getCompanyData(1);
+        	 $this->data['company_data'] = $company; 
+        	 $this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
+        	 $this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
+			 $this->data['products'] = $this->model_products->getActiveProductData();   
+            $this->render_template('pedidos/create', $this->data);
         }	
 	}
 

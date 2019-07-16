@@ -63,8 +63,12 @@
                   <label for="product_name">Nombre del producto</label>
                   <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Nombre del producto" value="<?php echo $product_data['nombre']; ?>"  autocomplete="off"/>
                 </div>
-
-              
+                
+                    <div class="form-group">
+                      <label for="product_name">Precio del producto</label>
+                      <input type="number" min="0" max="500" step="0.01" class="form-control" id="precio" name="precio" placeholder="Precio del producto"  value="<?php echo $product_data['precio_unitario']; ?>"required/>
+                    </div>
+                 
 
                 <div class="form-group">
                   <label for="material">Material del Producto</label>

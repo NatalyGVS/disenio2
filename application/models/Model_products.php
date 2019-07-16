@@ -34,12 +34,12 @@ class Model_products extends CI_Model
 		return $query->result_array();
 	}
 
-	// public function getActiveProductData()
-	// {
-	// 	$sql = "SELECT * FROM productosnew WHERE availability = ? ORDER BY id DESC";
-	// 	$query = $this->db->query($sql, array(1));
-	// 	return $query->result_array();
-	// }
+	 public function getActiveProductData()
+	 {
+	 	$sql = "SELECT * FROM productosnew  ORDER BY id DESC";
+	 	$query = $this->db->query($sql, array(1));
+	 	return $query->result_array();
+	 }
 
 	public function getActiveInsumoData()
 	{
@@ -72,15 +72,13 @@ class Model_products extends CI_Model
  */
 	public function create()
 	{    
-		
-
-		
-			$upload_image = $this->upload_image();
+		$upload_image = $this->upload_image();
 		
 		// $user_id = $this->session->userdata('id');
 		// $bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
     	$data = array(
-    			'nombre' => $this->input->post('product_name'),
+				'nombre' => $this->input->post('product_name'),
+				'precio_unitario' => $this->input->post('precio'),
                 'category_id' => $this->input->post('category_id'),
                 'material' => $this->input->post('material'),
 				'unidad_medida' => $this->input->post('unidad_medida'),

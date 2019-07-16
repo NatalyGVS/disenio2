@@ -1,16 +1,19 @@
 
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Gestionar Pedidos
-      
+      Gestionar
+
+      <small>Pedidos
+</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li class="active">Pedidos
-      </li>
+</li>
     </ol>
   </section>
 
@@ -35,71 +38,26 @@
         <?php endif; ?>
 
         <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Añadir orden</h3>
-            </div>
-
-
-       <?php foreach ($mesas as $k => $v): ?>
-      <?php
-        if($v['active']==1){  //LIBRE
-          
-           echo 
-           '<button onclick="editFunc('.$v['id'].')" class="btn btn-success btn-lg " style= " margin: 15px;" data-toggle="modal" data-target="#createModal" > <h3 > '.$v['name'].' </h3> </button >       ';
-           
-        }else{  //OCUPADO
-           echo 
-           '<button class="btn btn-danger btn-lg" style= "margin: 15px;" data-toggle="modal" data-target="#editModal">  <h3 > '.$v['name'].' </h3> </button > ';
-      
-        }?>
-        <?php endforeach ?>
-
-
-
-
-  <!-- ============================================================================================================================================================  -->    
-  <!-- FORMULARIO CREAR ORDEN  --> 
-  <div class="modal fade" id="createModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-       
-       
-        <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div> 
-        
-
-   <div class="modal-body">
-        <div class="form-group">
-        
-            
-          </div>     
-         <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal" id="updateForm">
+          <div class="box-header">
+            <h3 class="box-title">Añadir Pedido</h3>
+          </div>
+          <!-- /.box-header -->
+          <form role="form" action="<?php base_url('pedidos/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
 
-
-             
-             
-
-                 <div class="form-group">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control input-lg" id="id_mesa" name="id_mesa"  autocomplete="off"  style="background-color: #FF6467 ;  font-weight: bold; font-size: 30px; text-align: center;" />                      </div>
-                  </div>  
-             
-                  <div class="form-group">
+                <div class="form-group">
                    <label for="gross_amount" class="col-sm-12 control-label">Fecha: <?php date_default_timezone_set("America/Lima"); 
                                                                                            echo date("d/m/Y  , h:i a" ) ?></label> 
                 </div>
 
-                <div class="col-md-6 col-xs-12 pull pull-left">
-               
-                      
+                <div class="col-md-4 col-xs-12 pull pull-left">
+
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Nombre del cliente</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Ingresa Nombre del cliente" autocomplete="off" />
+                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Ingresa Nombre del Cliente" autocomplete="off" />
                     </div>
                   </div>
 
@@ -113,9 +71,19 @@
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Telefono del cliente</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Ingresa Telefono del cliente" autocomplete="off">
+                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Ingresa Telefono del Cliente" autocomplete="off">
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">RUC del cliente</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="RUC" name="RUC" placeholder="Ingresa RUC del Cliente" autocomplete="off">
+                    </div>
+                  </div>
+
+
+
                 </div>
                 
                 
@@ -137,11 +105,11 @@
                         <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
                             <option value=""></option>
                             <?php foreach ($products as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
+                              <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ?></option>
                             <?php endforeach ?>
                           </select>
                         </td>
-                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td><input type="text"  name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
                         <td>
                           <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
@@ -166,34 +134,24 @@
                       <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" autocomplete="off">
                     </div>
                   </div>
-
                   <?php if($is_service_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="service_charge" class="col-sm-5 control-label">S de carga<?php echo $company_data['service_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" autocomplete="off">
-                    </div>
-                  </div>
+              
                   <?php endif; ?>
-
                   <?php if($is_vat_enabled == true): ?>
                   <div class="form-group">
-                    <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
+                    <label for="vat_charge" class="col-sm-5 control-label">IGV <?php echo $company_data['vat_charge_value'] ?> %</label>
                     <div class="col-sm-7">
                       <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled autocomplete="off">
                       <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" autocomplete="off">
                     </div>
                   </div>
                   <?php endif; ?>
-
                   <div class="form-group">
-                    <label for="discount" class="col-sm-5 control-label">Descuento</label>
+                    <label for="discount" class="col-sm-5 control-label">Descuento(S/. )</label>
                     <div class="col-sm-7">
                       <input type="text" class="form-control" id="discount" name="discount" placeholder="Descuento" onkeyup="subAmount()" autocomplete="off">
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Importe neto</label>
                     <div class="col-sm-7">
@@ -202,44 +160,18 @@
                     </div>
                   </div>
 
-
                 </div>
-              </div> 
-             
+              </div>
+              <!-- /.box-body -->
 
-               <div class="box-footer">
+              <div class="box-footer">
                 <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
                 <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
-                
+
                 <button type="submit" class="btn btn-primary">Crear orden</button>
-                <a href="<?php echo base_url('orders/create') ?>" class="btn btn-warning">Atras</a>
+                <a href="<?php echo base_url('pedidos/') ?>" class="btn btn-warning">Atras</a>
               </div>
-            </form> 
-
-         </div> 
-        
-     
-       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>  
-
-<!-- ///////  FIN  CREATE MODEL   -->
-<!-- ============================================================================================================================================================  -->    
-
-
-
-
-
-
-
-
-
-
-        
+            </form>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -254,11 +186,8 @@
 </div>
 <!-- /.content-wrapper -->
 
-
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
-  var manageTable;
-  var valor_mesa;
 
   $(document).ready(function() {
     $(".select_group").select2();
@@ -266,8 +195,7 @@
 
     $("#mainOrdersNav").addClass('active');
     $("#addOrderNav").addClass('active');
-    $("#manageOrdersNav").addClass('active');
-
+    
     var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
         'onclick="alert(\'Call your custom code here.\')">' +
         '<i class="glyphicon glyphicon-tag"></i>' +
@@ -280,7 +208,7 @@
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-          url: base_url + '/orders/getTableProductRow/',
+          url: base_url + '/pedidos/getTableProductRow/',
           type: 'post',
           dataType: 'json',
           success:function(response) {
@@ -291,12 +219,12 @@
                     '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
                         '<option value=""></option>';
                         $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
+                          html += '<option value="'+value.id+'">'+value.nombre+'</option>';             
                         });
                         
                       html += '</select>'+
                     '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input type="text"   name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
                     '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
@@ -319,33 +247,11 @@
 
   }); // /document
 
- 
-// edit function
-
-function editFunc(id)
-{ 
-  $.ajax({
-    url: 'fetchMesasDataById/'+id,
-    type: 'post',
-    dataType: 'json',
-    success:function(response) {
-
-      $("#id_mesa").val(response.name);
-       $("#id_mesa_value").val(response.name);
-
-
-       valor_mesa = response.name;   
-          // alert(valor_mesa);              
-     
-    }
-  });
-};
-
-
   function getTotal(row = null) {
     if(row) {
-      var total = Number($("#rate_value_"+row).val()) * Number($("#qty_"+row).val());
+      var total = Number($("#rate_value_"+row).val()) * Number($("#qty_"+row).val());  // precio unitario * cantidad
       total = total.toFixed(2);
+      console.log(total);
       $("#amount_"+row).val(total);
       $("#amount_value_"+row).val(total);
       
@@ -362,29 +268,31 @@ function editFunc(id)
     var product_id = $("#product_"+row_id).val();    
     if(product_id == "") {
       $("#rate_"+row_id).val("");
-      $("#rate_value_"+row_id).val("");
+      $("#rate_value_"+row_id).val(""); // punitario
 
-      $("#qty_"+row_id).val("");           
+      $("#qty_"+row_id).val("");           // cantidad
 
-      $("#amount_"+row_id).val("");
+      $("#amount_"+row_id).val("");      // monto
       $("#amount_value_"+row_id).val("");
 
     } else {
       $.ajax({
-        url: base_url + 'orders/getProductValueById',
+        url: base_url + 'pedidos/getProductValueById',
         type: 'post',
         data: {product_id : product_id},
         dataType: 'json',
         success:function(response) {
           // setting the rate value into the rate input field
           
-          $("#rate_"+row_id).val(response.price);
-          $("#rate_value_"+row_id).val(response.price);
+          $("#rate_"+row_id).val(response.precio_unitario);
+          $("#rate_value_"+row_id).val(response.precio_unitario);
 
           $("#qty_"+row_id).val(1);
           $("#qty_value_"+row_id).val(1);
 
-          var total = Number(response.price) * 1;
+          var total = Number(response.precio_unitario) * 1;
+
+          
           total = total.toFixed(2);
           $("#amount_"+row_id).val(total);
           $("#amount_value_"+row_id).val(total);
@@ -397,12 +305,6 @@ function editFunc(id)
 
   // calculate the total amount of the order
   function subAmount() {
-//  alert(valor_mesa); 
-     $("#id_mesa").val(valor_mesa);
-      $("#id_mesa_value").val(valor_mesa);
-
-     
-
     var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value']:0; ?>;
     var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value']:0; ?>;
 
@@ -459,7 +361,4 @@ function editFunc(id)
     $("#product_info_table tbody tr#row_"+tr_id).remove();
     subAmount();
   }
-
- 
-
 </script>
