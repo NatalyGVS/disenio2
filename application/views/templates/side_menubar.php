@@ -97,9 +97,16 @@
             </li>
           <?php endif; ?>
 
-          <!--Menu Productos totales-->
+          <!--Menu Pedidos totales-->
 
-
+          <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
+            <li id="mainPedidosNav">
+              <a href="<?php echo base_url('pedidos/') ?>">
+                <img class="fa" src="/disenio2/assets/images/icons/products.png">
+                <span style="margin-left: 15px;">Pedidos</span>
+              </a>
+            </li>
+          <?php endif; ?>
 
   
 
