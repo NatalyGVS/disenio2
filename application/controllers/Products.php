@@ -164,7 +164,7 @@ class Products extends Admin_Controller
         // $product_id = $this->input->post('product_id');
 		
 		if($product_id) {
-			$product_data = $this->model_products->getProductData($product_id);
+			$product_data = $this->model_products->getInsumoData($product_id);
 			echo json_encode($product_data);
 		}
 	}
@@ -265,16 +265,16 @@ class Products extends Admin_Controller
             $this->data['product_data'] = $product_data;
             //
             $result = array();
-            /*
-        	$orders_data = $this->model_products->getProductData($id);
+           
+        	$orders_data = $this->model_products->getProductData($product_id);
     		$result['order'] = $orders_data;
-    		$orders_item = $this->model_orders->getProductsItemData($orders_data['id']);
+    		$orders_item = $this->model_products->getProductsItemData($orders_data['id']);
     		foreach($orders_item as $k => $v) {
     			$result['order_item'][] = $v;
     		}
     		$this->data['order_data'] = $result;
 
-*/
+
 
             //
 

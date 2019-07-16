@@ -112,7 +112,8 @@
 
 
              <!-- dsadsdas -->
-
+ 
+             
              <table class="table table-bordered" id="product_info_table">
                   <thead>
                     <tr>
@@ -123,7 +124,7 @@
                   </thead>
 
                    <tbody>
-
+                  
                     <?php if(isset($order_data['order_item'])): ?>
                       <?php $x = 1; ?>
                       <?php foreach ($order_data['order_item'] as $key => $val): ?>
@@ -133,12 +134,12 @@
                          <td>
                           <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
                               <option value=""></option>
-                              <?php foreach ($products as $k => $v): ?>
-                                <option value="<?php echo $v['id'] ?>" <?php if($val['producto_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
+                              <?php foreach ($products as $k => $v): ?>  
+                                <option value="<?php echo $v['id'] ?>" <?php if($val['insumo_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
                               <?php endforeach ?>
                             </select>
                           </td>
-                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['cantidad'] ?>" autocomplete="off"></td>
                          
                           <td><button type="button" class="btn btn-default" onclick="removeRow('<?php echo $x; ?>')"><i class="fa fa-close"></i></button></td>
                        </tr>
@@ -231,7 +232,7 @@ $("#addProductsNav").addClass('active');
                     '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
                         '<option value=""></option>';
                         $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
+                          html += '<option value="'+value.id+'">'+value.nombre+'</option>';             
                         });
                         
                       html += '</select>'+
