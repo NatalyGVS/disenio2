@@ -82,12 +82,9 @@
 
                 <div class="form-group">
                   <label for="category">Categoría</label>
-                  <?php $category_data = json_decode($product_data['category_id']);  ?>
-                  <select class="form-control select_group" id="category" name="category[]">
+                  <select class="form-control select_group" id="category" name="category">
                     <?php foreach ($category as $k => $v): ?>
-                   
-                      <option value="<?php echo $v['id'] ?>" <?php if($category_data == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
-                           
+                      <option value="<?php echo $v['id'] ?>"><?php echo $v['nombre'] ?></option>       
                     <?php endforeach ?>
                   </select>
                 </div>
