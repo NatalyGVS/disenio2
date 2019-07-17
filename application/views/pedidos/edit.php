@@ -3,9 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Gestionar
-
-      <small>Pedidos</small>
+      Editar Pedidos
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -39,7 +37,7 @@
             <h3 class="box-title">Editar Ordennn</h3>
           </div>
           <!-- /.box-header -->
-          <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
+          <form role="form" action="<?php base_url('pedidos/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
@@ -51,13 +49,6 @@
 
                 <div class="col-md-4 col-xs-12 pull pull-left">
 
-
-                  <div class="form-group">
-                    <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;" >Nombre de Mesa</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="id_mesa" name="id_mesa"  value="<?php echo $order_data['order']['id_mesa'] ?>" autocomplete="off" disabled/>
-                    </div>
-                  </div>
 
 
 
@@ -84,61 +75,67 @@
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Nombre del cliente</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" value="<?php echo $order_data['order']['customer_name'] ?>" autocomplete="off"/>
+                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" value="<?php echo $order_data['order']['nombre_cli'] ?>" autocomplete="off"/>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Dirección del cliente</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_address" name="customer_address" placeholder="Enter Customer Address" value="<?php echo $order_data['order']['customer_address'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="customer_address" name="customer_address" placeholder="Enter Customer Address" value="<?php echo $order_data['order']['direccion_cli'] ?>" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Telefono del cliente</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Enter Customer Phone" value="<?php echo $order_data['order']['customer_phone'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Enter Customer Phone" value="<?php echo $order_data['order']['telefono_cli'] ?>" autocomplete="off">
                     </div>
                   </div>
                 </div>
                 
-                
+                <div class="form-group">
+                    <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">RUC del cliente</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="RUC" name="RUC" placeholder="Enter Customer Phone" value="<?php echo $order_data['order']['ruc_cli'] ?>" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
                 <br /> <br/>
                 <table class="table table-bordered" id="product_info_table">
                   <thead>
                     <tr>
                       <th style="width:50%">Producto</th>
-                      <th style="width:10%">Qty</th>
-                      <th style="width:10%">Tarifa</th>
-                      <th style="width:20%">Cantidad</th>
+                      <th style="width:10%">Cantidad</th>
+                      <th style="width:10%">Precio Unitario</th>
+                      <th style="width:20%">Monto</th>
                       <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
                     </tr>
                   </thead>
 
                    <tbody>
-
+             
                     <?php if(isset($order_data['order_item'])): ?>
                       <?php $x = 1; ?>
                       <?php foreach ($order_data['order_item'] as $key => $val): ?>
-                        <?php //print_r($v); ?>
+                      
                        <tr id="row_<?php echo $x; ?>">
                          <td>
                           <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
                               <option value=""></option>
                               <?php foreach ($products as $k => $v): ?>
-                                <option value="<?php echo $v['id'] ?>" <?php if($val['product_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['name'] ?></option>
+                                <option value="<?php echo $v['id'] ?>" <?php if($val['producto_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['nombre'] ?></option>
                               <?php endforeach ?>
                             </select>
                           </td>
-                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['cantidad'] ?>" autocomplete="off"></td>
                           <td>
-                            <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['rate'] ?>" autocomplete="off">
-                            <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['rate'] ?>" autocomplete="off">
+                            <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['pu'] ?>" autocomplete="off">
+                            <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['pu'] ?>" autocomplete="off">
                           </td>
                           <td>
-                            <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['amount'] ?>" autocomplete="off">
-                            <input type="hidden" name="amount_value[]" id="amount_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['amount'] ?>" autocomplete="off">
+                            <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['monto'] ?>" autocomplete="off">
+                            <input type="hidden" name="amount_value[]" id="amount_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['monto'] ?>" autocomplete="off">
                           </td>
                           <td><button type="button" class="btn btn-default" onclick="removeRow('<?php echo $x; ?>')"><i class="fa fa-close"></i></button></td>
                        </tr>
@@ -155,39 +152,33 @@
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label">Cantidad bruta</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <?php if($is_service_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="service_charge" class="col-sm-5 control-label">S de carga <?php echo $company_data['service_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
-                    </div>
-                  </div>
+           
                   <?php endif; ?>
                   <?php if($is_vat_enabled == true): ?>
                   <div class="form-group">
-                    <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
+                    <label for="vat_charge" class="col-sm-5 control-label">IGV <?php echo $company_data['vat_charge_value'] ?> %</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>"  autocomplete="off"> 
+                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>" autocomplete="off"> 
                     </div>
                   </div>
                   <?php endif; ?>
                   <div class="form-group">
                     <label for="discount" class="col-sm-5 control-label">Descuento</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Descuento" onkeyup="subAmount()" value="<?php echo $order_data['order']['discount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Descuento" onkeyup="subAmount()" value="<?php echo $order_data['order']['descuento'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Importe neto</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
                     </div>
                   </div>
 
@@ -210,9 +201,9 @@
                 <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
                 <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
 
-                <a target="__blank" href="<?php echo base_url() . 'orders/printDiv/'.$order_data['order']['id'] ?>" class="btn btn-default" >Impresión</a>
+                <!-- <a target="__blank" href="<?php echo base_url() . 'pedidos/printDiv/'.$order_data['order']['id'] ?>" class="btn btn-default" >Impresión</a> -->
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Atras</a>
+                <a href="<?php echo base_url('pedidos/') ?>" class="btn btn-warning">Atras</a>
               </div>
             </form>
           <!-- /.box-body -->
@@ -267,7 +258,7 @@
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-          url: base_url + '/orders/getTableProductRow/',
+          url: base_url + '/pedidos/getTableProductRow/',
           type: 'post',
           dataType: 'json',
           success:function(response) {
@@ -336,7 +327,7 @@
 
     } else {
       $.ajax({
-        url: base_url + 'orders/getProductValueById',
+        url: base_url + 'pedidos/getPedidosValueById',
         type: 'post',
         data: {product_id : product_id},
         dataType: 'json',

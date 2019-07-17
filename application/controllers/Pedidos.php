@@ -227,13 +227,7 @@ class Pedidos extends Admin_Controller
 		$products = $this->model_products->getActiveProductData();
 		echo json_encode($products);
 	}
-	public function getTableMesaRow()
-	{
-		$mesas = $this->model_mesas->getActiveMesas();
-		echo json_encode($mesas);
-		// $mesas = $this->model_mesas->getActiveCategory();
-		// echo json_encode($mesas);
-	}
+
 	/*
 	* If the validation is not valid, then it redirects to the edit orders page 
 	* If the validation is successfully then it updates the data into the database 
@@ -272,7 +266,7 @@ class Pedidos extends Admin_Controller
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 			
 			$result = array();
-        	$orders_data = $this->model_pedidos->getOrdersData($id);
+        	$orders_data = $this->model_pedidos->getPedidosData($id);
     		$result['order'] = $orders_data;
     		$orders_item = $this->model_pedidos->getOrdersItemData($orders_data['id']);
     		foreach($orders_item as $k => $v) {

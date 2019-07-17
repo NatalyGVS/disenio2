@@ -50,8 +50,8 @@ class Model_pedidos extends CI_Model
 		if(!$order_id) {
 			return false;
 		}
-		/*$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-		$query = $this->db->query($sql, array($order_id));*/
+		$sql = "SELECT * FROM pedidos_item WHERE pedido_id = ?";
+		$query = $this->db->query($sql, array($order_id));
 		return $query->result_array();
 	}
 
@@ -297,13 +297,14 @@ class Model_pedidos extends CI_Model
 	{
 		if($id) {
 
-			$order = $this->model_orders->getOrdersData($id) ;
+			$order = $this->model_pedidos->getPedidosData($id) ;
 			
-            if($order['estado_orden']==0){
+            if($order['estado_pedido']==0){
 				$this->db->where('id', $id);
 				$delete = $this->db->delete('pedidos');
-				$this->db->where('order_id', $id);
-				$delete_item = $this->db->delete('orders_item');
+
+				$this->db->where('pedido_id', $id);
+				$delete_item = $this->db->delete('pedidos_item');
 				return ($delete == true && $delete_item) ? true : false;
 
 			}else{
