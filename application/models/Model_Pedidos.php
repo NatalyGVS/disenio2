@@ -20,6 +20,18 @@ class Model_pedidos extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getPedidosItemData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM pedidos_item WHERE pedido_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+		$sql = "SELECT * FROM pedidos_item ORDER BY pedido_id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	public function getProveedores($id = null)
 	{
 		if($id) {
@@ -40,6 +52,42 @@ class Model_pedidos extends CI_Model
 			return $query->row_array();
 		}
 		$sql = "SELECT * FROM insumo_proveedor ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getProductoInsumoData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM producto_insumo WHERE producto_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+		$sql = "SELECT * FROM producto_insumo ORDER BY producto_id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getValoracion($id = null, $idPro = null)
+	{
+		if($id) {
+			$sql = "SELECT valoracion FROM insumo_proveedor WHERE id_insumo = ? AND id_proveedor = ?";
+			$query = $this->db->query($sql, array($id, $idPro));
+			return $query->row_array();
+		}
+		$sql = "SELECT valoracion FROM insumo_proveedor ORDER BY producto_id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getInsumosData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM insumos WHERE id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+		$sql = "SELECT * FROM insumos ORDER BY id DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -264,14 +312,32 @@ class Model_pedidos extends CI_Model
 				foreach ($data as $key => $value) {
 					
 					// $consulta = "INSERT INTO `cotizacion`(`id_pedido`, `id_proveedor`, `fecha_cotizacion`,) 
-					$consulta = "INSERT INTO `cotizacion`(`id_pedido`,`id_proveedor`) 
-									 VALUES (" .$pedido['id']. ","   .$value['id'].    " ) ";
-
-											//    VALUES (" .$value['id']." ) ";
-											   
+					//"INSERT INTO `cotizacion`(`id_pedido`,`id_proveedor`)  VALUES (" .$pedido['id']. ","   .$value['id'].    " ) "
+					
+					$consulta = "CALL `INSERT_COTIZACION`(".$pedido['id'].",".$value['id'].")";
+					$ultimo_id_cotizacion = mysql_insert_id($conexion); 
 					$resultado = mysqli_query( $conexion, $consulta );
 
-				
+					$ped_item = $this->getPedidosItemData($pedido['id']);
+
+	    			$count_product = count($this->input->post('product'));
+			    	for($x = 0; $x < $count_product; $x++) {
+			    		$prod_insumo = $this->getProductoInsumoData($this->input->post('product')[$x]);
+			    		$val_ins_proveedor = $this->getValoracion($prod_insumo['insumo_id'],$value['id']);
+			    		$arreglo = array(
+			    			'pedido_id' => $id,
+			    			'producto_id' => $this->input->post('product')[$x],
+			    			'insumo_id' => $prod_insumo['insumo_id'],
+			    			'cantidad' => $this->input->post('qty')[$x],
+			    			'pu' => $this->input->post('rate_value')[$x],
+			    			'valoracion' => $val_ins_proveedor
+			    		);
+						$consulta2 = "CALL `INSERT_DET_COTIZACION`(".$ultimo_id_cotizacion.",".$arreglo['insumo_id']." , ".$arreglo['cantidad'].",".$arreglo['pu'].",".$arreglo['valoracion'].")";
+						$resultado2 = mysqli_query( $conexion, $consulta2);
+			    	}
+			    	$consulta3 = "CALL `UPDATE_COTIZACION`(".$ultimo_id_cotizacion.")";
+			    	$resultado3 = mysqli_query( $conexion, $consulta3);
+
 				} 
 
 			
