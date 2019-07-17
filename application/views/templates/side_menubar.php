@@ -108,6 +108,15 @@
             </li>
           <?php endif; ?>
 
+          <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
+            <li id="mainCotizacionNav">
+              <a href="<?php echo base_url('cotizacion/') ?>">
+                <img class="fa" src="/disenio2/assets/images/icons/products.png">
+                <span style="margin-left: 15px;">Cotizacion</span>
+              </a>
+            </li>
+          <?php endif; ?>
+
   
 
         <?php endif; ?>

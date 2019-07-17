@@ -24,18 +24,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `caja`
---
-
-CREATE TABLE `caja` (
-  `id` int(11) NOT NULL,
-  `monto_ini` int(11) NOT NULL,
-  `monto_fin` int(11) NOT NULL,
-  `active` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `categories`
@@ -64,48 +52,6 @@ INSERT INTO `categories` (`id`, `nombre`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `company`
---
-
-CREATE TABLE `company` (
-  `id` int(11) NOT NULL,
-  `company_name` varchar(255) NOT NULL,
-  `service_charge_value` varchar(255) NOT NULL,
-  `vat_charge_value` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `currency` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `company`
---
-
-INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`) VALUES
-(1, 'nombre', '', '18', 'doreccopm', '12312321', 'pais', 'holi', '5');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `customers`
---
-
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `groups`
 --
 
@@ -128,7 +74,6 @@ INSERT INTO `groups` (`id`, `group_name`, `permission`) VALUES
 --
 -- Estructura de tabla para la tabla `insumos`
 --
-
 CREATE TABLE `insumos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
@@ -149,26 +94,6 @@ INSERT INTO `insumos` (`id`, `nombre`, `cantidad`, `unidad_medida`) VALUES
 (6, 'insumo6', 7, 'u'),
 (7, 'insumo7', 0, 'u'),
 (8, 'insumo8', 0, 'kg');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mesas`
---
-
-CREATE TABLE `mesas` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `active` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `mesas`
---
-
-INSERT INTO `mesas` (`id`, `name`, `active`) VALUES
-(4, '1', 2),
-(5, '2', 2);
 
 -- --------------------------------------------------------
 
@@ -389,6 +314,17 @@ CREATE TABLE `users` (
   `gender` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `cotizacion` (
+  `id` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `id_insumo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_unitario` varchar(255) NOT NULL,
+  `valoracion` int(1) NOT NULL,
+  `precio_total` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Volcado de datos para la tabla `users`
 --
@@ -421,11 +357,6 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 -- Índices para tablas volcadas
 --
 
---
--- Indices de la tabla `caja`
---
-ALTER TABLE `caja`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `categories`
@@ -433,17 +364,6 @@ ALTER TABLE `caja`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `company`
---
-ALTER TABLE `company`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `groups`
@@ -455,12 +375,6 @@ ALTER TABLE `groups`
 -- Indices de la tabla `insumos`
 --
 ALTER TABLE `insumos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `mesas`
---
-ALTER TABLE `mesas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -521,19 +435,6 @@ ALTER TABLE `user_group`
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
---
--- AUTO_INCREMENT de la tabla `company`
---
-ALTER TABLE `company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `groups`
 --
 ALTER TABLE `groups`
@@ -544,12 +445,6 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `insumos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `mesas`
---
-ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `orders`
