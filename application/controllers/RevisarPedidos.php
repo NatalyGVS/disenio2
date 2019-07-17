@@ -56,13 +56,18 @@ class RevisarPedidos extends Admin_Controller
 			}
 			if(in_array('updateOrder', $this->permission)) {
 				$buttons .= ' <a href="'.base_url('revisarPedidos/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-eye"></i></a>';
+				
 			}
 			if(in_array('updateOrder', $this->permission)) {
-				$buttons .= ' <a href="'.base_url('revisarPedidos/view/'.$value['id']).'" class="btn btn-default"><i class="fa fa-check"></i></a>';
+				// $buttons .= ' <a href="'.base_url('revisarPedidos/view/'.$value['id']).'" class="btn btn-default"><i class="fa fa-check"></i></a>';
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="aprobarFunc('.$value['id'].')" data-toggle="modal" data-target="#aprobarModal"><i class="fa fa-check"></i></button>';
+
 			}
 			if(in_array('deleteOrder', $this->permission)) {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-close"></i></button>';
 			}
+
+			
 
 			if($value['estado_pago'] == 1) {
 				$estado_pago = '<span class="label label-success">Pagado</span>';	
@@ -305,7 +310,7 @@ class RevisarPedidos extends Admin_Controller
         if($order_id) {
 			
 					// $delete = $this->model_pedidos->remove($order_id);
-					$update = $this->model_pedidos->updateRechazado($id);
+					$update = $this->model_pedidos->updateRechazado($order_id);
 
 					if($update == true) {
 						$response['success'] = true;
@@ -322,7 +327,33 @@ class RevisarPedidos extends Admin_Controller
 				}
 				echo json_encode($response); 
 	}
+	public function aprobar() //actualizar re chazado
+	{
+		if(!in_array('deleteOrder', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
+		$order_id = $this->input->post('order_id');
+        $response = array();
+        if($order_id) {
+			
+					// $delete = $this->model_pedidos->remove($order_id);
+					$update = $this->model_pedidos->updateAprobado($order_id);
 
+					if($update == true) {
+						$response['success'] = true;
+						$response['messages'] = "Eliminado exitosamente"; 
+					}
+					else {
+						$response['success'] = false;
+						$response['messages'] = "Error en la base de datos";
+					}
+				}
+				else {
+					$response['success'] = false;
+					$response['messages'] = "Refersh the page again!!";
+				}
+				echo json_encode($response); 
+	}
 
 
 	/*
