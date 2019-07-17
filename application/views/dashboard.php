@@ -45,11 +45,9 @@
           </div>
 
 
-
-          <!-- ./col -->
+          <!--
           <div class="col-lg-4 col-xs-6">
           	<a href="<?php echo base_url('orders/') ?>" class="small-box-footer"> 
-            <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
                 <h3><?php echo $total_paid_orders ?></h3>
@@ -64,9 +62,9 @@
               </div>
               <label class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></label>
             </div>
-        </a>
+          </a>
           </div>
-
+          -->
 
 
 

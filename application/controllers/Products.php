@@ -232,16 +232,12 @@ class Products extends Admin_Controller
             // true case
             
             $data = array(
-                'name' => $this->input->post('product_name'),
-                'sku' => $this->input->post('sku'),
-                'price' => $this->input->post('price'),
-                'qty' => $this->input->post('qty'),
-                'description' => $this->input->post('description'),
-                // 'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
-                // 'brand_id' => json_encode($this->input->post('brands')),
-                'category_id' => json_encode($this->input->post('category')),
-                // 'store_id' => $this->input->post('store'),
-                'availability' => $this->input->post('availability'),
+                'nombre' => $this->input->post('product_name'),
+                'category_id' => $this->input->post('category'),
+                'material' => $this->input->post('material'),
+                'unidad_medida' => $this->input->post('unidad_medida'),
+                'descripcion' => $this->input->post('descripcion'),
+                'precio_unitario' => $this->input->post('precio'),
             );
 
             
