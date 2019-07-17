@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Pedidos extends Admin_Controller 
+class RevisarPedidos extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -23,8 +23,8 @@ class Pedidos extends Admin_Controller
 		if(!in_array('viewOrder', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
-		$this->data['page_title'] = 'Manage Pedidoss';
-		$this->render_template('pedidos/index', $this->data);		
+		$this->data['page_title'] = 'Revisar Pedidoss';
+		$this->render_template('revisarPedidos/index', $this->data);		
 	}
 	/*
 	* Fetches the orders data from the orders table 
@@ -55,11 +55,19 @@ class Pedidos extends Admin_Controller
 				// $buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
 			}
 			if(in_array('updateOrder', $this->permission)) {
-				$buttons .= ' <a href="'.base_url('pedidos/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+				$buttons .= ' <a href="'.base_url('revisarPedidos/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-eye"></i></a>';
+				
+			}
+			if(in_array('updateOrder', $this->permission)) {
+				// $buttons .= ' <a href="'.base_url('revisarPedidos/view/'.$value['id']).'" class="btn btn-default"><i class="fa fa-check"></i></a>';
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="aprobarFunc('.$value['id'].')" data-toggle="modal" data-target="#aprobarModal"><i class="fa fa-check"></i></button>';
+
 			}
 			if(in_array('deleteOrder', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-close"></i></button>';
 			}
+
+			
 
 			if($value['estado_pago'] == 1) {
 				$estado_pago = '<span class="label label-success">Pagado</span>';	
@@ -110,13 +118,14 @@ class Pedidos extends Admin_Controller
 				$date_time,
 				 $value['nombre_cli'], 
 				//  $value['direccion_cli'],
-				 $value['telefono_cli'],
+				//  $value['telefono_cli'],
 				 $value['ruc_cli'],
-				 $estado_pedido,
-				 $estado_pago,
-				 $value['cant_bruta'],
-				 $value['descuento'],
+				
+				//  $estado_pago,
+				//  $value['cant_bruta'],
+				//  $value['descuento'],
 				 $value['cant_neta'],
+				 $estado_pedido,
 				$buttons
 			);
 		} // /foreach
@@ -148,11 +157,11 @@ class Pedidos extends Admin_Controller
         	
         	if($order_id) {
 				$this->session->set_flashdata('success', 'Creado Satisfactoriamente');
-				redirect('pedidos/', 'refresh');
+				redirect('revisarPedidos/', 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Ocurrio un error!!!!');
-        		redirect('pedidos/create', 'refresh');
+        		redirect('revisarPedidos/create', 'refresh');
         	}
         }
         else {
@@ -162,7 +171,7 @@ class Pedidos extends Admin_Controller
         	 $this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
         	 $this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 			 $this->data['products'] = $this->model_products->getActiveProductData();   
-            $this->render_template('pedidos/create', $this->data);
+            $this->render_template('revisarPedidos/create', $this->data);
         }	
 	}
 
@@ -207,7 +216,7 @@ class Pedidos extends Admin_Controller
 		if(!$id) {
 			redirect('dashboard', 'refresh');
 		}
-		$this->data['page_title'] = 'Actualizar Pedido';
+		$this->data['page_title'] = 'Update Order';
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	
@@ -217,11 +226,11 @@ class Pedidos extends Admin_Controller
         	
         	if($update == true) {
         		$this->session->set_flashdata('success', 'Actualizado Satisfactoriamente');
-        		redirect('pedidos', 'refresh');
+        		redirect('revisarPedidos', 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error!!!');
-        		redirect('pedidos/update/'.$id, 'refresh');
+        		redirect('revisarPedidos/update/'.$id, 'refresh');
         	}
         }
         else {
@@ -240,12 +249,12 @@ class Pedidos extends Admin_Controller
     		}
     		$this->data['order_data'] = $result;
 			$this->data['products'] =  $this->model_products->getActiveProductData();   
-            $this->render_template('pedidos/edit', $this->data);
+            $this->render_template('revisarPedidos/edit', $this->data);
         }
 	}
 
 
-/*
+
 	public function updateEstado($id)
 	{
 		if(!in_array('updateOrder', $this->permission)) {
@@ -289,13 +298,9 @@ class Pedidos extends Admin_Controller
             $this->render_template('pedidos/estado', $this->data);
         }
 	}
- */
+ 
 
-	/*
-	* It removes the data from the database
-	* and it returns the response into the json format
-	*/
-	public function remove()
+	public function remove() //actualizar re chazado
 	{
 		if(!in_array('deleteOrder', $this->permission)) {
             redirect('dashboard', 'refresh');
@@ -304,8 +309,10 @@ class Pedidos extends Admin_Controller
         $response = array();
         if($order_id) {
 			
-					$delete = $this->model_pedidos->remove($order_id);
-					if($delete == true) {
+					// $delete = $this->model_pedidos->remove($order_id);
+					$update = $this->model_pedidos->updateRechazado($order_id);
+
+					if($update == true) {
 						$response['success'] = true;
 						$response['messages'] = "Eliminado exitosamente"; 
 					}
@@ -320,9 +327,7 @@ class Pedidos extends Admin_Controller
 				}
 				echo json_encode($response); 
 	}
-
-
-	public function actualizar()
+	public function aprobar() //actualizar re chazado
 	{
 		if(!in_array('deleteOrder', $this->permission)) {
             redirect('dashboard', 'refresh');
@@ -330,21 +335,24 @@ class Pedidos extends Admin_Controller
 		$order_id = $this->input->post('order_id');
         $response = array();
         if($order_id) {
-            $delete = $this->model_pedidos->remove($order_id);
-            if($delete == true) {
-                $response['success'] = true;
-                $response['messages'] = "Successfully removed"; 
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = "Error in the database while removing the product information";
-            }
-        }
-        else {
-            $response['success'] = false;
-            $response['messages'] = "Refersh the page again!!";
-        }
-        echo json_encode($response); 
+			
+					// $delete = $this->model_pedidos->remove($order_id);
+					$update = $this->model_pedidos->updateAprobado($order_id);
+
+					if($update == true) {
+						$response['success'] = true;
+						$response['messages'] = "Eliminado exitosamente"; 
+					}
+					else {
+						$response['success'] = false;
+						$response['messages'] = "Error en la base de datos";
+					}
+				}
+				else {
+					$response['success'] = false;
+					$response['messages'] = "Refersh the page again!!";
+				}
+				echo json_encode($response); 
 	}
 
 

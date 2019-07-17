@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2019 a las 02:15:08
+-- Tiempo de generación: 17-07-2019 a las 22:00:45
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -23,7 +23,6 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
 
 --
 -- Estructura de tabla para la tabla `categories`
@@ -46,8 +45,71 @@ INSERT INTO `categories` (`id`, `nombre`, `active`) VALUES
 (4, 'Forjados', 1),
 (5, 'Válvulas', 1),
 (6, 'Portaválvulas', 1),
-(7, 'Maquinados', 1),
-(8, 'Laton', 1);
+(7, 'Maquinados', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company`
+--
+
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `service_charge_value` varchar(255) NOT NULL,
+  `vat_charge_value` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `currency` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `company`
+--
+
+INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`) VALUES
+(1, 'nombre', '', '18', 'doreccopm', '12312321', 'pais', 'holi', '5');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cotizacion`
+--
+
+CREATE TABLE `cotizacion` (
+  `id` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `fecha_cotizacion` varchar(255) NOT NULL,
+  `puntuacion` varchar(255) NOT NULL,
+  `precio` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cotizacion`
+--
+
+INSERT INTO `cotizacion` (`id`, `id_pedido`, `id_proveedor`, `fecha_cotizacion`, `puntuacion`, `precio`) VALUES
+(36, 8, 1, '', '', ''),
+(37, 8, 2, '', '', ''),
+(38, 8, 3, '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cotizacion_detalle`
+--
+
+CREATE TABLE `cotizacion_detalle` (
+  `id` int(11) NOT NULL,
+  `id_cotizacion` int(11) NOT NULL,
+  `insumo_id` int(11) NOT NULL,
+  `cant_total` varchar(255) NOT NULL,
+  `pu` varchar(255) NOT NULL,
+  `valoracion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -74,6 +136,7 @@ INSERT INTO `groups` (`id`, `group_name`, `permission`) VALUES
 --
 -- Estructura de tabla para la tabla `insumos`
 --
+
 CREATE TABLE `insumos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
@@ -87,13 +150,57 @@ CREATE TABLE `insumos` (
 
 INSERT INTO `insumos` (`id`, `nombre`, `cantidad`, `unidad_medida`) VALUES
 (1, 'insumo1', 2, 'kg'),
-(2, 'insumo2', 22, 'kg'),
+(2, 'insumo2', 20, 'kg'),
 (3, 'insumo3', 62, 'kg'),
-(4, 'insumo4', 60, 'gr'),
+(4, 'insumo4', 58, 'gr'),
 (5, 'insumo5', 0, 'lt'),
 (6, 'insumo6', 7, 'u'),
 (7, 'insumo7', 0, 'u'),
 (8, 'insumo8', 0, 'kg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `insumo_proveedor`
+--
+
+CREATE TABLE `insumo_proveedor` (
+  `id` int(11) NOT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `id_insumo` int(11) NOT NULL,
+  `precio_unitario` varchar(255) NOT NULL,
+  `valoracion` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `insumo_proveedor`
+--
+
+INSERT INTO `insumo_proveedor` (`id`, `id_proveedor`, `id_insumo`, `precio_unitario`, `valoracion`) VALUES
+(1, 1, 1, '5', 3),
+(2, 1, 2, '5', 3),
+(3, 1, 3, '5.8', 5),
+(4, 1, 4, '5', 4),
+(5, 1, 5, '7', 3),
+(6, 1, 6, '3', 3),
+(7, 1, 7, '5', 4),
+(8, 1, 8, '4', 3),
+(9, 2, 1, '5.4', 3),
+(10, 2, 2, '5.1', 3),
+(11, 2, 3, '5', 5),
+(12, 2, 4, '5', 4),
+(13, 2, 5, '6.8', 3),
+(14, 2, 6, '3.2', 3),
+(15, 2, 7, '4', 4),
+(16, 2, 8, '3', 3),
+(17, 3, 1, '5.6', 3),
+(18, 4, 2, '6', 3),
+(19, 3, 3, '6.8', 5),
+(20, 4, 4, '5', 4),
+(21, 3, 5, '7.3', 3),
+(22, 3, 6, '3.5', 3),
+(23, 3, 7, '5.7', 4),
+(24, 3, 8, '4.9', 3);
 
 -- --------------------------------------------------------
 
@@ -154,6 +261,65 @@ INSERT INTO `orders_item` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amoun
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(11) NOT NULL,
+  `codPedido` varchar(255) NOT NULL,
+  `fecha` varchar(255) NOT NULL,
+  `nombre_cli` varchar(255) NOT NULL,
+  `direccion_cli` varchar(255) NOT NULL,
+  `telefono_cli` varchar(255) NOT NULL,
+  `ruc_cli` varchar(255) NOT NULL,
+  `estado_pedido` int(11) NOT NULL,
+  `estado_pago` int(11) NOT NULL,
+  `cant_bruta` varchar(255) NOT NULL,
+  `descuento` varchar(255) NOT NULL,
+  `cant_neta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `codPedido`, `fecha`, `nombre_cli`, `direccion_cli`, `telefono_cli`, `ruc_cli`, `estado_pedido`, `estado_pago`, `cant_bruta`, `descuento`, `cant_neta`) VALUES
+(7, 'FISI-PED-1BD8', '1563361139', 'cli4', '', '', '', 0, 0, '4.24', '', '5.00'),
+(8, 'FISI-PED-7880', '1563364095', 'Aaaaa', 'Aaaaaa', 'Bbbbbb', '1232132', 3, 0, '98.00', '10', '105.64'),
+(9, 'FISI-PED-4416', '1563390182', 'aa', '', '', '', 0, 0, '5.23', '', '6.17'),
+(10, 'FISI-PED-AB99', '1563390189', 'ss', 'ss', '', '', 0, 0, '5.23', '', '6.17'),
+(11, 'FISI-PED-9D40', '1563390198', 'ssda', '', '', '', 0, 0, '3.15', '', '3.72');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedidos_item`
+--
+
+CREATE TABLE `pedidos_item` (
+  `id` int(11) NOT NULL,
+  `pedido_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` varchar(255) NOT NULL,
+  `pu` int(11) NOT NULL,
+  `monto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pedidos_item`
+--
+
+INSERT INTO `pedidos_item` (`id`, `pedido_id`, `producto_id`, `cantidad`, `pu`, `monto`) VALUES
+(11, 7, 122, '1', 4, 4),
+(29, 8, 121, '6', 3, 18),
+(30, 8, 122, '20', 4, 80),
+(31, 9, 123, '1', 5, 5),
+(32, 10, 123, '1', 5, 5),
+(33, 11, 121, '1', 3, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `productosnew`
 --
 
@@ -188,7 +354,8 @@ INSERT INTO `productosnew` (`id`, `nombre`, `category_id`, `material`, `unidad_m
 (120, 'Esparcellamas', '4', '1', '0', '', 'assets/images/product_image/defecto.jpg', '4.12'),
 (121, 'Premium', '5', '1', '0', '', 'assets/images/product_image/defecto.jpg', '3.15'),
 (122, 'Portaválvulas', '6', '1', '0', '', 'assets/images/product_image/defecto.jpg', '4.24'),
-(123, 'Peritas', '7', '1', '0', '', 'assets/images/product_image/defecto.jpg', '5.23');
+(123, 'Peritas', '2', '1', '2', 'lkk', 'assets/images/product_image/defecto.jpg', '5.23'),
+(125, 'sa', '1', '1', '0', '', 'assets/images/product_image/defecto.jpg', '333');
 
 -- --------------------------------------------------------
 
@@ -242,7 +409,11 @@ INSERT INTO `producto_insumo` (`id`, `producto_id`, `insumo_id`, `cantidad`) VAL
 (88, 122, 3, '3'),
 (89, 122, 2, '2'),
 (90, 123, 3, '4'),
-(91, 123, 2, '1');
+(91, 123, 2, '1'),
+(92, 124, 4, '2'),
+(93, 124, 2, '2'),
+(94, 125, 3, '2'),
+(95, 125, 6, '13');
 
 -- --------------------------------------------------------
 
@@ -252,25 +423,17 @@ INSERT INTO `producto_insumo` (`id`, `producto_id`, `insumo_id`, `cantidad`) VAL
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `sku` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `material` varchar(255) DEFAULT NULL,
+  `unidad_medida` varchar(255) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
   `price` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL,
   `image` text NOT NULL,
-  `description` text NOT NULL,
-  `category_id` text NOT NULL,
-  `availability` int(11) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `products`
---
-
-INSERT INTO `products` (`id`, `nombre`, `sku`, `price`, `qty`, `image`, `description`, `category_id`, `availability`) VALUES
-(1, 's', 's', 's', 's', '<p>You did not select a file to upload.</p>', '', '[\"2\"]', 1),
-(2, 'r', 'rr', 'rr', '-1', 'assets/images/product_image/5d199cd9b04ce.jpg', '<p>ret</p>', '[\"5\"]', 1),
-(3, 'aa', 'aa', '33', '333', 'assets/images/product_image/5d1cb3bd22af4.jpg', '<p>eee</p>', 'null', 1),
-(4, 'sadasdasd', 'asadasdsa', '444', '444', '<p>You did not select a file to upload.</p>', '<p>sadsad</p>', '[\"5\"]', 1);
 
 -- --------------------------------------------------------
 
@@ -291,11 +454,9 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`id`, `razon_social`, `ruc`, `direccion`, `tipo_proveedor`) VALUES
-(3, 'oads', '989898', 'ooo', '1'),
-(4, 'Cia Camporsal', '20415721677', 'Avenida Colonial 560', '1'),
-(5, 'Mecanica Industrial Lira', '20190143806', 'Calle Huarán 149 - 151 . Urb.27 de Abril', '1'),
-(6, 'Dincorsa', '20165016115', 'Calle Mariscal Luzuriaga 544', '1'),
-(7, 'PRUEVA', '1123', '213', '1');
+(1, 'Cia Camporsal', '20415721677', 'Avenida Colonial 560', '1'),
+(2, 'Mecanica Industrial Lira', '20190143806', 'Calle Huarán 149 - 151 . Urb.27 de Abril', '1'),
+(3, 'Dincorsa', '20165016115', 'Calle Mariscal Luzuriaga 544', '1');
 
 -- --------------------------------------------------------
 
@@ -312,17 +473,6 @@ CREATE TABLE `users` (
   `lastname` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `gender` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `id_proveedor` int(11) NOT NULL,
-  `id_insumo` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio_unitario` varchar(255) NOT NULL,
-  `valoracion` int(1) NOT NULL,
-  `precio_total` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -357,13 +507,29 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 -- Índices para tablas volcadas
 --
 
-
 --
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indices de la tabla `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cotizacion`
+--
+ALTER TABLE `cotizacion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cotizacion_detalle`
+--
+ALTER TABLE `cotizacion_detalle`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `groups`
@@ -378,6 +544,14 @@ ALTER TABLE `insumos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `insumo_proveedor`
+--
+ALTER TABLE `insumo_proveedor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_proveedor` (`id_proveedor`),
+  ADD KEY `id_insumo` (`id_insumo`);
+
+--
 -- Indices de la tabla `orders`
 --
 ALTER TABLE `orders`
@@ -387,6 +561,18 @@ ALTER TABLE `orders`
 -- Indices de la tabla `orders_item`
 --
 ALTER TABLE `orders_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedidos_item`
+--
+ALTER TABLE `pedidos_item`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -405,7 +591,9 @@ ALTER TABLE `producto_insumo`
 -- Indices de la tabla `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `proveedor_id` (`proveedor_id`);
 
 --
 -- Indices de la tabla `proveedores`
@@ -433,8 +621,27 @@ ALTER TABLE `user_group`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
+--
+-- AUTO_INCREMENT de la tabla `company`
+--
+ALTER TABLE `company`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `cotizacion`
+--
+ALTER TABLE `cotizacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT de la tabla `cotizacion_detalle`
+--
+ALTER TABLE `cotizacion_detalle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `groups`
 --
 ALTER TABLE `groups`
@@ -445,6 +652,12 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `insumos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `insumo_proveedor`
+--
+ALTER TABLE `insumo_proveedor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `orders`
@@ -459,28 +672,40 @@ ALTER TABLE `orders_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `pedidos_item`
+--
+ALTER TABLE `pedidos_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
 -- AUTO_INCREMENT de la tabla `productosnew`
 --
 ALTER TABLE `productosnew`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_insumo`
 --
 ALTER TABLE `producto_insumo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -493,6 +718,17 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -43,7 +43,7 @@ class Model_products extends CI_Model
 
 	public function getActiveInsumoData()
 	{
-	    $sql = "SELECT * FROM insumos where cantidad > 0  ORDER BY id DESC"; 
+	    $sql = "SELECT * FROM insumos where cantidad >= 0  ORDER BY id DESC"; 
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
@@ -103,7 +103,7 @@ class Model_products extends CI_Model
 			// $this->db->insert('producto_insumo', $items);
 
 			// now decrease the stock from the insumogetInsumoData
-			
+			/*
 			$product_data = $this->model_products->getInsumoData($this->input->post('product')[$x]); // id del insumo
 			
     		$qty = (int) $product_data['cantidad'] - (int) $this->input->post('qty')[$x];
@@ -120,7 +120,7 @@ class Model_products extends CI_Model
 				$delete = $this->db->delete('productosnew');
 				return false;
 			}
-
+			*/
 			// SI ESTA BIEN RECIEN AGREGA A LA TABLA PRODUCTO_INSUMO
 			$this->db->insert('producto_insumo', $items);
     	

@@ -5,7 +5,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Gestionar Pedidos
+      Revisar Pedidos
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -35,13 +35,8 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Gestionar Pedidos</h3>
+            <h3 class="box-title">Revisar Pedidos(Aprobar/Rechazar)</h3>
           </div>
-
-          <?php if(in_array('createOrder', $user_permission)): ?>
-          <a href="<?php echo base_url('pedidos/create') ?>" class="btn btn-primary">Añadir Pedido</a>
-          <br /> <br />
-        <?php endif; ?>
 
 
           <!-- /.box-header -->
@@ -53,14 +48,14 @@
                  <th> Fecha de Emision </th>
                  <th> Nombre del cliente </th>
 <!--                  <th> Direccion del Cliente </th> -->
-                 <th> Telefono del Cliente</th>
+<!--                  <th> Telefono del Cliente</th> -->
                  <th> RUC  </th>
-                 <th> Estado Pedido </th>
-                 <th> Estado de pago </th>
-                  <th> Cantidad Bruta </th> 
-                  <th> Descuento </th> 
+                 
+<!--                  <th> Estado de pago </th> -->
+                  <!-- <th> Cantidad Bruta </th>  -->
+                  <!-- <th> Descuento </th>  -->
                   <th> Cantidad Neta </th>  
-                  
+                  <th> Estado Pedido </th>
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                   <th>Acción</th>
                 <?php endif; ?>
@@ -93,9 +88,9 @@
         <h4 class="modal-title">Eliminar pedido</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('pedidos/remove') ?>" method="post" id="removeForm">
+      <form role="form" action="<?php echo base_url('revisarPedidos/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
-          <p>¿Realmente quieres eliminar?</p>
+          <p>¿Seguro que desea Rechazar el Pedido?</p>
           
         </div>
          
@@ -114,6 +109,35 @@
 <?php endif; ?>
 
 
+<?php if(in_array('deleteOrder', $user_permission)): ?>
+<!-- remove brand modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="aprobarModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Aprobar pedido</h4>
+      </div>
+
+      <form role="form" action="<?php echo base_url('revisarPedidos/aprobar') ?>" method="post" id="aprobarForm">
+        <div class="modal-body">
+          <p>¿Seguro que desea Aprobar el Pedido?</p>
+          
+        </div>
+         
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </div>
+      </form>
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php endif; ?>
 
 <script type="text/javascript">
 var manageTable;
@@ -121,12 +145,12 @@ var base_url = "<?php echo base_url(); ?>";
 
 $(document).ready(function() {
 
-  $("#mainPedidosNav").addClass('active');
-  $("#managePedidosNav").addClass('active');
+  $("#mainRevPedidosNav").addClass('active');
+  $("#manageRevPedidosNav").addClass('active');
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': base_url + 'pedidos/fetchPedidosData',
+    'ajax': base_url + 'revisarPedidos/fetchPedidosData',
     'order': [],
     "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
@@ -179,5 +203,50 @@ function removeFunc(id)
   }
 }
 
+// remove functions 
+function aprobarFunc(id)
+{
+  if(id) {
+    $("#aprobarForm").on('submit', function() {
+
+      var form = $(this);
+
+      // remove the text-danger
+
+
+      $(".text-danger").remove();
+
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data: { order_id:id }, 
+        dataType: 'json',
+        success:function(response) {
+
+          manageTable.ajax.reload(null, false); 
+
+          if(response.success === true) {
+            $("#messages").html('<div class="alert alert-success alert-dismissible" role="alert">'+
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+              '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+
+            '</div>');
+
+            // hide the modal
+            $("#aprobarModal").modal('hide');
+
+          } else {
+
+            $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+              '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
+            '</div>'); 
+          }
+        }
+      }); 
+
+      return false;
+    });
+  }
+}
 
 </script>

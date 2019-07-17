@@ -24,6 +24,9 @@ class Model_proveedores extends CI_Model
 		  $query = $this->db->query($sql);
 		  return $query->result_array();
 	}
+
+
+	
 /*
 	public function getMesasData_PyO($id = null)  // PEDIDOS Y ORDENES
 	{
