@@ -52,7 +52,7 @@
                  <th> Codigo de Pedido </th>
                  <th> Fecha de Emision </th>
                  <th> Nombre del cliente </th>
-                 <th> Direccion del Cliente </th>
+<!--                  <th> Direccion del Cliente </th> -->
                  <th> Telefono del Cliente</th>
                  <th> RUC  </th>
                  <th> Estado Pedido </th>

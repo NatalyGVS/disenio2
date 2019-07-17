@@ -64,14 +64,6 @@
                   </div>
 
 
-                  <!-- <div class="form-group">
-                    <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Nombre de Mesa</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="estado_orden" name="estado_orden" placeholder="Enter Customer Name" value="<?php //echo $order_data['order']['estado_orden'] ?>" autocomplete="off"/>
-                    </div>
-                  </div> -->
-
-
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Nombre del cliente</label>
                     <div class="col-sm-7">
@@ -201,7 +193,6 @@
                 <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
                 <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
 
-                <!-- <a target="__blank" href="<?php echo base_url() . 'pedidos/printDiv/'.$order_data['order']['id'] ?>" class="btn btn-default" >Impresión</a> -->
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
                 <a href="<?php echo base_url('pedidos/') ?>" class="btn btn-warning">Atras</a>
               </div>
@@ -222,26 +213,7 @@
 
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
-  // function printOrder(id)
-  // {
-  //   if(id) {
-  //     $.ajax({
-  //       url: base_url + 'orders/printDiv/' + id,
-  //       type: 'post',
-  //       success:function(response) {
-  //         var mywindow = window.open('', 'new div', 'height=400,width=600');
-  //         // mywindow.document.write('<html><head><title></title>');
-  //         // mywindow.document.write('<link rel="stylesheet" href="<?php //echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>" type="text/css" />');
-  //         // mywindow.document.write('</head><body >');
-  //         mywindow.document.write(response);
-  //         // mywindow.document.write('</body></html>');
-  //         mywindow.print();
-  //         mywindow.close();
-  //         return true;
-  //       }
-  //     });
-  //   }
-  // }
+
 
   $(document).ready(function() {
     $(".select_group").select2();
@@ -270,7 +242,7 @@
                     '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
                         '<option value=""></option>';
                         $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
+                          html += '<option value="'+value.id+'">'+value.nombre+'</option>';             
                         });
                         
                       html += '</select>'+
@@ -334,13 +306,13 @@
         success:function(response) {
           // setting the rate value into the rate input field
           
-          $("#rate_"+row_id).val(response.price);
-          $("#rate_value_"+row_id).val(response.price);
+          $("#rate_"+row_id).val(response.precio_unitario);
+          $("#rate_value_"+row_id).val(response.precio_unitario);
 
           $("#qty_"+row_id).val(1);
           $("#qty_value_"+row_id).val(1);
 
-          var total = Number(response.price) * 1;
+          var total = Number(response.precio_unitario) * 1;
           total = total.toFixed(2);
           $("#amount_"+row_id).val(total);
           $("#amount_value_"+row_id).val(total);

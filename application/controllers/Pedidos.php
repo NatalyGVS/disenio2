@@ -33,40 +33,6 @@ class Pedidos extends Admin_Controller
 
 	
 
-	public function fetchMesasData()
-	{ 
-		$result = array('data' => array());
-
-		$data = $this->model_mesas->getMesasData_PyO();
-
-		foreach ($data as $key => $value) {
-
-			// button
-			$buttons = '';
-
-			//if(in_array('updateMesas', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editFunc('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
-			//}
-
-			//if(in_array('deleteMesas', $this->permission)) {
-			
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
-			//}
-				
-
-			$status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
-
-			$result['data'][$key] = array(
-				$value['name'],
-				$status,
-				$buttons
-			);
-		} // /foreach
-
-		echo json_encode($result);
-	}
-
-
 	public function fetchPedidosData()
 	{   
 
@@ -143,7 +109,7 @@ class Pedidos extends Admin_Controller
 				$value['codPedido'],
 				$date_time,
 				 $value['nombre_cli'], 
-				 $value['direccion_cli'],
+				//  $value['direccion_cli'],
 				 $value['telefono_cli'],
 				 $value['ruc_cli'],
 				 $estado_pedido,
@@ -250,11 +216,11 @@ class Pedidos extends Admin_Controller
         	$update = $this->model_pedidos->update($id);
         	
         	if($update == true) {
-        		$this->session->set_flashdata('success', 'Successfully updated');
+        		$this->session->set_flashdata('success', 'Actualizado Satisfactoriamente');
         		redirect('pedidos', 'refresh');
         	}
         	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
+        		$this->session->set_flashdata('errors', 'Error!!!');
         		redirect('pedidos/update/'.$id, 'refresh');
         	}
         }

@@ -109,26 +109,23 @@ class Model_pedidos extends CI_Model
 	public function update($id)
 	{
 		if($id) {
-			$user_id = $this->session->userdata('id');
+		
 			// fetch the order data 
 			$data = array(
-				'customer_name' => $this->input->post('customer_name'),
-	    		'customer_address' => $this->input->post('customer_address'),
-	    		'customer_phone' => $this->input->post('customer_phone'),
-	    		'gross_amount' => $this->input->post('gross_amount_value'),
-	    		'service_charge_rate' => $this->input->post('service_charge_rate'),
-	    		'service_charge' => ($this->input->post('service_charge_value') > 0) ? $this->input->post('service_charge_value'):0,
-	    		'vat_charge_rate' => $this->input->post('vat_charge_rate'),
-	    		'vat_charge' => ($this->input->post('vat_charge_value') > 0) ? $this->input->post('vat_charge_value') : 0,
-	    		'net_amount' => $this->input->post('net_amount_value'),
-	    		'discount' => $this->input->post('discount'),
-	    		'paid_status' => $this->input->post('paid_status'),
-	    		'user_id' => $user_id
+				'nombre_cli' => $this->input->post('customer_name'),
+	    		'direccion_cli' => $this->input->post('customer_address'),
+	    		'telefono_cli' => $this->input->post('customer_phone'),
+	    		'ruc_cli' => $this->input->post('RUC'),
+	    		'cant_bruta' => $this->input->post('gross_amount_value'),
+	    		'descuento' => $this->input->post('discount'),
+				'cant_neta' => $this->input->post('net_amount_value')
+			
 	    	);
 			$this->db->where('id', $id);
 			$update = $this->db->update('pedidos', $data);
 			// now the order item 
 			// first we will replace the product qty to original and subtract the qty again
+/*
 			$this->load->model('model_products');
 			$get_order_item = $this->getOrdersItemData($id);
 			foreach ($get_order_item as $k => $v) {
@@ -141,27 +138,30 @@ class Model_pedidos extends CI_Model
 				
 				// update the product qty
 				$this->model_products->update($update_product_data, $product_id);
-			}
-			// now remove the order item data 
-			$this->db->where('order_id', $id);
-			$this->db->delete('orders_item');
+			} */
+
+			// now remove the pedidos item data 
+			$this->db->where('pedido_id', $id);
+			$this->db->delete('pedidos_item');
+
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
 	    	for($x = 0; $x < $count_product; $x++) {
 	    		$items = array(
-	    			'order_id' => $id,
-	    			'product_id' => $this->input->post('product')[$x],
-	    			'qty' => $this->input->post('qty')[$x],
-	    			'rate' => $this->input->post('rate_value')[$x],
-	    			'amount' => $this->input->post('amount_value')[$x],
+	    			'pedido_id' => $id,
+	    			'producto_id' => $this->input->post('product')[$x],
+	    			'cantidad' => $this->input->post('qty')[$x],
+	    			'pu' => $this->input->post('rate_value')[$x],
+	    			'monto' => $this->input->post('amount_value')[$x],
 	    		);
-				$this->db->insert('orders_item', $items);
+				$this->db->insert('pedidos_item', $items);
 				
-	    		// now decrease the stock from the product
+				// DISMINUIRAN LOS INSUMOS CUADNO EL JP LO ACEPTE 
+				/*
 	    		$product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
 	    		$qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
 	    		$update_product = array('qty' => $qty);
-	    		$this->model_products->update($update_product, $this->input->post('product')[$x]);
+	    		$this->model_products->update($update_product, $this->input->post('product')[$x]); */
 	    	}
 			return true;
 		}
