@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2019 a las 02:15:08
+-- Tiempo de generación: 17-07-2019 a las 15:20:08
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -58,8 +58,7 @@ INSERT INTO `categories` (`id`, `nombre`, `active`) VALUES
 (4, 'Forjados', 1),
 (5, 'Válvulas', 1),
 (6, 'Portaválvulas', 1),
-(7, 'Maquinados', 1),
-(8, 'Laton', 1);
+(7, 'Maquinados', 1);
 
 -- --------------------------------------------------------
 
@@ -142,9 +141,9 @@ CREATE TABLE `insumos` (
 
 INSERT INTO `insumos` (`id`, `nombre`, `cantidad`, `unidad_medida`) VALUES
 (1, 'insumo1', 2, 'kg'),
-(2, 'insumo2', 22, 'kg'),
+(2, 'insumo2', 20, 'kg'),
 (3, 'insumo3', 62, 'kg'),
-(4, 'insumo4', 60, 'gr'),
+(4, 'insumo4', 58, 'gr'),
 (5, 'insumo5', 0, 'lt'),
 (6, 'insumo6', 7, 'u'),
 (7, 'insumo7', 0, 'u'),
@@ -263,7 +262,7 @@ INSERT INTO `productosnew` (`id`, `nombre`, `category_id`, `material`, `unidad_m
 (120, 'Esparcellamas', '4', '1', '0', '', 'assets/images/product_image/defecto.jpg', '4.12'),
 (121, 'Premium', '5', '1', '0', '', 'assets/images/product_image/defecto.jpg', '3.15'),
 (122, 'Portaválvulas', '6', '1', '0', '', 'assets/images/product_image/defecto.jpg', '4.24'),
-(123, 'Peritas', '7', '1', '0', '', 'assets/images/product_image/defecto.jpg', '5.23');
+(123, 'Peritas', '2', '1', '2', 'lkk', 'assets/images/product_image/defecto.jpg', '5.23');
 
 -- --------------------------------------------------------
 
@@ -317,7 +316,9 @@ INSERT INTO `producto_insumo` (`id`, `producto_id`, `insumo_id`, `cantidad`) VAL
 (88, 122, 3, '3'),
 (89, 122, 2, '2'),
 (90, 123, 3, '4'),
-(91, 123, 2, '1');
+(91, 123, 2, '1'),
+(92, 124, 4, '2'),
+(93, 124, 2, '2');
 
 -- --------------------------------------------------------
 
@@ -327,25 +328,17 @@ INSERT INTO `producto_insumo` (`id`, `producto_id`, `insumo_id`, `cantidad`) VAL
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `sku` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `proveedor_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `material` varchar(255) DEFAULT NULL,
+  `unidad_medida` varchar(255) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
   `price` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL,
   `image` text NOT NULL,
-  `description` text NOT NULL,
-  `category_id` text NOT NULL,
-  `availability` int(11) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `products`
---
-
-INSERT INTO `products` (`id`, `nombre`, `sku`, `price`, `qty`, `image`, `description`, `category_id`, `availability`) VALUES
-(1, 's', 's', 's', 's', '<p>You did not select a file to upload.</p>', '', '[\"2\"]', 1),
-(2, 'r', 'rr', 'rr', '-1', 'assets/images/product_image/5d199cd9b04ce.jpg', '<p>ret</p>', '[\"5\"]', 1),
-(3, 'aa', 'aa', '33', '333', 'assets/images/product_image/5d1cb3bd22af4.jpg', '<p>eee</p>', 'null', 1),
-(4, 'sadasdasd', 'asadasdsa', '444', '444', '<p>You did not select a file to upload.</p>', '<p>sadsad</p>', '[\"5\"]', 1);
 
 -- --------------------------------------------------------
 
@@ -366,11 +359,9 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`id`, `razon_social`, `ruc`, `direccion`, `tipo_proveedor`) VALUES
-(3, 'oads', '989898', 'ooo', '1'),
 (4, 'Cia Camporsal', '20415721677', 'Avenida Colonial 560', '1'),
 (5, 'Mecanica Industrial Lira', '20190143806', 'Calle Huarán 149 - 151 . Urb.27 de Abril', '1'),
-(6, 'Dincorsa', '20165016115', 'Calle Mariscal Luzuriaga 544', '1'),
-(7, 'PRUEVA', '1123', '213', '1');
+(6, 'Dincorsa', '20165016115', 'Calle Mariscal Luzuriaga 544', '1');
 
 -- --------------------------------------------------------
 
@@ -491,7 +482,9 @@ ALTER TABLE `producto_insumo`
 -- Indices de la tabla `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `proveedor_id` (`proveedor_id`);
 
 --
 -- Indices de la tabla `proveedores`
@@ -519,7 +512,7 @@ ALTER TABLE `user_group`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `company`
@@ -567,25 +560,25 @@ ALTER TABLE `orders_item`
 -- AUTO_INCREMENT de la tabla `productosnew`
 --
 ALTER TABLE `productosnew`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_insumo`
 --
 ALTER TABLE `producto_insumo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -598,6 +591,17 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
