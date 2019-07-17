@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-07-2019 a las 23:33:04
+-- Tiempo de generación: 17-07-2019 a las 02:15:08
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -78,6 +78,13 @@ CREATE TABLE `company` (
   `message` text NOT NULL,
   `currency` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `company`
+--
+
+INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`) VALUES
+(1, 'nombre', '', '18', 'doreccopm', '12312321', 'pais', 'holi', '5');
 
 -- --------------------------------------------------------
 
@@ -518,7 +525,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `customers`
