@@ -34,7 +34,7 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Editar Ordennn</h3>
+            <h3 class="box-title">Visualizar Pedidos</h3>
           </div>
           <!-- /.box-header -->
           <form role="form" action="<?php base_url('pedidos/create') ?>" method="post" class="form-horizontal">
@@ -49,6 +49,19 @@
 
                 <div class="col-md-4 col-xs-12 pull pull-left">
 
+
+
+
+                  <div class="form-group">
+                    <label for="estado_orden" class="col-sm-5 control-label">Estado pagado</label>
+                    <div class="col-sm-7">
+                      <select type="text" class="form-control" id="estado_orden" name="estado_orden" disabled>
+                        <option value="0">En espera</option>
+                        <option value="1">En Preparacion</option>
+                        <option value="1">Despachado</option>
+                      </select>
+                    </div>
+                  </div>
 
 
                   <div class="form-group">
@@ -125,41 +138,48 @@
                 </table>
 
                 <br /> <br/>
+
                 <div class="col-md-6 col-xs-12 pull pull-right">
 
-                              <div class="form-group">
-                                <label for="gross_amount" class="col-sm-5 control-label">Cantidad bruta</label>
-                                <div class="col-sm-7">
-                                  <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
-                                  <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
-                                </div>
-                              </div>
+                  <div class="form-group">
+                    <label for="gross_amount" class="col-sm-5 control-label">Cantidad bruta</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['cant_bruta'] ?>" autocomplete="off">
+                    </div>
+                  </div>
+                  <?php if($is_service_enabled == true): ?>
+           
+                  <?php endif; ?>
+                  <?php if($is_vat_enabled == true): ?>
+                  <div class="form-group">
+                    <label for="vat_charge" class="col-sm-5 control-label">IGV <?php echo $company_data['vat_charge_value'] ?> %</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>"  autocomplete="off"> 
+                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>" autocomplete="off"> 
+                    </div>
+                  </div>
+                  <?php endif; ?>
+                  <div class="form-group">
+                    <label for="discount" class="col-sm-5 control-label">Descuento</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Descuento" onkeyup="subAmount()" value="<?php echo $order_data['order']['descuento'] ?>" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="net_amount" class="col-sm-5 control-label">Importe neto</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
+                    </div>
+                  </div>
 
-                              <?php if($is_vat_enabled == true): ?>
-                              <div class="form-group">
-                                <label for="vat_charge" class="col-sm-5 control-label">IGV <?php echo $company_data['vat_charge_value'] ?> %</label>
-                                <div class="col-sm-7">
-                                  <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>"  autocomplete="off"> 
-                                  <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['cant_bruta']*0.18 ?>" autocomplete="off"> 
-                                </div>
-                              </div>
-                              <?php endif; ?>
-                              <div class="form-group">
-                                <label for="discount" class="col-sm-5 control-label">Descuento</label>
-                                <div class="col-sm-7">
-                                  <input type="text" class="form-control" id="discount" name="discount" placeholder="Descuento" onkeyup="subAmount()" value="<?php echo $order_data['order']['descuento'] ?>" autocomplete="off">
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <label for="net_amount" class="col-sm-5 control-label">Importe neto</label>
-                                <div class="col-sm-7">
-                                  <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
-                                  <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['cant_neta'] ?>" autocomplete="off">
-                                </div>
-                              </div>
 
 
-               
+                </div>
+
+                 
+                <a href="<?php echo base_url('revisarPedidos/') ?>" class="btn btn-warning">Atras</a>
               </div>
               <!-- /.box-body -->
 
@@ -168,8 +188,7 @@
                 <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
                 <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
 
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="<?php echo base_url('pedidos/') ?>" class="btn btn-warning">Atras</a>
+               
               </div>
             </form>
           <!-- /.box-body -->
