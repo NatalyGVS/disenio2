@@ -57,7 +57,9 @@
                  <th> RUC  </th>
                  <th> Estado Pedido </th>
                  <th> Estado de pago </th>
-                  <th> Cantidad Neta </th> 
+                  <th> Cantidad Bruta </th> 
+                  <th> Descuento </th> 
+                  <th> Cantidad Neta </th>  
                   
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                   <th>Acción</th>

@@ -6,7 +6,7 @@ class Pedidos extends Admin_Controller
 	{
 		parent::__construct();
 		$this->not_logged_in();
-		$this->data['page_title'] = 'Orders';
+		$this->data['page_title'] = 'Pedidos';
 		
 		$this->load->model('model_pedidos');
 	
@@ -31,15 +31,7 @@ class Pedidos extends Admin_Controller
 	* this function is called from the datatable ajax function
 	*/
 
-	public function fetchMesasDataById($id) 
-	{
-		if($id) {
-			$data = $this->model_mesas->getMesasData_PyO($id);
-			echo json_encode($data);
-		}
-
-		return false;
-	}
+	
 
 	public function fetchMesasData()
 	{ 
@@ -79,74 +71,90 @@ class Pedidos extends Admin_Controller
 	{   
 
 		$result = array('data' => array());
-		$data = $this->model_pedidos->getOrdersData();
-		foreach ($data as $key => $value) {
-			$count_total_item = $this->model_pedidos->countOrderItem($value['id']);
+		$data = $this->model_pedidos->getPedidosData();
 
-			date_default_timezone_set("America/Lima");   
-			$date = date('d-m-Y', $value['date_time']);
-			$time = date('h:i a', $value['date_time']);
-			$date_time = $date . ' ' . $time;
+
+		foreach ($data as $key => $value) {
+		
+
+			 date_default_timezone_set("America/Lima");   
+			 $date = date('d-m-Y', $value['fecha']);
+			 $time = date('h:i a', $value['fecha']);
+			 $date_time = $date . ' ' . $time;
+
+
 			// button
 			$buttons = '';
 			if(in_array('viewOrder', $this->permission)) {
 				// $buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
 			}
 			if(in_array('updateOrder', $this->permission)) {
-				$buttons .= ' <a href="'.base_url('orders/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+				$buttons .= ' <a href="'.base_url('pedidos/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
 			}
 			if(in_array('deleteOrder', $this->permission)) {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
 			}
 
-			if($value['paid_status'] == 1) {
-				$paid_status = '<span class="label label-success">Pagado</span>';	
+			if($value['estado_pago'] == 1) {
+				$estado_pago = '<span class="label label-success">Pagado</span>';	
 			}
 			else {
-				if ($value['paid_status'] == 2){
-					$paid_status = '<span class="label label-warning">No Pagado</span>';
+				if ($value['estado_pago'] == 0){
+					$estado_pago = '<span class="label label-warning">No Pagado</span>';
 				}else{
-					$paid_status = '<span class="label label-danger">ERROR</span>';
+					$estado_pago = '<span class="label label-danger">ERROR</span>';
 				}	
 
 			}
 
-			if($value['estado_orden'] == 0) {
-				$estado_orden = '<span class="label label-default">En Espera</span>';	
+
+			switch ($value['estado_pedido']) {
+				case "0":
+				$estado_pedido = '<span class="label label-warning">En Espera</span>';
+					break;
+				case "1":
+				$estado_pedido = '<span class="label label-default">En Anulado</span>';
+					break;
+				case 2:
+				$estado_pedido = '<span class="label label-danger">Rechazado</span>';
+					break;
+				case 3:
+				$estado_pedido = '<span class="label label-success">Aprobado</span>';
+					break;
+
+				case 4:
+				$estado_pedido = '<span class="label label-info">En compra de Insumos</span>';
+					break;
+
+				case 5:
+				$estado_pedido = '<span class="label label-primary">En Produccion</span>';
+					break;
+				case 6:
+				$estado_pedido = '<span class="label label-success">Listo</span>';
+					break;
+				case 7:
+				$estado_pedido = '<span class="label label-default">En Recogido</span>';
+					break; 
+				default:
+				$estado_pedido = '<span class="label label-default">OTRO</span>';
 			}
-			else  
-
-			{
-				if($value['estado_orden'] == 1) {
-					$estado_orden = '<span class="label label-warning">En Preparacion</span>';	
-				}
-			   else {
-				if($value['estado_orden'] == 2) {
-					$estado_orden = '<span class="label label-primary">En Despacho</span>';	
-				} else  {
-					$estado_orden = '<span class="label label-danger">NO IDENTIFICADO</span>';	
-				}
-			   }
-			}
-
-            
-
-			$usuario = $this->model_users->getUserData($value['user_id']) ;
+            			
 			$result['data'][$key] = array(
-				$value['bill_no'],
-				
-				$mesa['name'],
-				$usuario['username'],
-				$value['customer_name'],
+				$value['codPedido'],
 				$date_time,
-				$count_total_item,
-				$value['net_amount'],
-				$paid_status,
-				$estado_orden ,
+				 $value['nombre_cli'], 
+				 $value['direccion_cli'],
+				 $value['telefono_cli'],
+				 $value['ruc_cli'],
+				 $estado_pedido,
+				 $estado_pago,
+				 $value['cant_bruta'],
+				 $value['descuento'],
+				 $value['cant_neta'],
 				$buttons
 			);
 		} // /foreach
-		$this->data['mesas'] = $this->model_mesas->getActiveMesas(); 
+		
 		echo json_encode($result);
 	}
 
@@ -200,7 +208,7 @@ class Pedidos extends Admin_Controller
 	* It checks retrieves the particular product data from the product id 
 	* and return the data into the json format.
 	*/
-	public function getProductValueById()
+	public function getPedidosValueById()
 	{   $product_id = $this->input->post('product_id');
 		
 		if($product_id) {
@@ -335,24 +343,22 @@ class Pedidos extends Admin_Controller
 		$order_id = $this->input->post('order_id');
         $response = array();
         if($order_id) {
-
-
 			
-            $delete = $this->model_pedidos->remove($order_id);
-            if($delete == true) {
-                $response['success'] = true;
-                $response['messages'] = "Successfully removed"; 
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = "Error in the database while removing the product information";
-            }
-        }
-        else {
-            $response['success'] = false;
-            $response['messages'] = "Refersh the page again!!";
-        }
-        echo json_encode($response); 
+					$delete = $this->model_pedidos->remove($order_id);
+					if($delete == true) {
+						$response['success'] = true;
+						$response['messages'] = "Eliminado exitosamente"; 
+					}
+					else {
+						$response['success'] = false;
+						$response['messages'] = "Error en la base de datos";
+					}
+				}
+				else {
+					$response['success'] = false;
+					$response['messages'] = "Refersh the page again!!";
+				}
+				echo json_encode($response); 
 	}
 
 

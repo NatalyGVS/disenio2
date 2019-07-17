@@ -103,7 +103,7 @@
             <li id="mainPedidosNav">
               <a href="<?php echo base_url('pedidos/') ?>">
                 <img class="fa" src="/disenio2/assets/images/icons/products.png">
-                <span style="margin-left: 15px;">Pedidos</span>
+                <span style="margin-left: 15px;">Pedidos/ Cliente</span>
               </a>
             </li>
           <?php endif; ?>

@@ -277,7 +277,7 @@
 
     } else {
       $.ajax({
-        url: base_url + 'pedidos/getProductValueById',
+        url: base_url + 'pedidos/getPedidosValueById',
         type: 'post',
         data: {product_id : product_id},
         dataType: 'json',

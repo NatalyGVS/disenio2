@@ -6,15 +6,15 @@ class Model_pedidos extends CI_Model
 		parent::__construct();
 	}
 	/* get the pedidos data */
-	public function getOrdersData($id = null)
+	public function getPedidosData($id = null)
 	{
 		if($id) {
-			//$sql = "SELECT * FROM pedidos WHERE id = ?";
-			//$query = $this->db->query($sql, array($id));
+			$sql = "SELECT * FROM pedidos WHERE id = ?";
+			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
-		//$sql = "SELECT * FROM pedidos ORDER BY id DESC";
-		//$query = $this->db->query($sql);
+		$sql = "SELECT * FROM pedidos ORDER BY id DESC";
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
@@ -101,8 +101,8 @@ class Model_pedidos extends CI_Model
 	public function countOrderItem($order_id)
 	{
 		if($order_id) {
-			/*$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-			$query = $this->db->query($sql, array($order_id));*/
+			$sql = "SELECT * FROM pedidos_item WHERE _id = ?";
+			$query = $this->db->query($sql, array($order_id));
 			return $query->num_rows();
 		}
 	}
