@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2019 a las 15:20:08
+-- Tiempo de generación: 17-07-2019 a las 15:38:19
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -21,19 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `disenio2`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `caja`
---
-
-CREATE TABLE `caja` (
-  `id` int(11) NOT NULL,
-  `monto_ini` int(11) NOT NULL,
-  `monto_fin` int(11) NOT NULL,
-  `active` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -88,23 +75,6 @@ INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `customers`
---
-
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `groups`
 --
 
@@ -148,26 +118,6 @@ INSERT INTO `insumos` (`id`, `nombre`, `cantidad`, `unidad_medida`) VALUES
 (6, 'insumo6', 7, 'u'),
 (7, 'insumo7', 0, 'u'),
 (8, 'insumo8', 0, 'kg');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mesas`
---
-
-CREATE TABLE `mesas` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `active` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `mesas`
---
-
-INSERT INTO `mesas` (`id`, `name`, `active`) VALUES
-(4, '1', 2),
-(5, '2', 2);
 
 -- --------------------------------------------------------
 
@@ -224,6 +174,59 @@ CREATE TABLE `orders_item` (
 INSERT INTO `orders_item` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`) VALUES
 (5, 31, 2, '1', '', ''),
 (6, 31, 3, '3', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(11) NOT NULL,
+  `codPedido` varchar(255) NOT NULL,
+  `fecha` varchar(255) NOT NULL,
+  `nombre_cli` varchar(255) NOT NULL,
+  `direccion_cli` varchar(255) NOT NULL,
+  `telefono_cli` varchar(255) NOT NULL,
+  `ruc_cli` varchar(255) NOT NULL,
+  `estado_pedido` int(11) NOT NULL,
+  `estado_pago` int(11) NOT NULL,
+  `cant_bruta` varchar(255) NOT NULL,
+  `descuento` varchar(255) NOT NULL,
+  `cant_neta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `codPedido`, `fecha`, `nombre_cli`, `direccion_cli`, `telefono_cli`, `ruc_cli`, `estado_pedido`, `estado_pago`, `cant_bruta`, `descuento`, `cant_neta`) VALUES
+(7, 'FISI-PED-1BD8', '1563361139', 'cli4', '', '', '', 0, 0, '4.24', '', '5.00'),
+(8, 'FISI-PED-7880', '1563364095', 'Aaaaa', 'Aaaaaa', 'Bbbbbb', '1232132', 0, 0, '98.00', '10', '105.64');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedidos_item`
+--
+
+CREATE TABLE `pedidos_item` (
+  `id` int(11) NOT NULL,
+  `pedido_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` varchar(255) NOT NULL,
+  `pu` int(11) NOT NULL,
+  `monto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pedidos_item`
+--
+
+INSERT INTO `pedidos_item` (`id`, `pedido_id`, `producto_id`, `cantidad`, `pu`, `monto`) VALUES
+(11, 7, 122, '1', 4, 4),
+(29, 8, 121, '6', 3, 18),
+(30, 8, 122, '20', 4, 80);
 
 -- --------------------------------------------------------
 
@@ -323,26 +326,6 @@ INSERT INTO `producto_insumo` (`id`, `producto_id`, `insumo_id`, `cantidad`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `products`
---
-
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `proveedor_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `material` varchar(255) DEFAULT NULL,
-  `unidad_medida` varchar(255) NOT NULL,
-  `descripcion` varchar(255) DEFAULT NULL,
-  `price` varchar(255) NOT NULL,
-  `qty` varchar(255) NOT NULL,
-  `image` text NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `proveedores`
 --
 
@@ -413,12 +396,6 @@ INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 --
 
 --
--- Indices de la tabla `caja`
---
-ALTER TABLE `caja`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -428,12 +405,6 @@ ALTER TABLE `categories`
 -- Indices de la tabla `company`
 --
 ALTER TABLE `company`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `customers`
---
-ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -449,12 +420,6 @@ ALTER TABLE `insumos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `mesas`
---
-ALTER TABLE `mesas`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `orders`
 --
 ALTER TABLE `orders`
@@ -464,6 +429,18 @@ ALTER TABLE `orders`
 -- Indices de la tabla `orders_item`
 --
 ALTER TABLE `orders_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedidos_item`
+--
+ALTER TABLE `pedidos_item`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -477,14 +454,6 @@ ALTER TABLE `productosnew`
 --
 ALTER TABLE `producto_insumo`
   ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `proveedor_id` (`proveedor_id`);
 
 --
 -- Indices de la tabla `proveedores`
@@ -521,12 +490,6 @@ ALTER TABLE `company`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `groups`
 --
 ALTER TABLE `groups`
@@ -537,12 +500,6 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `insumos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `mesas`
---
-ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `orders`
@@ -557,6 +514,18 @@ ALTER TABLE `orders_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `pedidos_item`
+--
+ALTER TABLE `pedidos_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
 -- AUTO_INCREMENT de la tabla `productosnew`
 --
 ALTER TABLE `productosnew`
@@ -567,12 +536,6 @@ ALTER TABLE `productosnew`
 --
 ALTER TABLE `producto_insumo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
-
---
--- AUTO_INCREMENT de la tabla `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -591,17 +554,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -90,7 +90,7 @@
 
       <form role="form" action="<?php echo base_url('revisarPedidos/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
-          <p>¿Realmente quieres eliminar?</p>
+          <p>¿Seguro que desea Rechazar el Pedido?</p>
           
         </div>
          

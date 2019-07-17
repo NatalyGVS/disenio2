@@ -207,7 +207,7 @@ class Pedidos extends Admin_Controller
 		if(!$id) {
 			redirect('dashboard', 'refresh');
 		}
-		$this->data['page_title'] = 'Update Order';
+		$this->data['page_title'] = 'Actualizar Pedido';
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	

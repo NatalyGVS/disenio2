@@ -249,7 +249,7 @@ class RevisarPedidos extends Admin_Controller
 	}
 
 
-/*
+
 	public function updateEstado($id)
 	{
 		if(!in_array('updateOrder', $this->permission)) {
@@ -293,13 +293,9 @@ class RevisarPedidos extends Admin_Controller
             $this->render_template('pedidos/estado', $this->data);
         }
 	}
- */
+ 
 
-	/*
-	* It removes the data from the database
-	* and it returns the response into the json format
-	*/
-	public function remove()
+	public function remove() //actualizar re chazado
 	{
 		if(!in_array('deleteOrder', $this->permission)) {
             redirect('dashboard', 'refresh');
@@ -308,8 +304,10 @@ class RevisarPedidos extends Admin_Controller
         $response = array();
         if($order_id) {
 			
-					$delete = $this->model_pedidos->remove($order_id);
-					if($delete == true) {
+					// $delete = $this->model_pedidos->remove($order_id);
+					$update = $this->model_pedidos->updateRechazado($id);
+
+					if($update == true) {
 						$response['success'] = true;
 						$response['messages'] = "Eliminado exitosamente"; 
 					}
@@ -325,31 +323,6 @@ class RevisarPedidos extends Admin_Controller
 				echo json_encode($response); 
 	}
 
-
-	public function actualizar()
-	{
-		if(!in_array('deleteOrder', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
-		$order_id = $this->input->post('order_id');
-        $response = array();
-        if($order_id) {
-            $delete = $this->model_pedidos->remove($order_id);
-            if($delete == true) {
-                $response['success'] = true;
-                $response['messages'] = "Successfully removed"; 
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = "Error in the database while removing the product information";
-            }
-        }
-        else {
-            $response['success'] = false;
-            $response['messages'] = "Refersh the page again!!";
-        }
-        echo json_encode($response); 
-	}
 
 
 	/*

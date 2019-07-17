@@ -168,6 +168,23 @@ class Model_pedidos extends CI_Model
 	}
 
 
+	public function updateRechazado($id)
+	{
+		if($id) {
+		
+			// fetch the order data 
+			$data = array(
+				'estado_pedido' =>"2" ,
+
+			
+	    	);
+			$this->db->where('id', $id);
+			$update = $this->db->update('pedidos', $data);
+
+		
+			return true;
+		}
+	}
 
 	public function updateEs($id)
 	{
