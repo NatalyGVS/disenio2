@@ -5,15 +5,15 @@ class Model_pedidos extends CI_Model
 	{
 		parent::__construct();
 	}
-	/* get the orders data */
+	/* get the pedidos data */
 	public function getOrdersData($id = null)
 	{
 		if($id) {
-			//$sql = "SELECT * FROM orders WHERE id = ?";
+			//$sql = "SELECT * FROM pedidos WHERE id = ?";
 			//$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
-		//$sql = "SELECT * FROM orders ORDER BY id DESC";
+		//$sql = "SELECT * FROM pedidos ORDER BY id DESC";
 		//$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -21,12 +21,12 @@ class Model_pedidos extends CI_Model
 	public function getOrdersData2($id = null)
 	{
 		if($id) {
-			/*$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='0' or   estado_orden='1') ";
+			/*$sql = "SELECT * FROM pedidos WHERE  id = ? and(  estado_orden='0' or   estado_orden='1') ";
 			$query = $this->db->query($sql, array($id));*/
 			return $query->row_array();
 		}
 
-		/*$sql = "SELECT * FROM orders WHERE estado_orden='0' or   estado_orden='1'  ORDER BY id DESC";
+		/*$sql = "SELECT * FROM pedidos WHERE estado_orden='0' or   estado_orden='1'  ORDER BY id DESC";
 		$query = $this->db->query($sql);*/
 		return $query->result_array();
 	}
@@ -34,17 +34,17 @@ class Model_pedidos extends CI_Model
 	public function getOrdersData3($id = null)
 	{
 		if($id) {
-			/*$sql = "SELECT * FROM orders WHERE  id = ? and(  estado_orden='3' and   paid_status='2') ";
+			/*$sql = "SELECT * FROM pedidos WHERE  id = ? and(  estado_orden='3' and   paid_status='2') ";
 			$query = $this->db->query($sql, array($id));*/
 			return $query->row_array();
 		}
 
-		/*$sql = "SELECT * FROM orders WHERE estado_orden='2' and   paid_status='2'  ORDER BY id DESC";
+		/*$sql = "SELECT * FROM pedidos WHERE estado_orden='2' and   paid_status='2'  ORDER BY id DESC";
 		$query = $this->db->query($sql);*/
 		return $query->result_array();
 	}
 
-	// get the orders item data
+	// get the pedidos item data
 	public function getOrdersItemData($order_id = null)
 	{
 		if(!$order_id) {
@@ -66,18 +66,13 @@ class Model_pedidos extends CI_Model
     		'nombre_cli' => $this->input->post('customer_name'),
     		'direccion_cli' => $this->input->post('customer_address'),
 			'telefono_cli' => $this->input->post('customer_phone'),
-			'ruc_cli' => strtotime(date('Y-m-d h:i:s a')),
-    		'estado_pedido' => $this->input->post('gross_amount_value'),
-    		'estado_pago' => $this->input->post('service_charge_rate'),
-			/*
-			'gross_amount' => $this->input->post('gross_amount_value'),
-    		'service_charge_rate' => $this->input->post('service_charge_rate'),
-			'service_charge' => ($this->input->post('service_charge_value') > 0) ?$this->input->post('service_charge_value'):0,
-    		'vat_charge_rate' => $this->input->post('vat_charge_rate'),
-    		'vat_charge' => ($this->input->post('vat_charge_value') > 0) ? $this->input->post('vat_charge_value') : 0,
-    		'net_amount' => $this->input->post('net_amount_value'),
-    		'discount' => $this->input->post('discount'), */
-    		
+			'ruc_cli' => $this->input->post('RUC'),
+    		'estado_pedido' => 0 ,
+			'estado_pago' => 0 ,
+			'cant_bruta' => $this->input->post('gross_amount_value'),
+			'descuento' => $this->input->post('discount'),
+			'cant_neta' => $this->input->post('net_amount_value'),
+	    		
     	);
 
 		$insert = $this->db->insert('pedidos', $data);
@@ -97,78 +92,12 @@ class Model_pedidos extends CI_Model
 
     		$this->db->insert('pedidos_item', $items);
 
- 
-    	}
+     	}
 
 		return ($order_id) ? $order_id : false;
 	}
 
 
-/*
-	public function create()
-	{
-		$name_mesa = $this->input->post('id_mesa');
-		$this->load->model('model_mesas');
-		$mesa = $this->model_mesas->getMesaforName($name_mesa) ;
-			  
-		// ****** MODIFICAR ESTADO DE MESA
-			   
-				if( $mesa['active']==1) { //LIBRE
-					$data = array( 'active' => 2 );
-					$update = $this->model_mesas->update($data, $mesa['id']);
-					
-				}
-				else {  // $mesa['active']==2  // OCUPADO
-//// No se puede crear orden 
-// MANDAR A EDIT MESA 
-				}
-		$user_id = $this->session->userdata('id');
-		$bill_no = 'FISI-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
-    	$data = array(
-    		'bill_no' => $bill_no,
-    		'customer_name' => $this->input->post('customer_name'),
-    		'customer_address' => $this->input->post('customer_address'),
-    		'customer_phone' => $this->input->post('customer_phone'),
-    		'date_time' => strtotime(date('d-m-Y h:i:s a')),
-    		'gross_amount' => $this->input->post('gross_amount_value'),
-    		'service_charge_rate' => $this->input->post('service_charge_rate'),
-    		'service_charge' => ($this->input->post('service_charge_value') > 0) ?$this->input->post('service_charge_value'):0,
-    		'vat_charge_rate' => $this->input->post('vat_charge_rate'),
-    		'vat_charge' => ($this->input->post('vat_charge_value') > 0) ? $this->input->post('vat_charge_value') : 0,
-    		'net_amount' => $this->input->post('net_amount_value'),
-    		'discount' => $this->input->post('discount'),
-    		'paid_status' => 2,
-			'user_id' => $user_id,
-			'id_mesa' => $mesa['id'],
-    		'estado_orden' => 0
-			
-    	);
- 
-		// ******
-
-		$insert = $this->db->insert('orders', $data);
-		$order_id = $this->db->insert_id();
-		$this->load->model('model_products');
-		$count_product = count($this->input->post('product'));
-    	for($x = 0; $x < $count_product; $x++) {
-    		$items = array(
-    			'order_id' => $order_id,
-    			'product_id' => $this->input->post('product')[$x],
-    			'qty' => $this->input->post('qty')[$x],
-    			'rate' => $this->input->post('rate_value')[$x],
-    			'amount' => $this->input->post('amount_value')[$x],
-    		);
-    		$this->db->insert('orders_item', $items);
-    		// now decrease the stock from the product
-    		$product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
-    		$qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
-    		$update_product = array('qty' => $qty);
-    		$this->model_products->update($update_product, $this->input->post('product')[$x]);
-    	}
-		return ($order_id) ? $order_id : false;
-	}
-
-	*/
 	public function countOrderItem($order_id)
 	{
 		if($order_id) {
@@ -197,7 +126,7 @@ class Model_pedidos extends CI_Model
 	    		'user_id' => $user_id
 	    	);
 			$this->db->where('id', $id);
-			$update = $this->db->update('orders', $data);
+			$update = $this->db->update('pedidos', $data);
 			// now the order item 
 			// first we will replace the product qty to original and subtract the qty again
 			$this->load->model('model_products');
@@ -261,7 +190,7 @@ class Model_pedidos extends CI_Model
 	    		// 'user_id' => $user_id
 	    	);
 			$this->db->where('id', $id);
-			$update = $this->db->update('orders', $data);
+			$update = $this->db->update('pedidos', $data);
 			// now the order item 
 			// first we will replace the product qty to original and subtract the qty again
 			$this->load->model('model_products');
@@ -324,7 +253,7 @@ class Model_pedidos extends CI_Model
 	    		// 'user_id' => $user_id
 	    	);
 			$this->db->where('id', $id);
-			$update = $this->db->update('orders', $data);
+			$update = $this->db->update('pedidos', $data);
 			// now the order item 
 			// first we will replace the product qty to original and subtract the qty again
 			$this->load->model('model_products');
@@ -372,7 +301,7 @@ class Model_pedidos extends CI_Model
 			
             if($order['estado_orden']==0){
 				$this->db->where('id', $id);
-				$delete = $this->db->delete('orders');
+				$delete = $this->db->delete('pedidos');
 				$this->db->where('order_id', $id);
 				$delete_item = $this->db->delete('orders_item');
 				return ($delete == true && $delete_item) ? true : false;
@@ -389,7 +318,7 @@ class Model_pedidos extends CI_Model
 
 	public function countTotalPaidOrders()
 	{
-		/*$sql = "SELECT * FROM orders WHERE paid_status = ?";
+		/*$sql = "SELECT * FROM pedidos WHERE paid_status = ?";
 		$query = $this->db->query($sql, array(1));*/
 		//return $query->num_rows();
 		return null;

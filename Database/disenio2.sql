@@ -181,6 +181,18 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
   
 
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`);
+
+  ALTER TABLE `pedidos_item`
+  ADD PRIMARY KEY (`id`);
+
+    ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+ ALTER TABLE `pedidos_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  
 
 -- ********************************************************************************
 -- ********************************************************************************

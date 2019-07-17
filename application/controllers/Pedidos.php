@@ -7,9 +7,9 @@ class Pedidos extends Admin_Controller
 		parent::__construct();
 		$this->not_logged_in();
 		$this->data['page_title'] = 'Orders';
-		$this->load->model('model_mesas');
+		
 		$this->load->model('model_pedidos');
-		$this->load->model('model_orders');
+	
 		$this->load->model('model_products');
 		$this->load->model('model_company');
 		$this->load->model('model_users');
@@ -18,7 +18,7 @@ class Pedidos extends Admin_Controller
 	* It only redirects to the manage pedidos page
 	*/
 	public function index()
-	{   $this->data['mesas'] = $this->model_mesas->getActiveMesas(); 
+	{   
 		
 		if(!in_array('viewOrder', $this->permission)) {
             redirect('dashboard', 'refresh');
@@ -79,9 +79,9 @@ class Pedidos extends Admin_Controller
 	{   
 
 		$result = array('data' => array());
-		$data = $this->model_orders->getOrdersData();
+		$data = $this->model_pedidos->getOrdersData();
 		foreach ($data as $key => $value) {
-			$count_total_item = $this->model_orders->countOrderItem($value['id']);
+			$count_total_item = $this->model_pedidos->countOrderItem($value['id']);
 
 			date_default_timezone_set("America/Lima");   
 			$date = date('d-m-Y', $value['date_time']);
@@ -129,7 +129,7 @@ class Pedidos extends Admin_Controller
 			   }
 			}
 
-            $mesa = $this->model_mesas->getMesasData_PyO($value['id_mesa']) ;
+            
 
 			$usuario = $this->model_users->getUserData($value['user_id']) ;
 			$result['data'][$key] = array(
@@ -163,22 +163,22 @@ class Pedidos extends Admin_Controller
 		// if(!in_array('createOrder', $this->permission)) {
         //     redirect('dashboard', 'refresh');
         // }
-		$this->data['page_title'] = 'Agregar Orden';
+		$this->data['page_title'] = 'Agregar Pedido';
 
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	
         if ($this->form_validation->run() == TRUE) {        	
         	
-        	$order_id = $this->model_orders->create();
+        	$order_id = $this->model_pedidos->create();
         	
         	if($order_id) {
-				$this->session->set_flashdata('success', 'Successfully created');
-				redirect('pedidos', 'refresh');
+				$this->session->set_flashdata('success', 'Creado Satisfactoriamente');
+				redirect('pedidos/', 'refresh');
         	}
         	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('pedidos/create/', 'refresh');
+        		$this->session->set_flashdata('errors', 'Ocurrio un error!!!!');
+        		redirect('pedidos/create', 'refresh');
         	}
         }
         else {
@@ -245,7 +245,7 @@ class Pedidos extends Admin_Controller
 	
         if ($this->form_validation->run() == TRUE) {        	
         	
-        	$update = $this->model_orders->update($id);
+        	$update = $this->model_pedidos->update($id);
         	
         	if($update == true) {
         		$this->session->set_flashdata('success', 'Successfully updated');
@@ -264,9 +264,9 @@ class Pedidos extends Admin_Controller
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 			
 			$result = array();
-        	$orders_data = $this->model_orders->getOrdersData($id);
+        	$orders_data = $this->model_pedidos->getOrdersData($id);
     		$result['order'] = $orders_data;
-    		$orders_item = $this->model_orders->getOrdersItemData($orders_data['id']);
+    		$orders_item = $this->model_pedidos->getOrdersItemData($orders_data['id']);
     		foreach($orders_item as $k => $v) {
     			$result['order_item'][] = $v;
     		}
@@ -292,7 +292,7 @@ class Pedidos extends Admin_Controller
 	
         if ($this->form_validation->run() == TRUE) {        	
         	
-        	$update = $this->model_orders->update($id);
+        	$update = $this->model_pedidos->update($id);
         	
         	if($update == true) {
         		$this->session->set_flashdata('success', 'Successfully updated');
@@ -310,9 +310,9 @@ class Pedidos extends Admin_Controller
         	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
         	$result = array();
-        	$orders_data = $this->model_orders->getOrdersData($id);
+        	$orders_data = $this->model_pedidos->getOrdersData($id);
     		$result['order'] = $orders_data;
-    		$orders_item = $this->model_orders->getOrdersItemData($orders_data['id']);
+    		$orders_item = $this->model_pedidos->getOrdersItemData($orders_data['id']);
     		foreach($orders_item as $k => $v) {
     			$result['order_item'][] = $v;
     		}
@@ -338,7 +338,7 @@ class Pedidos extends Admin_Controller
 
 
 			
-            $delete = $this->model_orders->remove($order_id);
+            $delete = $this->model_pedidos->remove($order_id);
             if($delete == true) {
                 $response['success'] = true;
                 $response['messages'] = "Successfully removed"; 
@@ -364,7 +364,7 @@ class Pedidos extends Admin_Controller
 		$order_id = $this->input->post('order_id');
         $response = array();
         if($order_id) {
-            $delete = $this->model_orders->remove($order_id);
+            $delete = $this->model_pedidos->remove($order_id);
             if($delete == true) {
                 $response['success'] = true;
                 $response['messages'] = "Successfully removed"; 
@@ -394,8 +394,8 @@ class Pedidos extends Admin_Controller
         }
         
 		if($id) {
-			$order_data = $this->model_orders->getOrdersData($id);
-			$orders_items = $this->model_orders->getOrdersItemData($id);
+			$order_data = $this->model_pedidos->getOrdersData($id);
+			$orders_items = $this->model_pedidos->getOrdersItemData($id);
 			$company_info = $this->model_company->getCompanyData(1);
 			$order_date = date('d/m/Y', $order_data['date_time']);
 			$paid_status = ($order_data['paid_status'] == 1) ? "Pagado" : "No Pagado";
